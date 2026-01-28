@@ -172,6 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // YES - Accept Cookies (Play Music)
         btnYes.addEventListener('click', () => {
             localStorage.setItem('blockermax_cookie_consent', 'accepted'); // Set consent immediately
+
+            // Hide the real banner if it was about to show
+            if (cookieBanner) {
+                cookieBanner.classList.remove('visible');
+                cookieBanner.style.display = 'none';
+            }
+
             audio.muted = false;
             audio.volume = 1.0;
             audio.play().then(() => {
@@ -184,6 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // NO - Decline Cookies (Still Plays Music as per user request)
         btnNo.addEventListener('click', () => {
             localStorage.setItem('blockermax_cookie_consent', 'declined'); // Set consent immediately
+
+            // Hide the real banner if it was about to show
+            if (cookieBanner) {
+                cookieBanner.classList.remove('visible');
+                cookieBanner.style.display = 'none';
+            }
+
             audio.muted = false; // Force unmute
             audio.volume = 1.0;
             audio.play().then(() => {
