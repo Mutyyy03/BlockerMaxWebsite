@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - BlockerMax</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .support-page {
+            background-color: #000000;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .support-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            /* Start from top */
+            align-items: center;
+            text-align: center;
+            padding: 160px 20px 40px;
+            /* Reduced bottom padding to minimize scroll */
+        }
+
+        .support-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .support-text {
+            font-size: 1.25rem;
+            color: #888;
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .support-email {
+            font-size: 1.8rem;
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 2px solid #333;
+            padding-bottom: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .support-email:hover {
+            color: #3b82f6;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body class="support-page">
+    <nav class="glass-nav">
+        <div class="nav-left">
+            <a href="index.html" class="nav-brand-link">
+                <img src="logo.png" alt="Blockermax Logo" class="nav-logo-img">
+                <span class="nav-logo">Blockermax</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="support.html" class="nav-link">Support</a>
+            <a href="download.html" class="nav-cta">Try for free</a>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="nav-brand-link">
+                <img src="logo.png" alt="Blockermax Logo" class="nav-logo-img">
+                <span class="nav-logo">Blockermax</span>
+            </a>
+            <button class="menu-close" aria-label="Close Menu">&times;</button>
+        </div>
+        <div class="mobile-menu-links">
+            <a href="blog.html" class="mobile-nav-link">Blog</a>
+            <a href="support.html" class="mobile-nav-link">Support</a>
+        </div>
+        <div class="mobile-menu-footer">
+            <a href="download.html" class="mobile-nav-cta">Try for free</a>
+        </div>
+    </div>
+
+    <main class="support-content">
+        <h1 class="support-title">We're here to help</h1>
+        <p class="support-text">Have questions or need assistance? Our support team is ready to assist you on your
+            journey. Reach out to us directly and we'll get back to you as soon as possible.</p>
+        <a href="mailto:support@blockermax.com" class="support-email">support@blockermax.com</a>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <img src="iconSun.svg" alt="Sun Icon" class="footer-sun-icon">
+                    <h3 class="footer-tagline">Walking to light together</h3>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <a href="blog.html">Blog</a>
+                    <a href="download.html">Download</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="support.html">Support</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Socials</h4>
+                    <a href="#">Reddit</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">TikTok</a>
+                    <a href="#">X</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
