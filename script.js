@@ -1,66 +1,79 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Animate Hero Badge first
-    const badge = document.querySelector('.hero-badge');
-    if (badge) {
-        badge.style.opacity = '0';
-        badge.style.transform = 'translateY(20px)';
-        badge.style.transition = 'all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
-        setTimeout(() => {
-            badge.style.opacity = '1';
-            badge.style.transform = 'translateY(0)';
-        }, 300);
-    }
+    // 1. Define Animation Function (Delayed)
+    const startHeroAnimations = () => {
+        // Animate Hero Badge
+        const badge = document.querySelector('.hero-badge');
+        if (badge) {
+            badge.style.opacity = '0';
+            badge.style.transform = 'translateY(20px)';
+            badge.style.transition = 'all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            setTimeout(() => {
+                badge.style.opacity = '1';
+                badge.style.transform = 'translateY(0)';
+            }, 300);
+        }
 
-    // 2. Animate Title
-    const title = document.querySelector('.hero-title');
-    const subtitle = document.querySelector('.hero-subtitle-sub');
-    const storeButtons = document.querySelector('.store-buttons');
+        // Animate Title
+        const title = document.querySelector('.hero-title');
+        const subtitle = document.querySelector('.hero-subtitle-sub');
+        const storeButtons = document.querySelector('.store-buttons');
 
-    if (title) {
-        title.innerHTML = '';
-        const titleLines = ["Quit your porn addiction", "with BlockerMax"];
-        const titleStartDelay = 800;
-        let globalWordIndex = 0;
+        if (title) {
+            title.innerHTML = '';
+            const titleLines = ["Quit Porn Addiction with", "Science-Based Blocking"];
+            const titleStartDelay = 800;
+            let globalWordIndex = 0;
 
-        titleLines.forEach((lineText, lineIndex) => {
-            const words = lineText.split(' ');
-            words.forEach(word => {
-                const span = document.createElement('span');
-                span.textContent = word + ' ';
-                span.className = 'hero-word';
-                span.style.animationDelay = `${titleStartDelay + (globalWordIndex * 150)}ms`;
-                title.appendChild(span);
-                globalWordIndex++;
-            });
-            if (lineIndex < titleLines.length - 1) title.appendChild(document.createElement('br'));
-        });
-
-        // 3. Animate Subtitle after Title
-        if (subtitle) {
-            const subtitleText = subtitle.innerText;
-            subtitle.innerText = '';
-            const subtitleWords = subtitleText.split(' ');
-            const subtitleStartDelay = titleStartDelay + (globalWordIndex * 150) + 400;
-
-            subtitleWords.forEach((word, index) => {
-                const span = document.createElement('span');
-                span.textContent = word + ' ';
-                span.className = 'hero-subtitle-word';
-                span.style.animationDelay = `${subtitleStartDelay + (index * 100)}ms`;
-                subtitle.appendChild(span);
+            titleLines.forEach((lineText, lineIndex) => {
+                const words = lineText.split(' ');
+                words.forEach(word => {
+                    const span = document.createElement('span');
+                    span.textContent = word + ' ';
+                    span.className = 'hero-word';
+                    span.style.animationDelay = `${titleStartDelay + (globalWordIndex * 150)}ms`;
+                    title.appendChild(span);
+                    globalWordIndex++;
+                });
+                if (lineIndex < titleLines.length - 1) title.appendChild(document.createElement('br'));
             });
 
-            // 4. Animate Badges last
-            if (storeButtons) {
-                const buttonsDelay = subtitleStartDelay + (subtitleWords.length * 100) + 300;
-                storeButtons.style.animation = 'none'; // Reset CSS animation
-                storeButtons.style.opacity = '0';
-                setTimeout(() => {
-                    storeButtons.style.animation = `appleReveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards`;
-                }, buttonsDelay);
+            // Animate Subtitle after Title
+            if (subtitle) {
+                const subtitleText = subtitle.innerText;
+                subtitle.innerText = '';
+                const subtitleWords = subtitleText.split(' ');
+                const subtitleStartDelay = titleStartDelay + (globalWordIndex * 150) + 400;
+
+                subtitleWords.forEach((word, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = word + ' ';
+                    span.className = 'hero-subtitle-word';
+                    span.style.animationDelay = `${subtitleStartDelay + (index * 100)}ms`;
+                    subtitle.appendChild(span);
+                });
+
+                // Animate Badges last
+                if (storeButtons) {
+                    const buttonsDelay = subtitleStartDelay + (subtitleWords.length * 100) + 300;
+                    storeButtons.style.animation = 'none'; // Reset CSS animation
+                    storeButtons.style.opacity = '0';
+                    setTimeout(() => {
+                        storeButtons.style.animation = `appleReveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards`;
+                    }, buttonsDelay);
+
+                    // Animate CTA Group AFTER Badges (User Request)
+                    const ctaGroup = document.querySelector('.cta-group');
+                    if (ctaGroup) {
+                        const ctaDelay = buttonsDelay + 400; // 400ms delay after badges start
+                        ctaGroup.style.opacity = '0';
+                        setTimeout(() => {
+                            ctaGroup.style.animation = `appleReveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards`;
+                        }, ctaDelay);
+                    }
+                }
             }
         }
-    }
+    };
 
     // Reveal Stat Text on Scroll
     const statText = document.querySelector('.stat-text');
@@ -93,16 +106,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let spans = Array.from(statText.querySelectorAll('span:not(.citation)'));
 
         const revealText = () => {
-            const sectionTop = infoSection.offsetTop;
-            const sectionHeight = infoSection.offsetHeight;
-            const viewportHeight = window.innerHeight;
-            const scrollY = window.scrollY;
+            const rect = statText.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
 
-            // Start logic
-            const startScroll = sectionTop - viewportHeight * 0.2; // Start earlier or later depending on feel, 0.2 means when 20% of viewport is past top
-            const endScroll = startScroll + (viewportHeight * 0.6); // Finish faster (0.6 screen height)
+            // Calculate progress based on element position in viewport
+            // Start: When element is near bottom (windowHeight * 0.9)
+            // End: When element is near center/top (windowHeight * 0.4)
+            // As user scrolls down, rect.top DECREASES.
 
-            let progress = (scrollY - startScroll) / (endScroll - startScroll);
+            const startPoint = windowHeight * 0.9;
+            const endPoint = windowHeight * 0.4;
+
+            // Progress 0 when rect.top == startPoint
+            // Progress 1 when rect.top == endPoint
+            // Formula: (startPoint - rect.top) / (startPoint - endPoint)
+
+            let progress = (startPoint - rect.top) / (startPoint - endPoint);
             progress = Math.max(0, Math.min(1, progress));
 
             const wordCount = spans.length;
@@ -152,22 +171,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // YES - Accept Cookies (Play Music)
         btnYes.addEventListener('click', () => {
+            localStorage.setItem('blockermax_cookie_consent', 'accepted'); // Set consent immediately
             audio.muted = false;
             audio.volume = 1.0;
             audio.play().then(() => {
                 updateIcon(true);
             }).catch(e => console.error("Play error:", e));
             closePopup();
+            startHeroAnimations();
         });
 
         // NO - Decline Cookies (Still Plays Music as per user request)
         btnNo.addEventListener('click', () => {
+            localStorage.setItem('blockermax_cookie_consent', 'declined'); // Set consent immediately
             audio.muted = false; // Force unmute
             audio.volume = 1.0;
             audio.play().then(() => {
                 updateIcon(true);
             }).catch(e => console.error("Play error:", e));
             closePopup();
+            startHeroAnimations();
         });
 
         // Manual Toggle Button Logic (Post-Popup)
@@ -194,7 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // We assume index 0 is active initially and playing via autoplay attribute
         // But double check autoplay if JS loads late
-        if (videos[0].paused) videos[0].play();
+        if (videos[0].paused) {
+            videos[0].play().catch(e => console.log("Auto-play prevented", e));
+        }
 
         // 1.5s transition
         const transitionDuration = 1.5;
@@ -247,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const menuClose = document.querySelector('.menu-close');
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta');
 
     if (mobileMenuToggle && mobileMenuOverlay) {
         mobileMenuToggle.addEventListener('click', () => {
@@ -277,5 +302,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 navbar.classList.remove('scrolled');
             }
         });
+    }
+
+    // Real Cookie Consent Logic
+    const cookieBanner = document.getElementById('cookie-banner');
+    const cookieAccept = document.getElementById('cookie-accept');
+    const cookieDecline = document.getElementById('cookie-decline');
+
+    // Mobile Cookie Elements
+    const mobileCookieNotice = document.querySelectorAll('.mobile-cookie-notice'); // Use class as ID might dupe if bad HTML
+    const mobileCookieAccept = document.querySelectorAll('.mobile-cookie-btn.primary');
+    const mobileCookieDecline = document.querySelectorAll('.mobile-cookie-btn.secondary');
+
+    if (cookieBanner) {
+        // Check local storage
+        const hasConsented = localStorage.getItem('blockermax_cookie_consent');
+
+        if (!hasConsented) {
+            // Show banner with a slight delay
+            setTimeout(() => {
+                // Double check if consent was given during the delay (e.g. via music popup)
+                if (!localStorage.getItem('blockermax_cookie_consent')) {
+                    cookieBanner.classList.add('visible');
+                    // Also show mobile notice
+                    mobileCookieNotice.forEach(el => el.style.display = 'block');
+                }
+            }, 2000);
+        }
+
+        const hideBanner = () => {
+            cookieBanner.classList.remove('visible');
+            cookieBanner.style.pointerEvents = 'none';
+            // Hide mobile notices too
+            mobileCookieNotice.forEach(el => el.style.display = 'none');
+
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 600);
+        };
+
+        const acceptCookies = () => {
+            localStorage.setItem('blockermax_cookie_consent', 'accepted');
+            hideBanner();
+        };
+
+        const declineCookies = () => {
+            localStorage.setItem('blockermax_cookie_consent', 'declined');
+            hideBanner();
+        };
+
+        if (cookieAccept) cookieAccept.addEventListener('click', acceptCookies);
+        if (cookieDecline) cookieDecline.addEventListener('click', declineCookies);
+
+        // Bind mobile buttons (using forEach because querySelectorAll returns NodeList)
+        mobileCookieAccept.forEach(btn => btn.addEventListener('click', acceptCookies));
+        mobileCookieDecline.forEach(btn => btn.addEventListener('click', declineCookies));
     }
 });

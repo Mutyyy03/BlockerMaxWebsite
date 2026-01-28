@@ -7,12 +7,19 @@
     <title>Download BlockerMax</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        html {
+            overflow-y: auto;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            /* Sunrise Gradient */
-            background: linear-gradient(to bottom, #dbeafe 0%, #e9d5ff 50%, #fdba74 100%);
-            background-attachment: fixed;
+            /* Mostly White with Subtle Warm Glow */
+            /* Reference Match: Mostly White, subtle orange/red glow */
+            /* More white stops to reduce color dominance */
+            background: linear-gradient(-45deg, #ffffff, #ffffff, #ffffff, #ffe0b2, #ffffff, #ffffff, #ffffff, #ffffff);
+            background-size: 800% 800%;
+            animation: gradientBG 120s ease infinite;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             display: flex;
             flex-direction: column;
@@ -20,46 +27,66 @@
             color: #1a1a1a;
             /* Dark text for light background */
             overflow-x: hidden;
+            overflow-y: visible;
+            /* Let HTML handle scrolling */
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .container {
-            flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 60px;
-            max-width: 1000px;
-            width: 90%;
-            margin: 150px auto 40px;
-            /* Reduced bottom margin */
-            /* Centered manually */
+            text-align: center;
+            gap: 40px;
+            max-width: 100%;
+            width: 100%;
+            margin: 140px auto 40px;
             position: relative;
             z-index: 10;
         }
 
         .left-content {
-            flex: 1;
+            width: 100%;
+            max-width: 800px;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         h1 {
             font-size: 3.5rem;
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 20px;
             line-height: 1.1;
             letter-spacing: -1px;
-            color: #111;
-            /* Dark Black */
+            color: #1a1a1a;
         }
 
         p {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: #444;
-            /* Dark Gray */
             margin-bottom: 40px;
             line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .store-links {
             display: flex;
+            justify-content: center;
             gap: 16px;
         }
 
@@ -72,75 +99,118 @@
             transform: translateY(-2px);
         }
 
-        .right-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .phone-mockup {
-            width: 300px;
-            height: 600px;
-            background-color: #ffffff;
-            /* White phone body */
-            border-radius: 40px;
-            border: 8px solid #111;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
-            /* Stronger shadow */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #888;
-            font-weight: 500;
+        /* Carousel Styles */
+        .app-carousel {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 40px 0;
             position: relative;
+            scrollbar-width: none;
+            /* Hide scrollbar Firefox */
+            -ms-overflow-style: none;
+            /* Hide scrollbar IE/Edge */
+            cursor: grab;
+            scroll-behavior: auto;
+            /* Smooth scroll is handled by JS for auto-scroll */
+            -webkit-overflow-scrolling: touch;
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
 
-        .phone-mockup::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            width: 100px;
-            height: 25px;
-            background: #111;
-            border-radius: 20px;
+        .app-carousel::-webkit-scrollbar {
+            display: none;
+            /* Hide scrollbar Chrome/Safari */
         }
 
-        /* Nav overrides for this light page */
-        .glass-nav {
+        .app-carousel:active {
+            cursor: grabbing;
+        }
+
+        .app-carousel-track {
+            display: flex;
+            gap: 20px;
+            /* More gap for better visual spacing */
+            width: max-content;
+        }
+
+        .app-scan-img {
+            height: min(700px, 80vh);
+            width: auto;
+            pointer-events: none;
+            /* Prevent image drag interfering with scroll */
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* Nav overrides for this page - FORCE CONSISTENCY */
+        .glass-nav,
+        .glass-nav.scrolled {
             top: 30px;
-            /* Ensure matched positioning */
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            transition: none !important;
+            /* Disable transition to prevent flicker */
         }
 
-        /* Override generic nav link colors for light bg */
+        /* Nav links - Dark for light bg, regardless of scroll state */
         .nav-logo,
-        .nav-link {
-            color: #111 !important;
+        .nav-link,
+        .glass-nav.scrolled .nav-link,
+        .glass-nav.scrolled .nav-logo {
+            color: #000000 !important;
         }
 
-        .nav-link svg {
-            stroke: #111 !important;
+        /* Mobile Menu Button - Black Lines */
+        .hamburger-line,
+        .glass-nav.scrolled .hamburger-line {
+            background-color: #000000 !important;
         }
 
-        .nav-cta {
-            background: #111 !important;
-            color: white !important;
+        .nav-link svg,
+        .glass-nav.scrolled .nav-link svg {
+            stroke: #000000 !important;
+        }
+
+        .nav-cta,
+        .glass-nav.scrolled .nav-cta {
+            background: #000000 !important;
+            color: #ffffff !important;
+        }
+
+        /* Footer text - White for dark bg (global footer has dark bg) */
+        .site-footer,
+        .site-footer h3,
+        .site-footer h4,
+        .site-footer a,
+        .footer-tagline {
+            color: #ffffff !important;
+        }
+
+        .footer-sun-icon {
+            filter: brightness(0) invert(1);
+            /* Make icon white */
         }
 
         @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .app-scan-img {
+                height: 550px;
+            }
+
             .container {
-                flex-direction: column-reverse;
-                /* Phone on top on mobile? Or bottom? usually bottom for download page */
-                text-align: center;
-                padding: 40px 0;
+                margin-top: 120px;
             }
+        }
 
-            .store-links {
-                justify-content: center;
-            }
-
-            body {
-                overflow-y: auto;
-            }
+        /* Fix mobile menu logo color */
+        .mobile-menu-overlay .nav-logo {
+            color: #ffffff !important;
         }
     </style>
 </head>
@@ -156,7 +226,7 @@
         <div class="nav-right">
             <a href="blog.html" class="nav-link">Blog</a>
             <a href="support.html" class="nav-link">Support</a>
-            <a href="download.html" class="nav-cta">Try for free</a>
+            <a href="download.html" class="nav-cta">Try 14 Days Free</a>
             <button class="mobile-menu-toggle" aria-label="Toggle Menu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -176,34 +246,47 @@
         <div class="mobile-menu-links">
             <a href="blog.html" class="mobile-nav-link">Blog</a>
             <a href="support.html" class="mobile-nav-link">Support</a>
-            <a href="index.html#features" class="mobile-nav-link">Content Blocker</a>
-            <a href="index.html#features" class="mobile-nav-link">AI Therapist</a>
-            <a href="index.html#features" class="mobile-nav-link">Panic Button</a>
-            <a href="index.html#features" class="mobile-nav-link">Tracker</a>
-            <a href="index.html#features" class="mobile-nav-link">Personalized Plan</a>
-            <a href="index.html#community" class="mobile-nav-link">Community</a>
-        </div>
-        <div class="mobile-menu-footer">
-            <a href="download.html" class="mobile-nav-cta">Try for free</a>
+            <a href="download.html" class="mobile-nav-cta">Try 14 Days Free</a>
         </div>
     </div>
 
     <div class="container">
         <div class="left-content">
-            <h1>Get started with BlockerMax today.</h1>
-            <p>Take control of your focus and build better habits. Available on iOS and Android.</p>
+            <h1>Get started with<br>BlockerMax today.</h1>
+            <p>Quit porn addiction using science-based methods.</p>
             <div class="store-links">
                 <a href="#" class="store-btn">
-                    <img src="Appstore.svg" alt="Download on App Store">
+                    <img src="Appstore2.svg" alt="Download on App Store">
                 </a>
-                <a href="#" class="store-btn">
-                    <img src="Playstore.svg" alt="Get it on Google Play">
+                <a href="https://play.google.com/store/apps/details?id=com.nane.blocker" class="store-btn">
+                    <img src="Googleplay2.svg" alt="Get it on Google Play">
                 </a>
             </div>
         </div>
-        <div class="right-content">
-            <div class="phone-mockup">
-                Phone Mockup
+
+        <div class="app-carousel">
+            <div class="app-carousel-track">
+                <!-- 9 Images from Mobile Folder - Doubled for loop -->
+                <img src="Mobile/Journey.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Journey2.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Mainpage.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Panicmodeactive.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Progress.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Schedule.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Smartblocking.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/StreakFinal.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Strict2.png" class="app-scan-img" alt="App Screen">
+
+                <!-- Duplicate Set -->
+                <img src="Mobile/Journey.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Journey2.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Mainpage.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Panicmodeactive.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Progress.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Schedule.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Smartblocking.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/StreakFinal.png" class="app-scan-img" alt="App Screen">
+                <img src="Mobile/Strict2.png" class="app-scan-img" alt="App Screen">
             </div>
         </div>
     </div>
@@ -211,8 +294,10 @@
         <div class="footer-container">
             <div class="footer-left">
                 <div class="footer-brand">
-                    <img src="iconSun.svg" alt="Sun Icon" class="footer-sun-icon">
-                    <h3 class="footer-tagline">Walking to light together</h3>
+                    <img src="logo.png" alt="BlockerMax Logo" class="footer-logo-img">
+                    <div class="footer-tagline-wrapper">
+                        <h3 class="footer-tagline">Walking to light together</h3>
+                    </div>
                 </div>
             </div>
             <div class="footer-right">
@@ -224,19 +309,75 @@
                 <div class="footer-column">
                     <h4>Company</h4>
                     <a href="support.html">Support</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms & Conditions</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms & Conditions</a>
                 </div>
                 <div class="footer-column">
                     <h4>Socials</h4>
-                    <a href="#">Reddit</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">TikTok</a>
-                    <a href="#">X</a>
+                    <a href="https://www.youtube.com/channel/UCOgbKBBQsoUu6m4f_CrlROg">YouTube</a>
+                    <a href="https://www.instagram.com/blockermax_official/">Instagram</a>
+                    <a href="https://www.tiktok.com/@blockermax">TikTok</a>
+                    <a href="https://x.com/BlockerMax_App">X</a>
                 </div>
             </div>
         </div>
     </footer>
+    <script src="script.js"></script>
+    <script>
+        const carousel = document.querySelector('.app-carousel');
+        const track = document.querySelector('.app-carousel-track');
+        let scrollSpeed = 1; // Speed of auto-scroll
+        let autoScrollId;
+        let isAutoScrolling = false;
+        let resumeTimeout;
+
+        // Auto-scroll loop
+        function startAutoScroll() {
+            stopAutoScroll(); // Ensure no duplicates
+            autoScrollId = setInterval(() => {
+                isAutoScrolling = true;
+                carousel.scrollLeft += scrollSpeed;
+                // Reset to middle if reached near end to simulate infinite
+                if (carousel.scrollLeft >= (track.offsetWidth / 2)) {
+                    carousel.scrollLeft = 0;
+                }
+                isAutoScrolling = false;
+            }, 20);
+        }
+
+        function stopAutoScroll() {
+            clearInterval(autoScrollId);
+        }
+
+        // Pause on ANY interaction (Scroll, Touch, Mouse)
+        const pauseAndResume = () => {
+            if (isAutoScrolling) return; // Ignore our own programatic scrolls
+
+            stopAutoScroll();
+            clearTimeout(resumeTimeout);
+
+            // Resume after 2 seconds of no activity
+            resumeTimeout = setTimeout(() => {
+                startAutoScroll();
+            }, 2000);
+        };
+
+        // Event Listeners for pausing
+        carousel.addEventListener('scroll', pauseAndResume);
+        carousel.addEventListener('touchstart', stopAutoScroll); // Immediate stop on touch
+        carousel.addEventListener('touchend', () => {
+            // Resume logic handled by scroll event or timeout here if no scroll happened
+            clearTimeout(resumeTimeout);
+            resumeTimeout = setTimeout(startAutoScroll, 2000);
+        });
+
+        // Mouse interactions for desktop manual drag (if needed) or hover
+        carousel.addEventListener('mouseenter', stopAutoScroll);
+        carousel.addEventListener('mouseleave', startAutoScroll);
+
+        // Initialize
+        startAutoScroll();
+    </script>
 </body>
 
 </html>
