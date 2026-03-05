@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parental Control - BlockerMax</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .parental-page {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Override glass nav text for white background */
+        .glass-nav .nav-logo {
+            color: #000000 !important;
+        }
+
+        /* Prevent nav from turning black when scrolled on this page */
+        .parental-page .glass-nav.scrolled {
+            background: rgba(255, 255, 255, 0.5) !important;
+            border-color: rgba(200, 200, 200, 0.2) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .parental-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 20px;
+            /* Reduced bottom padding to flow into gallery */
+        }
+
+        .parental-icon {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 30px;
+            border-radius: 35px;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+            object-fit: contain;
+        }
+
+        .parental-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .parental-text {
+            font-size: 1.25rem;
+            color: #444;
+            margin-bottom: 20px;
+            max-width: 550px;
+            line-height: 1.6;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .parental-title {
+                font-size: 2.5rem;
+            }
+
+            .parental-icon {
+                width: 110px;
+                height: 110px;
+                border-radius: 25px;
+            }
+        }
+
+        .parental-support {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: #333;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 20px 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .parental-support span {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .parental-support a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .parental-support a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        /* Floating Scattered Videos Layout */
+        .hero-scene {
+            position: relative;
+            width: 100%;
+            max-width: 1250px;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .hero-center-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .floating-video {
+            position: absolute;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: #fff;
+            padding: 5px;
+            z-index: 1;
+        }
+
+        .floating-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            display: block;
+        }
+
+        @keyframes floatAnim {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Specific positions for each video */
+        .vid-1 {
+            width: 180px;
+            top: 10%;
+            left: 10%;
+            animation: floatAnim 6s ease-in-out infinite;
+        }
+
+        .vid-2 {
+            width: 160px;
+            bottom: 6%;
+            right: 15%;
+            animation: floatAnim 7s ease-in-out infinite 1s;
+        }
+
+        .vid-3 {
+            width: 190px;
+            top: 5%;
+            right: 6%;
+            animation: floatAnim 8s ease-in-out infinite 0.5s;
+        }
+
+        .vid-4 {
+            width: 150px;
+            bottom: 18%;
+            left: 15%;
+            animation: floatAnim 6.5s ease-in-out infinite 1.5s;
+        }
+
+        .floating-video:hover {
+            transform: scale(1.05) !important;
+            z-index: 20;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            animation-play-state: paused;
+        }
+
+        .mobile-videos {
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            .hero-scene {
+                height: auto;
+                flex-direction: column;
+                margin-top: 40px;
+            }
+
+            .hero-center-content {
+                padding: 10px;
+            }
+
+            .desktop-videos .floating-video {
+                display: none;
+                /* Hide floating on mobile */
+            }
+
+            .mobile-videos {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                margin-top: 40px;
+                width: 100%;
+            }
+
+            .mobile-video-card {
+                width: 45%;
+                max-width: 180px;
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .mobile-video-card video {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        /* Auto Scrolling Mobile Previews */
+        .mobile-showcase-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: #ffffff;
+            padding: 60px 0 80px;
+        }
+
+        .scrolling-track {
+            display: flex;
+            width: max-content;
+            animation: scroll-left 50s linear infinite;
+        }
+
+        .scrolling-track:hover {
+            animation-play-state: paused;
+        }
+
+        .mobile-showcase-card {
+            width: 220px;
+            flex-shrink: 0;
+            margin: 0 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-showcase-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .mobile-showcase-card img {
+            width: 100%;
+            display: block;
+            object-fit: contain;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-showcase-card {
+                width: 140px;
+                margin: 0 10px;
+            }
+        }
+
+        /* Centered Footer for this specific page */
+        .parental-footer {
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+        }
+
+        .parental-footer .footer-tagline {
+            color: #1a1a1a;
+        }
+
+        .parental-footer .footer-container {
+            justify-content: center;
+        }
+
+        .parental-footer .footer-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="parental-page">
+    <nav class="glass-nav" style="min-width: auto; padding-right: 24px; gap: 20px;">
+        <div class="nav-left">
+            <a href="#" class="nav-brand-link" style="cursor: default;">
+                <img src="Parental Control AppIcon.png" alt="Parental Control Logo" class="nav-logo-img">
+                <span class="nav-logo">Blockermax</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="parental-content">
+        <div class="hero-scene">
+            <!-- Desktop Floating Videos -->
+            <div class="desktop-videos">
+                <div class="floating-video vid-1"><video src="video1.mp4" autoplay loop muted playsinline></video></div>
+                <div class="floating-video vid-2"><video src="video2.mp4" autoplay loop muted playsinline></video></div>
+                <div class="floating-video vid-3"><video src="video3.mp4" autoplay loop muted playsinline></video></div>
+                <div class="floating-video vid-4"><video src="video4.mp4" autoplay loop muted playsinline></video></div>
+            </div>
+
+            <div class="hero-center-content">
+                <h1 class="parental-title">Build Healthy Digital<br>Habits Early.</h1>
+                <p class="parental-text">BlockerMax's Parental Control empowers you to guide your family's screen time.
+                    Focus on what matters with science-backed filtering, distraction-free rules, and a safe browsing
+                    environment that grows with them.
+                </p>
+
+                <div class="parental-support">
+                    <span>Need assistance setting up?</span>
+                    <a href="mailto:blockermax@nanegate.com">blockermax@nanegate.com</a>
+                </div>
+            </div>
+
+            <!-- Mobile Grid Videos (visible only on smaller screens) -->
+            <div class="mobile-videos">
+                <div class="mobile-video-card"><video src="video1.mp4" autoplay loop muted playsinline></video></div>
+                <div class="mobile-video-card"><video src="video2.mp4" autoplay loop muted playsinline></video></div>
+                <div class="mobile-video-card"><video src="video3.mp4" autoplay loop muted playsinline></video></div>
+                <div class="mobile-video-card"><video src="video4.mp4" autoplay loop muted playsinline></video></div>
+            </div>
+        </div>
+    </main>
+
+    <div class="mobile-showcase-wrapper">
+        <div class="scrolling-track">
+            <!-- First Set -->
+            <div class="mobile-showcase-card"><img src="mobile1.png" alt="App Screenshot 1"></div>
+            <div class="mobile-showcase-card"><img src="mobile2.png" alt="App Screenshot 2"></div>
+            <div class="mobile-showcase-card"><img src="mobile3.png" alt="App Screenshot 3"></div>
+            <div class="mobile-showcase-card"><img src="mobile4.png" alt="App Screenshot 4"></div>
+            <div class="mobile-showcase-card"><img src="mobile5.png" alt="App Screenshot 5"></div>
+            <div class="mobile-showcase-card"><img src="mobile6.png" alt="App Screenshot 6"></div>
+            <div class="mobile-showcase-card"><img src="mobile7.png" alt="App Screenshot 7"></div>
+            <!-- Second Set (for seamless looping) -->
+            <div class="mobile-showcase-card"><img src="mobile1.png" alt="App Screenshot 1"></div>
+            <div class="mobile-showcase-card"><img src="mobile2.png" alt="App Screenshot 2"></div>
+            <div class="mobile-showcase-card"><img src="mobile3.png" alt="App Screenshot 3"></div>
+            <div class="mobile-showcase-card"><img src="mobile4.png" alt="App Screenshot 4"></div>
+            <div class="mobile-showcase-card"><img src="mobile5.png" alt="App Screenshot 5"></div>
+            <div class="mobile-showcase-card"><img src="mobile6.png" alt="App Screenshot 6"></div>
+            <div class="mobile-showcase-card"><img src="mobile7.png" alt="App Screenshot 7"></div>
+        </div>
+    </div>
+
+    <footer class="site-footer parental-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <img src="Parental Control AppIcon.png" alt="Parental Control Logo" class="footer-logo-img">
+                    <div class="footer-tagline-wrapper">
+                        <h3 class="footer-tagline">Walking to light together</h3>
+                    </div>
+                </div>
+                <div class="footer-store-buttons">
+                    <a href="https://apps.apple.com/us/app/porn-blocker-blocker-max/id6756876676"
+                        class="footer-store-btn">
+                        <img src="Appstore2.svg" alt="Download on App Store">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.nane.blocker" class="footer-store-btn">
+                        <img src="Googleplay2.svg" alt="Get it on Google Play">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
