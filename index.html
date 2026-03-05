@@ -129,7 +129,7 @@
                     dopamine-driven habits.</p>
                 <div class="hero-actions">
                     <div class="store-buttons">
-                        <a href="#" class="store-btn">
+                        <a href="https://apps.apple.com/us/app/porn-blocker-blocker-max/id6756876676" class="store-btn">
                             <img src="Appstore2.svg" alt="Download on App Store">
                         </a>
                         <a href="https://play.google.com/store/apps/details?id=com.nane.blocker" class="store-btn">
@@ -720,6 +720,15 @@
                         <h3 class="footer-tagline">Walking to light together</h3>
                     </div>
                 </div>
+                <div class="footer-store-buttons">
+                    <a href="https://apps.apple.com/us/app/porn-blocker-blocker-max/id6756876676"
+                        class="footer-store-btn">
+                        <img src="Appstore2.svg" alt="Download on App Store">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.nane.blocker" class="footer-store-btn">
+                        <img src="Googleplay2.svg" alt="Get it on Google Play">
+                    </a>
+                </div>
             </div>
             <div class="footer-right">
                 <div class="footer-column">
@@ -764,26 +773,16 @@
 
     <audio id="bg-music" loop autoplay muted preload="auto" src="bgmusic.aac"></audio>
     <!-- Music Consent Popup (Disguised as Cookie Consent) -->
-    <div id="music-popup-overlay" class="popup-overlay">
-        <div class="popup-content">
-            <h2 class="popup-title">We Value Your Privacy</h2>
-            <p class="popup-text">We use cookies to enhance your browsing experience and analyze our traffic. Please
-                accept to continue.</p>
-            <div class="popup-buttons">
-                <button id="music-yes" class="popup-btn primary">Accept Cookies</button>
-                <button id="music-no" class="popup-btn secondary">Decline Cookies</button>
-            </div>
+    <div id="music-popup-overlay" class="cookie-banner visible">
+        <div class="cookie-banner-content">
+            <h3 class="cookie-title">We use cookies</h3>
+            <p class="cookie-text">We use cookies to improve your experience and analyze site traffic. Your choice here
+                only affects cookie usage and will not change how the site works. You can update your preferences
+                anytime in our <a href="privacy-policy.html">Cookie Policy</a>.</p>
         </div>
-    </div>
-
-    <!-- Real Cookie Banner -->
-    <div id="cookie-banner" class="cookie-banner">
-        <h3 class="cookie-title">Your Privacy Matters</h3>
-        <p class="cookie-text">We use cookies only to ensure the site works properly and to understand how it’s used.
-            You can accept or decline at any time.</p>
         <div class="cookie-buttons">
-            <button id="cookie-accept" class="cookie-btn accept">Accept</button>
-            <button id="cookie-decline" class="cookie-btn decline">Decline</button>
+            <button id="music-yes" class="cookie-btn accept">Accept Cookies</button>
+            <button id="music-no" class="cookie-btn decline">Decline</button>
         </div>
     </div>
 
