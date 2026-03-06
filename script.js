@@ -75,6 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Start hero animations immediately in the background
+    startHeroAnimations();
+
     // Reveal Stat Text on Scroll
     const statText = document.querySelector('.stat-text');
     const infoSection = document.querySelector('.info');
@@ -185,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateIcon(true);
             }).catch(e => console.error("Play error:", e));
             closePopup();
-            startHeroAnimations();
         });
 
         // NO - Decline Cookies (Still Plays Music as per user request)
@@ -204,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateIcon(true);
             }).catch(e => console.error("Play error:", e));
             closePopup();
-            startHeroAnimations();
         });
 
         // Manual Toggle Button Logic (Post-Popup)
