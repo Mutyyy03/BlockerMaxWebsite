@@ -2011,3 +2011,10 @@ body {
     color: #ffffff;
     text-decoration: underline;
 }
+/* Parental Pages Nav Link Overrides */
+.parental-page .nav-link {
+    color: #1a1a1a !important;
+}
+.parental-page .nav-link:hover {
+    color: #666 !important;
+}
