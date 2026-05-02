@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BlockerMax Partner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="logo.png" alt="BlockerMax" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">
+                Partner Dashboard
+            </div>
+            <div class="navbar-nav">
+                <span class="nav-link" style="color: var(--text-main); font-weight: 600;">Welcome, John</span>
+                <a href="login.html" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 mb-4">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab('creator-kit')">Creator Kit</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Next Payout Date</p>
+                    <h3 style="margin: 0;">May 1, 2026</h3>
+                </div>
+                <div style="text-align: right;">
+                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Current Balance</p>
+                    <h2 style="margin: 0; color: var(--primary-color);">$420.50</h2>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px;">
+                <div class="card" style="padding: 16px; margin-bottom: 0;">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Clicks</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">1,245</div>
+                </div>
+                <div class="card" style="padding: 16px; margin-bottom: 0;">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Trials</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">342</div>
+                </div>
+                <div class="card" style="padding: 16px; margin-bottom: 0;">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Paid Users</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">85</div>
+                </div>
+                <div class="card" style="padding: 16px; margin-bottom: 0;">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Active Subs</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">310</div>
+                </div>
+                <div class="card" style="padding: 16px; margin-bottom: 0; border-color: rgba(0,122,255,0.2); background: rgba(0,122,255,0.03);">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--primary-color); letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 700;">My Earnings</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--primary-color);">$1,150</div>
+                </div>
+            </div>
+
+                <div class="card" style="padding: 16px; margin-bottom: 0;">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Clicks</div>
+
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Transactions</h3>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event Type</th>
+                                <th>Revenue</th>
+                                <th>Commission</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Apr 28, 2026</td>
+                                <td><span class="badge badge-primary">First Subscription</span></td>
+                                <td>$10.90</td>
+                                <td>$3.27</td>
+                            </tr>
+                            <tr>
+                                <td>Apr 28, 2026</td>
+                                <td><span class="badge badge-success">Renewal</span></td>
+                                <td>$10.90</td>
+                                <td>$0.60</td>
+                            </tr>
+                            <tr>
+                                <td>Apr 27, 2026</td>
+                                <td><span class="badge badge-primary">First Subscription</span></td>
+                                <td>$10.90</td>
+                                <td>$3.27</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creator Kit Tab -->
+        <div id="creator-kit" class="tab-content">
+            <div class="grid grid-2">
+                <!-- Promo Code -->
+                <div class="card">
+                    <h3>Your Promo Code</h3>
+                    <p>Share this code with your audience so they get a discount and you get commission.</p>
+                    <div class="copy-field mt-3">
+                        <input type="text" class="form-control" value="JOHN50" readonly id="promoCodeInput" style="font-size: 18px; font-weight: bold; color: var(--primary-color);">
+                        <button class="btn btn-primary" onclick="copyCode()">Copy</button>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4>Audience Benefits</h4>
+                        <ul style="padding-left: 20px; font-size: 14px; color: var(--text-muted); margin-top: 8px;">
+                            <li>20% discount on the first month OR extended free trial.</li>
+                            <li>Users must enter code <strong>JOHN50</strong> inside the app to activate premium.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Brand Assets -->
+                <div class="card">
+                    <h3>Brand Assets</h3>
+                    <p>Download official media to use in your content.</p>
+                    <ul style="list-style: none; padding: 0; margin-top: 16px;">
+                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">📱 App Screenshots (ZIP)</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">✨ App Icon High-Res</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">🎥 Demo Video</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">🎨 Feature Visuals</a></li>
+                        <li><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">🏆 Logo Pack</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Talking Points -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">Talking Points & Script Outline</h3>
+                </div>
+                <div style="background-color: #FAFAFA; padding: 24px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 8px;">Problem</h4>
+                    <p>Many people struggle with distractions and adult content, leading to lower productivity and brain fog.</p>
+                    
+                    <h4 style="margin-bottom: 8px;">Solution</h4>
+                    <p>BlockerMax helps you stay focused by blocking harmful websites and apps effectively across your devices.</p>
+                    
+                    <h4 style="margin-bottom: 8px;">Key Feature to Mention</h4>
+                    <p><strong>Strict Mode</strong> prevents you from disabling the block during active focus sessions. It keeps you accountable!</p>
+                    
+                    <h4 style="margin-bottom: 8px;">Call to Action (CTA)</h4>
+                    <p style="margin-bottom: 0;">"Download BlockerMax today and use my code <strong>JOHN50</strong> inside the app for a special discount."</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Remove active class from all tabs and contents
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab and content
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function copyCode() {
+            var copyText = document.getElementById("promoCodeInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+            navigator.clipboard.writeText(copyText.value);
+            
+            var btn = event.target;
+            var originalText = btn.innerText;
+            btn.innerText = "Copied!";
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

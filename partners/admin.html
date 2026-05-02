@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - BlockerMax Affiliate Program</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-color);
+            height: calc(100vh - 65px);
+            position: fixed;
+            padding: 24px;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 32px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 10px 16px;
+            color: var(--text-muted);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background-color: rgba(0, 122, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Logic Styles */
+        .admin-section {
+            display: none;
+        }
+        .admin-section.active {
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #fff;
+            width: 400px;
+            padding: 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" style="border-bottom: 1px solid var(--border-color);">
+        <div class="container" style="max-width: 100%; padding: 0 32px;">
+            <div class="navbar-brand">
+                <img src="logo.png" alt="BlockerMax" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">
+                BlockerMax Admin
+            </div>
+            <div class="navbar-nav">
+                <span class="badge badge-primary">Admin Access</span>
+            </div>
+        </div>
+    </nav>
+
+    <div style="display: flex;">
+        <div class="sidebar">
+            <ul class="sidebar-nav">
+                <li><a href="#" class="sidebar-link active" onclick="switchSection('influencers', this)">Influencers</a></li>
+                <li><a href="#" class="sidebar-link" onclick="switchSection('offer-codes', this)">Offer Codes</a></li>
+                <li><a href="#" class="sidebar-link" onclick="switchSection('transactions', this)">Transactions</a></li>
+                <li><a href="#" class="sidebar-link" onclick="switchSection('payouts', this)">Payouts</a></li>
+                <li><a href="#" class="sidebar-link" onclick="switchSection('settings', this)">Settings</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content" style="width: 100%;">
+            
+            <!-- Section: Influencers -->
+            <div id="influencers" class="admin-section active">
+
+                <style>
+                    .inf-layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; height: calc(100vh - 160px); }
+                    .inf-list-panel { background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+                    .inf-list-header { padding: 16px; border-bottom: 1px solid var(--border-color); }
+                    .inf-search-wrap { position: relative; margin-top: 10px; }
+                    .inf-search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+                    .inf-search-wrap input { width: 100%; padding: 8px 8px 8px 32px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13px; outline: none; box-sizing: border-box; }
+                    .inf-search-wrap input:focus { border-color: var(--primary-color); }
+                    .inf-list-scroll { overflow-y: auto; flex: 1; }
+                    .inf-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
+                    .inf-row:hover { background: #f8f9fa; }
+                    .inf-row.active { background: #EBF4FF; border-right: 2px solid var(--primary-color); }
+                    .inf-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+                    .inf-row-info { flex: 1; min-width: 0; }
+                    .inf-row-name { font-weight: 600; font-size: 14px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+                    .inf-row-sub { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+                    .inf-row-rev { font-size: 13px; font-weight: 600; color: var(--success); flex-shrink: 0; }
+                    .inf-detail-panel { background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius); overflow-y: auto; }
+                    .inf-empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); gap: 8px; }
+                    .inf-detail-inner { padding: 28px; }
+                    .inf-profile-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
+                    .inf-profile-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
+                    .inf-profile-meta { flex: 1; }
+                    .inf-profile-meta h3 { margin: 0 0 2px; font-size: 18px; }
+                    .inf-profile-meta p { margin: 0; font-size: 13px; color: var(--text-muted); }
+                    .inf-social-links { display: flex; gap: 8px; margin-top: 8px; }
+                    .inf-social-btn { padding: 4px 10px; border: 1px solid var(--border-color); border-radius: 20px; font-size: 11px; font-weight: 500; cursor: pointer; background: none; color: var(--text-main); display: flex; align-items: center; gap: 4px; text-decoration: none; }
+                    .inf-social-btn:hover { background: #f0f0f0; }
+                    .inf-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+                    .inf-stat-card { background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px 16px; }
+                    .inf-stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
+                    .inf-stat-value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+                    .inf-stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+                    .inf-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin: 0 0 12px; }
+                    .inf-commission-row { display: flex; gap: 12px; margin-bottom: 24px; }
+                    .inf-comm-box { flex: 1; background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px 16px; }
+                    .inf-comm-box label { font-size: 11px; text-transform: uppercase; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px; }
+                    .inf-comm-box input { width: 100%; border: 1px solid var(--border-color); border-radius: 6px; padding: 7px 10px; font-size: 15px; font-weight: 600; color: var(--text-main); box-sizing: border-box; background: #fff; outline: none; }
+                    .inf-comm-box input:focus { border-color: var(--primary-color); }
+                    .inf-payout-box { background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; }
+                    .inf-payout-row { display: flex; justify-content: space-between; align-items: center; }
+                    .inf-payout-label { font-size: 12px; color: var(--text-muted); }
+                    .inf-payout-value { font-size: 13px; font-weight: 600; font-family: monospace; }
+                    .inf-actions { display: flex; gap: 10px; }
+                </style>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h2 style="margin: 0;">Influencers</h2>
+                    <button class="btn btn-primary" onclick="openModal('addInfluencerModal')">+ Add Influencer</button>
+                </div>
+
+                <div class="inf-layout">
+                    <!-- LEFT: Creator List -->
+                    <div class="inf-list-panel">
+                        <div class="inf-list-header">
+                            <div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">2 CREATORS</div>
+                            <div class="inf-search-wrap">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input type="text" placeholder="Search creators...">
+                            </div>
+                        </div>
+                        <div class="inf-list-scroll">
+                            <div class="inf-row active" onclick="showInfluencer('johndoe', this)">
+                                <div class="inf-avatar" style="background:#E3F2FD; color:#1976D2;">JD</div>
+                                <div class="inf-row-info">
+                                    <div class="inf-row-name">John Doe</div>
+                                    <div class="inf-row-sub">JOHN50 · YouTube, Instagram</div>
+                                </div>
+                                <div class="inf-row-rev">$1,420</div>
+                            </div>
+                            <div class="inf-row" onclick="showInfluencer('techbro', this)">
+                                <div class="inf-avatar" style="background:#FCE4EC; color:#C2185B;">TB</div>
+                                <div class="inf-row-info">
+                                    <div class="inf-row-name">TechBro</div>
+                                    <div class="inf-row-sub">TECHBRO20 · Twitter</div>
+                                </div>
+                                <div class="inf-row-rev">$850</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Detail Panel -->
+                    <div class="inf-detail-panel" id="infDetailPanel">
+                        <div class="inf-detail-inner">
+                            <!-- PROFILE HEADER -->
+                            <div class="inf-profile-header">
+                                <div class="inf-profile-avatar" style="background:#E3F2FD; color:#1976D2;">JD</div>
+                                <div class="inf-profile-meta">
+                                    <h3>John Doe</h3>
+                                    <p>john@example.com</p>
+                                    <div class="inf-social-links">
+                                        <a href="#" class="inf-social-btn" onclick="event.preventDefault()">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                                            YouTube
+                                        </a>
+                                        <a href="#" class="inf-social-btn" onclick="event.preventDefault()">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                                            Instagram
+                                        </a>
+                                    </div>
+                                </div>
+                                <div style="display:flex; gap:8px;">
+                                    <span class="badge badge-success">Active</span>
+                                    <button class="btn btn-outline" style="padding:6px 12px; font-size:12px;" onclick="openModal('editInfluencerModal')">Edit</button>
+                                </div>
+                            </div>
+
+                            <!-- STATS -->
+                            <p class="inf-section-title">All-Time Performance</p>
+                            <div class="inf-stat-grid">
+                                <div class="inf-stat-card">
+                                    <div class="inf-stat-label">Clicks</div>
+                                    <div class="inf-stat-value" style="color:var(--text-main);">1,240</div>
+                                    <div class="inf-stat-sub">Link visits</div>
+                                </div>
+                                <div class="inf-stat-card">
+                                    <div class="inf-stat-label">Trials</div>
+                                    <div class="inf-stat-value" style="color:var(--primary-color);">142</div>
+                                    <div class="inf-stat-sub">11.5% of clicks</div>
+                                </div>
+                                <div class="inf-stat-card">
+                                    <div class="inf-stat-label">Paid Users</div>
+                                    <div class="inf-stat-value" style="color:#5856D6;">85</div>
+                                    <div class="inf-stat-sub">59.9% trial → paid</div>
+                                </div>
+                                <div class="inf-stat-card">
+                                    <div class="inf-stat-label">Total Revenue</div>
+                                    <div class="inf-stat-value" style="color:var(--success);">$1,420</div>
+                                    <div class="inf-stat-sub">Commission: $426</div>
+                                </div>
+                            </div>
+
+                            <!-- COMMISSION -->
+                            <p class="inf-section-title">Commission Rates</p>
+                            <div class="inf-commission-row">
+                                <div class="inf-comm-box">
+                                    <label>First Month %</label>
+                                    <input type="number" value="30" step="0.5" min="0" max="100">
+                                </div>
+                                <div class="inf-comm-box">
+                                    <label>Recurring %</label>
+                                    <input type="number" value="5.5" step="0.5" min="0" max="100">
+                                </div>
+                                <div style="display:flex; align-items:flex-end; padding-bottom:2px;">
+                                    <button class="btn btn-primary" style="white-space:nowrap;" onclick="alert('Commission rates saved!')">Save Rates</button>
+                                </div>
+                            </div>
+
+                            <!-- PROMO CODE -->
+                            <p class="inf-section-title">Promo Code</p>
+                            <div class="inf-payout-box" style="margin-bottom:24px;">
+                                <div class="inf-payout-row">
+                                    <div>
+                                        <div class="inf-payout-label">Active Code</div>
+                                        <div class="inf-payout-value" style="font-size:15px; letter-spacing:1px; color:var(--primary-color);">JOHN50</div>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <div class="inf-payout-label">Discount Given</div>
+                                        <div class="inf-payout-value">50% off first month</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PAYOUT -->
+                            <p class="inf-section-title">Payout Details</p>
+                            <div class="inf-payout-box">
+                                <div class="inf-payout-row" style="margin-bottom:10px;">
+                                    <div class="inf-payout-label">Method</div>
+                                    <div class="inf-payout-value">Crypto · USDT (Tron)</div>
+                                </div>
+                                <div class="inf-payout-row" style="margin-bottom:10px;">
+                                    <div class="inf-payout-label">Wallet Address</div>
+                                    <div class="inf-payout-value">0x1A2b3C...9Z</div>
+                                </div>
+                                <div class="inf-payout-row">
+                                    <div class="inf-payout-label">Pending Payout</div>
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <div class="inf-payout-value" style="color:var(--success);">$420.50</div>
+                                        <button class="btn btn-outline" style="padding:4px 12px; font-size:12px;" onclick="alert('Marked as paid!')">Mark Paid</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                function showInfluencer(id, el) {
+                    document.querySelectorAll('.inf-row').forEach(r => r.classList.remove('active'));
+                    el.classList.add('active');
+                }
+                </script>
+
+            </div>
+
+
+            <!-- Section: Offer Codes -->
+            <div id="offer-codes" class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2>Offer Codes Management</h2>
+                    <button class="btn btn-primary" onclick="alert('Generate Code Backend Not Connected')">+ Generate Code</button>
+                </div>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Influencer</th>
+                                    <th>Discount</th>
+                                    <th>Uses</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge" style="background: #eee;">JOHN50</span></td>
+                                    <td>John Doe</td>
+                                    <td>50% First Month</td>
+                                    <td>142 / ∞</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td><a href="#" style="font-size: 13px;">Edit</a> | <a href="#" style="font-size: 13px; color: var(--danger);">Deactivate</a></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge" style="background: #eee;">TECHBRO20</span></td>
+                                    <td>TechBro</td>
+                                    <td>20% First Month</td>
+                                    <td>89 / ∞</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td><a href="#" style="font-size: 13px;">Edit</a> | <a href="#" style="font-size: 13px; color: var(--danger);">Deactivate</a></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge" style="background: #eee;">SUMMER30</span></td>
+                                    <td>Jane Smith</td>
+                                    <td>30% First Year</td>
+                                    <td>500 / 500</td>
+                                    <td><span class="badge" style="background: var(--border-color); color: var(--text-muted);">Expired</span></td>
+                                    <td><a href="#" style="font-size: 13px;">Edit</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Transactions -->
+            <div id="transactions" class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2>Transactions History</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="date" class="form-control" style="width: auto;">
+                        <button class="btn btn-outline">Filter</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Transaction ID</th>
+                                    <th>Code Used</th>
+                                    <th>Plan</th>
+                                    <th>Gross Revenue</th>
+                                    <th>Comm. (30%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>May 1, 2026<br><span style="font-size: 12px; color: var(--text-muted);">14:30 PM</span></td>
+                                    <td><span style="font-size: 12px; font-family: monospace;">RC_TXN_88492</span></td>
+                                    <td><span class="badge" style="background: #eee;">JOHN50</span></td>
+                                    <td>Monthly Premium</td>
+                                    <td>$9.99</td>
+                                    <td style="color: var(--success); font-weight: 500;">+$2.99</td>
+                                </tr>
+                                <tr>
+                                    <td>May 1, 2026<br><span style="font-size: 12px; color: var(--text-muted);">11:15 AM</span></td>
+                                    <td><span style="font-size: 12px; font-family: monospace;">RC_TXN_88491</span></td>
+                                    <td><span class="badge" style="background: #eee;">TECHBRO20</span></td>
+                                    <td>Yearly Premium</td>
+                                    <td>$59.99</td>
+                                    <td style="color: var(--success); font-weight: 500;">+$17.99</td>
+                                </tr>
+                                <tr>
+                                    <td>Apr 30, 2026<br><span style="font-size: 12px; color: var(--text-muted);">09:45 AM</span></td>
+                                    <td><span style="font-size: 12px; font-family: monospace;">RC_TXN_88490</span></td>
+                                    <td><span class="badge" style="background: #eee;">JOHN50</span></td>
+                                    <td>Monthly Premium</td>
+                                    <td>$9.99</td>
+                                    <td style="color: var(--success); font-weight: 500;">+$2.99</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Payouts -->
+            <div id="payouts" class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2>Payouts Ledger</h2>
+                    <button class="btn btn-outline" onclick="alert('Export to CSV Backend Not Connected')">Export CSV</button>
+                </div>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Influencer</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                    <th>Ref ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>May 1, 2026</td>
+                                    <td>John Doe</td>
+                                    <td style="font-weight: 500;">$420.50</td>
+                                    <td><span style="font-size: 12px;">USDT (Tron)</span></td>
+                                    <td><span class="badge" style="background: #FFF3CD; color: #856404;">Pending</span></td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>Apr 1, 2026</td>
+                                    <td>TechBro</td>
+                                    <td style="font-weight: 500;">$850.00</td>
+                                    <td><span style="font-size: 12px;">Wise</span></td>
+                                    <td><span class="badge badge-success">Paid</span></td>
+                                    <td><span style="font-size: 12px; font-family: monospace;">TRX_9921</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Apr 1, 2026</td>
+                                    <td>John Doe</td>
+                                    <td style="font-weight: 500;">$310.25</td>
+                                    <td><span style="font-size: 12px;">USDT (Tron)</span></td>
+                                    <td><span class="badge badge-success">Paid</span></td>
+                                    <td><span style="font-size: 12px; font-family: monospace;">TX_0x9a...</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Settings -->
+            <div id="settings" class="admin-section">
+                <h2>Program Settings</h2>
+                <div class="card mt-3" style="max-width: 600px;">
+                    <form onsubmit="event.preventDefault(); alert('Settings Save Backend Not Connected');">
+                        <h3 style="margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Commission Rates</h3>
+                        <div class="grid grid-2" style="gap: 16px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500;">Default First Month (%)</label>
+                                <input type="number" class="form-control" value="30" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500;">Default Recurring (%)</label>
+                                <input type="number" class="form-control" value="5.5" step="0.1" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Payout Configuration</h3>
+                        <div class="form-group" style="margin-bottom: 24px;">
+                            <label class="form-label" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500;">Minimum Payout Threshold ($)</label>
+                            <input type="number" class="form-control" value="50" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+                        </div>
+
+                        <h3 style="margin-top: 24px; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">API Integration</h3>
+                        <div class="form-group" style="margin-bottom: 24px;">
+                            <label class="form-label" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500;">RevenueCat Webhook URL</label>
+                            <input type="text" class="form-control" value="https://api.blockermax.com/webhooks/revenuecat" readonly style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: #f8f9fa;">
+                            <small style="color: var(--text-muted); display: block; margin-top: 4px;">Generated automatically. Paste this in your RevenueCat project settings.</small>
+                        </div>
+
+                        <div style="margin-top: 32px; text-align: right;">
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal for Add Influencer -->
+    <div class="modal-overlay" id="addInfluencerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0;">Add Influencer</h3>
+                <button class="modal-close" onclick="closeModal('addInfluencerModal')">&times;</button>
+            </div>
+            <form onsubmit="addInfluencer(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" placeholder="e.g. Jane Smith" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" placeholder="jane@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Custom Promo Code</label>
+                    <input type="text" class="form-control" placeholder="JANE50" required>
+                </div>
+                <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label" style="font-size: 12px;">First Month Comm. (%)</label>
+                        <input type="number" class="form-control" value="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" style="font-size: 12px;">Recurring Comm. (%)</label>
+                        <input type="number" class="form-control" value="5.5" step="0.1" required>
+                    </div>
+                </div>
+                <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">Payout Method</label>
+                        <select class="form-control" required>
+                            <option value="crypto">Crypto (USDT)</option>
+                            <option value="wise">Wise</option>
+                            <option value="upwork">Upwork</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payout Address / Email</label>
+                        <input type="text" class="form-control" placeholder="Wallet address or email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Connected Social Accounts</label>
+                    <input type="text" class="form-control" placeholder="YouTube, TikTok, or Instagram URLs">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">Save Influencer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Edit Influencer -->
+    <div class="modal-overlay" id="editInfluencerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0;">Edit Influencer</h3>
+                <button class="modal-close" onclick="closeModal('editInfluencerModal')">&times;</button>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('Settings Updated!'); closeModal('editInfluencerModal');">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" value="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Custom Promo Code</label>
+                    <input type="text" class="form-control" value="JOHN50" required>
+                </div>
+                <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label" style="font-size: 12px;">First Month Comm. (%)</label>
+                        <input type="number" class="form-control" value="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" style="font-size: 12px;">Recurring Comm. (%)</label>
+                        <input type="number" class="form-control" value="5.5" step="0.1" required>
+                    </div>
+                </div>
+                <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">Payout Method</label>
+                        <select class="form-control" required>
+                            <option value="crypto" selected>Crypto (USDT)</option>
+                            <option value="wise">Wise</option>
+                            <option value="upwork">Upwork</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payout Address / Email</label>
+                        <input type="text" class="form-control" value="0x123...abc" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Connected Social Accounts</label>
+                    <input type="text" class="form-control" value="youtube.com/@johndoe, tiktok.com/@johndoe">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">Update Influencer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Performance Tracking -->
+    <div class="modal-overlay" id="performanceModal">
+        <div class="modal-content" style="width: 600px;">
+            <div class="modal-header">
+                <h3 style="margin: 0;">Performance: John Doe (JOHN50)</h3>
+                <button class="modal-close" onclick="closeModal('performanceModal')">&times;</button>
+            </div>
+            <div class="grid grid-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+                <div class="card" style="padding: 16px; background: #f8f9fa; border: 1px solid var(--border-color); box-shadow: none;">
+                    <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Clicks</div>
+                    <div style="font-size: 24px; font-weight: bold; margin-top: 4px;">1,240</div>
+                </div>
+                <div class="card" style="padding: 16px; background: #f8f9fa; border: 1px solid var(--border-color); box-shadow: none;">
+                    <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Trials / Paid</div>
+                    <div style="font-size: 24px; font-weight: bold; margin-top: 4px;">142 <span style="font-size: 14px; color: var(--text-muted);">/ 85</span></div>
+                </div>
+                <div class="card" style="padding: 16px; background: #f8f9fa; border: 1px solid var(--border-color); box-shadow: none;">
+                    <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Total Rev</div>
+                    <div style="font-size: 24px; font-weight: bold; margin-top: 4px; color: var(--success);">$1,420.50</div>
+                </div>
+            </div>
+            <h4 style="margin-bottom: 12px;">Recent Conversions</h4>
+            <div class="table-responsive">
+                <table style="font-size: 13px;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Plan</th>
+                            <th>Status</th>
+                            <th>Comm. Earned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>May 1, 14:30</td>
+                            <td>Monthly Premium</td>
+                            <td><span class="badge badge-success">Paid</span></td>
+                            <td style="color: var(--success); font-weight: 500;">+$2.99</td>
+                        </tr>
+                        <tr>
+                            <td>Apr 30, 09:45</td>
+                            <td>Yearly Premium</td>
+                            <td><span class="badge" style="background: #FFF3CD; color: #856404;">Trial</span></td>
+                            <td style="color: var(--text-muted);">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Apr 28, 11:20</td>
+                            <td>Monthly Premium (Renewal)</td>
+                            <td><span class="badge badge-success">Paid</span></td>
+                            <td style="color: var(--success); font-weight: 500;">+$0.54</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 24px;">
+                <button class="btn btn-outline" onclick="closeModal('performanceModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar Navigation Logic
+        function switchSection(sectionId, element) {
+            // Remove active classes
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
+            
+            // Add active class to clicked sidebar item and target section
+            element.classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Modal Logic
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        function addInfluencer(e) {
+            e.preventDefault();
+            alert('New Influencer saved successfully!');
+            closeModal('addInfluencerModal');
+            e.target.reset(); // Reset form
+        }
+
+        // Action Logic (Mark Paid)
+        function markPaid(btn) {
+            btn.innerText = "Paid ✓";
+            btn.style.color = "var(--success)";
+            btn.style.cursor = "default";
+            btn.onclick = null; // Disable further clicks
+        }
+    </script>
+</body>
+</html>
