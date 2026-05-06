@@ -57,6 +57,34 @@
         .calc-stat-val { font-size: 30px; font-weight: 700; line-height: 1; }
         .calc-stat-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
 
+        .btn-outline { background: #fff; border: 1px solid var(--border-color); color: var(--text-main); cursor: pointer; transition: all 0.2s; }
+        .btn-outline:hover { background: #f9f9f9; border-color: #ccc; }
+        .hero-badges a:hover { transform: translateY(-2px); }
+
+        /* Mockup Carousel */
+        .mockup-carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; position: relative; padding: 20px 0; }
+        .mockup-carousel::-webkit-scrollbar { display: none; }
+        .mockup-item { flex: 0 0 auto; width: 220px; scroll-snap-align: center; position: relative; transition: all 0.5s ease; }
+        .mockup-item img { width: 100%; border-radius: 0; box-shadow: none; border: none; }
+        
+        @media (min-width: 769px) {
+            .mockup-carousel { display: block; position: relative; width: 320px; height: auto; overflow: visible; padding: 0; margin: 0 auto; }
+            .mockup-item { position: absolute; top: 0; left: 0; width: 100%; margin: 0; }
+            
+            .mockup-item:nth-child(1) { position: relative; z-index: 6; transform: scale(1) translateX(0) translateY(0); opacity: 1; filter: blur(0); }
+            .mockup-item:nth-child(2) { z-index: 5; transform: scale(0.9) translateX(30px) translateY(15px); opacity: 0.6; filter: blur(2px); }
+            .mockup-item:nth-child(3) { z-index: 4; transform: scale(0.8) translateX(60px) translateY(30px); opacity: 0.3; filter: blur(4px); }
+            .mockup-item:nth-child(4) { z-index: 3; transform: scale(0.7) translateX(90px) translateY(45px); opacity: 0.1; filter: blur(6px); }
+            .mockup-item:nth-child(5) { z-index: 2; transform: scale(0.6) translateX(120px) translateY(60px); opacity: 0; filter: blur(8px); }
+            .mockup-item:nth-child(n+6) { z-index: 1; transform: scale(0.5) translateX(150px) translateY(75px); opacity: 0; filter: blur(10px); }
+        }
+
+        .desktop-only { display: flex !important; }
+        .mobile-only { display: none !important; }
+        @media (max-width: 1024px) {
+            .desktop-only { display: none !important; }
+            .mobile-only { display: flex !important; }
+        }
         @media (max-width: 768px) {
             .hero { flex-direction: column; text-align: center; gap: 32px; padding: 48px 0; }
             .hero-content { display: flex; flex-direction: column; align-items: center; }
@@ -67,6 +95,22 @@
             .feature-grid { grid-template-columns: 1fr; }
             .why-row, .steps, .comm-grid { grid-template-columns: 1fr 1fr; }
             .step::after { display: none; }
+            .hero { flex-direction: column; text-align: center; padding-top: 40px; }
+            .hero-image { margin-top: 40px; }
+            .hero-cta { justify-content: center; }
+            .hero-badges { justify-content: center; }
+            .section-title { font-size: 28px; }
+            .card { padding: 24px !important; }
+            .navbar { width: 100% !important; border-radius: 100px !important; margin: 0 auto 32px auto !important; }
+            .mockup-carousel { gap: 16px; padding: 20px 24px; }
+            
+            /* Fix for calculator overlap */
+            .calc-legend { flex-direction: column; align-items: flex-start !important; gap: 8px !important; }
+            
+            /* Fix for footer edges */
+            .footer { padding: 40px 24px !important; }
+            .footer .container { flex-direction: column; text-align: center; gap: 16px; }
+            .footer-links { justify-content: center; }
         }
         @media (max-width: 480px) {
             .why-row, .comm-grid { grid-template-columns: 1fr; }
@@ -75,31 +119,53 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-brand">
-                <img src="logo.png" alt="BlockerMax" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">
-                BlockerMax Partners
-            </div>
-            <div class="navbar-nav">
-                <a href="https://blockermax.com" class="nav-link" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-weight: 600; color: var(--text-main);">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    Main Site
-                </a>
-                <a href="#features" class="nav-link">Product</a>
-                <a href="#commission" class="nav-link">Commission</a>
-                <a href="#calculator" class="nav-link">Calculator</a>
-                <a href="login.html" class="nav-link">Login</a>
-                <a href="#apply" class="btn btn-primary" style="padding: 8px 18px; border-radius: 50px;">Apply Now</a>
-            </div>
+    <header style="position: sticky; top: 16px; z-index: 1000; width: 100%; margin-bottom: 48px;">
+        <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <a href="https://blockermax.com" class="btn btn-outline desktop-only" style="border-radius: 50px; padding: 8px 16px; font-size: 13px; font-weight: 600; align-items: center; gap: 6px; box-shadow: var(--shadow-sm); height: 44px; box-sizing: border-box; white-space: nowrap;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Main Site
+            </a>
+
+            <nav class="navbar" style="margin: 0;">
+                <div class="container" style="padding: 0;">
+                    <div class="navbar-brand">
+                        <img src="logo.png" alt="BlockerMax" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">
+                        BlockerMax Partners
+                    </div>
+                    <button class="menu-toggle" aria-label="Toggle Menu" onclick="document.querySelector('.navbar-nav').classList.toggle('active-menu'); this.classList.toggle('open');">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="navbar-nav">
+                        <a href="https://blockermax.com" class="nav-link mobile-only" style="align-items: center; gap: 8px; font-weight: 600; color: var(--text-main); margin-bottom: 8px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                            Main Site
+                        </a>
+                        <a href="#features" class="nav-link">Product</a>
+                        <a href="#commission" class="nav-link">Commission</a>
+                        <a href="#calculator" class="nav-link">Calculator</a>
+                        <a href="login.html" class="nav-link">Login</a>
+                        <a href="#apply" class="btn btn-primary" style="padding: 8px 18px; border-radius: 50px;">Apply Now</a>
+                    </div>
+                </div>
+            </nav>
         </div>
-    </nav>
+    </header>
 
     <div class="container">
 
         <!-- Hero -->
         <div class="hero">
             <div class="hero-content">
+                <div class="hero-badges" style="display: flex; gap: 12px; margin-bottom: 24px;">
+                    <a href="https://apps.apple.com/us/app/porn-blocker-blocker-max/id6756876676" target="_blank" style="display: block; transition: transform 0.2s ease;">
+                        <img src="../Appstore.svg" alt="App Store" style="height: 34px; width: auto; background: #fff; border-radius: 6px; padding: 1px; display: block;">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.nane.blocker" target="_blank" style="display: block; transition: transform 0.2s ease;">
+                        <img src="../Playstore.svg" alt="Google Play" style="height: 34px; width: auto; background: #fff; border-radius: 6px; padding: 1px; display: block;">
+                    </a>
+                </div>
                 <div class="section-label">Affiliate Program</div>
                 <h1>Join BlockerMax<br><span>Affiliate Program</span></h1>
                 <p>Using your audience and platform, invite people to quit porn and get a 30% revenue cut. As long as users pay, you get paid every month.</p>
@@ -108,8 +174,19 @@
                     <a href="login.html" class="btn btn-outline" style="padding: 13px 28px; font-size: 15px;">Partner Login</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="Blockermax.png" alt="BlockerMax App Mockup">
+            <div class="hero-image" style="width: 100%; overflow: visible; display: flex; justify-content: center; position: relative; align-items: center;">
+                <div class="mockup-carousel" id="mockupCarousel">
+                    <div class="mockup-item"><img src="Blockermax.png" alt="BlockerMax"></div>
+                    <div class="mockup-item"><img src="../Mockups/Smartblocking%201.png" alt="Smartblocking"></div>
+                    <div class="mockup-item"><img src="../Mockups/Strict%203.png" alt="Strict Mode"></div>
+                    <div class="mockup-item"><img src="../Mockups/Panicmodeactive%201.png" alt="Panic Mode"></div>
+                    <div class="mockup-item"><img src="../Mockups/Progress%201.png" alt="Progress"></div>
+                    <div class="mockup-item"><img src="../Mockups/Journey3%201.png" alt="Journey"></div>
+                    <div class="mockup-item"><img src="../Mockups/RisingFina%201.png" alt="Rising"></div>
+                </div>
+                <button onclick="nextMockup()" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); z-index: 20; background: #fff; border: 1px solid var(--border-color); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: var(--text-main); transition: all 0.2s;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
             </div>
         </div>
 
@@ -191,23 +268,26 @@
             </div>
 
             <!-- Big rate cards -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <style>
+                @media (max-width: 768px) {
+                    .big-percent { font-size: 48px !important; }
+                }
+            </style>
+            <div class="grid grid-2" style="gap: 16px; margin-bottom: 16px;">
                 <div style="background: #007AFF; border-radius: 16px; padding: 36px 32px; color: #fff; position: relative; overflow: hidden;">
-
                     <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 12px;">First Payment</div>
-                    <div style="font-size: 72px; font-weight: 800; line-height: 1; letter-spacing: -3px; margin-bottom: 12px;">30%</div>
+                    <div class="big-percent" style="font-size: 72px; font-weight: 800; line-height: 1; letter-spacing: -3px; margin-bottom: 12px;">30%</div>
                     <div style="font-size: 14px; opacity: 0.8; line-height: 1.4;">Earned when a referred user makes their first subscription payment.</div>
                 </div>
                 <div style="background: #F2FFF6; border-radius: 16px; padding: 36px 32px; color: var(--text-main); position: relative; overflow: hidden; border: 1.5px solid rgba(52,199,89,0.2);">
-
                     <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--success); margin-bottom: 12px;">Monthly Renewals</div>
-                    <div style="font-size: 72px; font-weight: 800; line-height: 1; letter-spacing: -3px; margin-bottom: 12px; color: #34C759;">5.5%</div>
+                    <div class="big-percent" style="font-size: 72px; font-weight: 800; line-height: 1; letter-spacing: -3px; margin-bottom: 12px; color: #34C759;">10%</div>
                     <div style="font-size: 14px; color: var(--text-muted); line-height: 1.4;">Earned every month a referred user keeps their subscription active.</div>
                 </div>
             </div>
 
             <!-- Meta row -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; background: transparent; border: none; border-radius: var(--radius-md); overflow: hidden;">
+            <div class="grid grid-3" style="gap: 12px; background: transparent; border: none; border-radius: var(--radius-md); overflow: hidden;">
                 <div style="background: #FFFFFF; padding: 20px; display: flex; align-items: center; gap: 16px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
                     <div style="font-size: 24px;">💳</div>
                     <div>
@@ -242,14 +322,15 @@
                 </div>
                 <!-- Plan toggle -->
                 <div id="planToggle" style="display: flex; background: var(--bg-color); border-radius: 10px; padding: 4px; gap: 4px; align-self: flex-start; border: 1px solid var(--border-color);">
-                    <button id="planMonthly" onclick="setPlan('monthly', this)" style="padding: 8px 16px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; background: var(--primary-color); color: #fff; transition: all 0.2s;">Monthly</button>
-                    <button id="planYearly" onclick="setPlan('yearly', this)" style="padding: 8px 16px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: var(--text-muted); transition: all 0.2s;">Yearly</button>
+                    <button id="planMonthly" onclick="setPlan('monthly', this)" style="padding: 8px 16px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; background: var(--primary-color); color: #fff; transition: all 0.2s;">Monthly ($10.90)</button>
+                    <button id="planQuarterly" onclick="setPlan('quarterly', this)" style="padding: 8px 16px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: var(--text-muted); transition: all 0.2s;">Quarterly ($15.90)</button>
+                    <button id="planYearly" onclick="setPlan('yearly', this)" style="padding: 8px 16px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: var(--text-muted); transition: all 0.2s;">Yearly ($39.90)</button>
                 </div>
             </div>
 
             <!-- Slider & Input -->
             <div style="margin-bottom: 36px;">
-                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
                     <span style="font-size: 14px; color: var(--text-muted); font-weight: 500;">Users referred per year</span>
                     <span style="display: flex; align-items: baseline; gap: 4px;">
                         <input type="number" id="calcUserInput" value="250" min="1" max="7500" oninput="updateCalcFromInput()" 
@@ -287,7 +368,7 @@
             </div>
 
             <!-- Results row -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px;">
+            <div class="grid grid-3" style="gap: 16px; margin-bottom: 28px;">
                 <div style="background: rgba(0, 122, 255, 0.04); border: 1px solid rgba(0, 122, 255, 0.15); border-radius: 16px; padding: 24px;">
                     <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-main); opacity: 0.7; font-weight: 700; margin-bottom: 8px;">First-Payment</div>
                     <div id="calcFirst" style="font-size: 32px; font-weight: 800; color: var(--primary-color); letter-spacing: -1px; line-height: 1; margin-bottom: 4px;">$163.50</div>
@@ -296,7 +377,7 @@
                 <div style="background: rgba(52, 199, 89, 0.04); border: 1px solid rgba(52, 199, 89, 0.15); border-radius: 16px; padding: 24px;">
                     <div id="calcRenewalLabel" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-main); opacity: 0.7; font-weight: 700; margin-bottom: 8px;">Monthly Renewal</div>
                     <div id="calcRenewal" style="font-size: 32px; font-weight: 800; color: var(--success); letter-spacing: -1px; line-height: 1; margin-bottom: 4px;">$30.03</div>
-                    <div id="calcRenewalSubtext" style="font-size: 12px; color: var(--text-main); opacity: 0.6;">5.5% per renewal</div>
+                    <div id="calcRenewalSubtext" style="font-size: 12px; color: var(--text-main); opacity: 0.6;">10% per renewal</div>
                 </div>
                 <div style="background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 16px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
                     <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-main); opacity: 0.7; font-weight: 700; margin-bottom: 8px;">Year-1 Total</div>
@@ -311,12 +392,12 @@
                     <div id="calcBarFirst" style="background:#007AFF; transition:width 0.3s ease; border-radius:4px 0 0 4px;"></div>
                     <div id="calcBarRenewal" style="background:#34C759; transition:width 0.3s ease;"></div>
                 </div>
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div style="display:flex; gap:16px;">
+                <div class="calc-legend" style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 12px;">
+                    <div style="display:flex; gap:16px; flex-wrap: wrap;">
                         <div style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--text-muted);"><div style="width:8px;height:8px;border-radius:2px;background:var(--primary-color);flex-shrink:0;"></div>First-payment</div>
                         <div style="display:flex; align-items:center; gap:5px; font-size:12px; color:var(--text-muted);"><div style="width:8px;height:8px;border-radius:2px;background:var(--success);flex-shrink:0;"></div>Renewals</div>
                     </div>
-                    <div id="calcBarLabel" style="font-size:12px; color:var(--text-muted);"></div>
+                    <div id="calcBarLabel" style="font-size:12px; color:var(--text-muted); font-weight: 500;"></div>
                 </div>
             </div>
         </div>
@@ -439,14 +520,13 @@
 
     </div>
 
-    <footer class="footer container">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-            <p style="margin: 0; font-size: 13px;">© 2026 BlockerMax. All rights reserved.</p>
-            <div style="display: flex; gap: 20px;">
+    <footer class="footer">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <p class="footer-copy" style="margin: 0; font-size: 13px;">© 2026 BlockerMax. All rights reserved.</p>
+            <div class="footer-links" style="display: flex; gap: 20px; flex-wrap: wrap;">
                 <a href="#" style="font-size: 13px; color: var(--text-muted);">Affiliate Terms</a>
-                <a href="#" style="font-size: 13px; color: var(--text-muted);">Privacy Policy</a>
-                <a href="#" style="font-size: 13px; color: var(--text-muted);">Brand Guidelines</a>
-                <a href="mailto:partners@blockermax.com" style="font-size: 13px; color: var(--text-muted);">Contact</a>
+                <a href="https://blockermax.com/privacy-policy.html" style="font-size: 13px; color: var(--text-muted);">Privacy Policy</a>
+                <a href="https://blockermax.com/support.html" style="font-size: 13px; color: var(--text-muted);">Contact</a>
             </div>
         </div>
     </footer>
@@ -468,7 +548,10 @@
             btn.style.background = 'var(--primary-color)';
             btn.style.color = '#fff';
 
-            calcPlan.price = plan === 'yearly' ? 39.90 : 10.90;
+            if (plan === 'yearly') { calcPlan.price = 39.90; }
+            else if (plan === 'quarterly') { calcPlan.price = 15.90; }
+            else { calcPlan.price = 10.90; }
+            
             updateCalcFromSlider(); // Keep current user count, just update math
         }
 
@@ -497,19 +580,25 @@
         function calculateValues(u) {
             var p = calcPlan.price;
             var first = u * p * 0.30;
-            var renewalValue = u * p * 0.055;
+            var renewalValue = u * p * 0.10;
             
             var yearRenewalsTotal, total, renewalLabel, renewalSub, totalSub;
 
             if (currentPlan === 'monthly') {
                 renewalLabel = "Monthly Renewal";
-                renewalSub = "5.5% per month";
+                renewalSub = "10% per month";
                 yearRenewalsTotal = renewalValue * 11; // 1 first month + 11 renewals
                 total = first + yearRenewalsTotal;
                 totalSub = "First + 11mo renewals";
+            } else if (currentPlan === 'quarterly') {
+                renewalLabel = "Quarterly Renewal";
+                renewalSub = "10% per quarter";
+                yearRenewalsTotal = renewalValue * 3; // 1 first quarter + 3 renewals in a year
+                total = first + yearRenewalsTotal;
+                totalSub = "First + 3qtr renewals";
             } else {
                 renewalLabel = "Yearly Renewal";
-                renewalSub = "5.5% per year";
+                renewalSub = "10% per year";
                 yearRenewalsTotal = 0; // Yearly plan only renews after 12 months
                 total = first; // In the first year, only the initial payment occurs
                 totalSub = "First year earnings";
@@ -524,14 +613,30 @@
             document.getElementById('calcTotalSubtext').textContent = totalSub;
 
             // Bar update
-            var fp_percent = total > 0 ? Math.round((first / (first + (renewalValue * (currentPlan === 'monthly' ? 11 : 1)))) * 100) : 100;
+            var renewalsInYear = currentPlan === 'monthly' ? 11 : (currentPlan === 'quarterly' ? 3 : 1);
+            var fp_percent = total > 0 ? Math.round((first / (first + (renewalValue * renewalsInYear))) * 100) : 100;
             document.getElementById('calcBarFirst').style.width = fp_percent + '%';
             document.getElementById('calcBarRenewal').style.width = (100 - fp_percent) + '%';
             
-            var barLabelText = currentPlan === 'monthly' 
-                ? fmt(first) + ' first + ' + fmt(yearRenewalsTotal) + ' renewals'
-                : fmt(first) + ' first year';
+            var barLabelText = currentPlan === 'yearly' 
+                ? fmt(first) + ' first year'
+                : fmt(first) + ' first + ' + fmt(yearRenewalsTotal) + ' renewals';
             document.getElementById('calcBarLabel').textContent = barLabelText;
+        }
+
+        function nextMockup() {
+            const carousel = document.getElementById('mockupCarousel');
+            if (window.innerWidth > 768) {
+                const first = carousel.firstElementChild;
+                carousel.appendChild(first);
+            } else {
+                const itemWidth = carousel.firstElementChild.offsetWidth + 16;
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    carousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
+                }
+            }
         }
 
         updateCalcFromInput();
