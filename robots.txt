@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /partners/admin.html
 
 Sitemap: https://blockermax.com/sitemap.xml

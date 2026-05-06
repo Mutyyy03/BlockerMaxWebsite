@@ -29,7 +29,7 @@
 
         <!-- Overview Tab -->
         <div id="overview" class="tab-content active">
-            <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                 <div>
                     <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Next Payout Date</p>
                     <h3 style="margin: 0;">May 1, 2026</h3>
@@ -40,11 +40,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px;">
-                <div class="card" style="padding: 16px; margin-bottom: 0;">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Clicks</div>
-                    <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">1,245</div>
-                </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
                 <div class="card" style="padding: 16px; margin-bottom: 0;">
                     <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Trials</div>
                     <div style="font-size: 20px; font-weight: 700; color: var(--text-main);">342</div>
@@ -62,10 +58,6 @@
                     <div style="font-size: 20px; font-weight: 700; color: var(--primary-color);">$1,150</div>
                 </div>
             </div>
-
-                <div class="card" style="padding: 16px; margin-bottom: 0;">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Clicks</div>
-
 
             <div class="card mt-3">
                 <div class="card-header">
@@ -131,12 +123,16 @@
                 <div class="card">
                     <h3>Brand Assets</h3>
                     <p>Download official media to use in your content.</p>
-                    <ul style="list-style: none; padding: 0; margin-top: 16px;">
-                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">📱 App Screenshots (ZIP)</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">✨ App Icon High-Res</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">🎥 Demo Video</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">🎨 Feature Visuals</a></li>
-                        <li><a href="#" class="btn btn-outline btn-block" style="justify-content: flex-start;">🏆 Logo Pack</a></li>
+                    
+                    <a href="../Creator%20Kit.zip" download class="btn btn-primary btn-block" style="margin-top: 16px; margin-bottom: 24px; padding: 12px; font-weight: 600; justify-content: center;">📦 Download Full Kit (ZIP)</a>
+                    
+                    <h4 style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 12px;">Individual Assets</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/App%20Screenshots.zip" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">📱 App Screenshots (ZIP)</a></li>
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Highres_Logo.png" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">✨ High-Res Logo</a></li>
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Video.mp4" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎥 Demo Video</a></li>
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Journey%20Cards.zip" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎨 Feature Visuals (ZIP)</a></li>
+                        <li><a href="../bgmusic.aac" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎵 Background Audio</a></li>
                     </ul>
                 </div>
             </div>
@@ -146,18 +142,113 @@
                 <div class="card-header">
                     <h3 class="card-title">Talking Points & Script Outline</h3>
                 </div>
-                <div style="background-color: #FAFAFA; padding: 24px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                    <h4 style="margin-bottom: 8px;">Problem</h4>
-                    <p>Many people struggle with distractions and adult content, leading to lower productivity and brain fog.</p>
+                <style>
+                    /* Accordion Styles */
+                    .accordion { display: flex; flex-direction: column; gap: 12px; }
+                    .accordion-item { background: transparent; border: 1px solid rgba(0,0,0,0.05); border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+                    .accordion-header { padding: 16px 20px; font-weight: 600; font-size: 15px; color: var(--text-main); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.7); transition: background 0.2s; }
+                    .accordion-header::-webkit-details-marker { display: none; }
+                    .accordion-header::after { content: '+'; font-size: 20px; color: var(--text-muted); line-height: 1; }
+                    .accordion-item:hover .accordion-header { background: rgba(255,255,255,0.9); }
+                    details[open] .accordion-header::after { content: '−'; }
+                    details[open] .accordion-header { border-bottom: 1px solid rgba(0,0,0,0.05); background: #FFFFFF; }
+                    .accordion-content { padding: 24px; background: rgba(255,255,255,0.3); display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+                    .tp-box { background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; }
+                    .tp-box h4 { margin-bottom: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+                    .tp-box p { font-size: 13px; margin-bottom: 0; line-height: 1.5; color: var(--text-main); flex-grow: 1; }
+                </style>
+                <div class="accordion">
+                    <!-- Point 1 -->
+                    <details class="accordion-item" open>
+                        <summary class="accordion-header">Talking Point 1 — Recovery Focus</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>A lot of people don’t just need motivation — they need a system that protects them when willpower drops.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax helps users reduce adult content triggers, stay protected, and build a healthier recovery routine over time.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Strict Mode</strong> keeps blocking active when users are most vulnerable, making it harder to bypass protection impulsively.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Download BlockerMax today and use my code <strong style="color: var(--primary-color);">JOHN50</strong> inside the app for a special discount.”</p>
+                            </div>
+                        </div>
+                    </details>
                     
-                    <h4 style="margin-bottom: 8px;">Solution</h4>
-                    <p>BlockerMax helps you stay focused by blocking harmful websites and apps effectively across your devices.</p>
-                    
-                    <h4 style="margin-bottom: 8px;">Key Feature to Mention</h4>
-                    <p><strong>Strict Mode</strong> prevents you from disabling the block during active focus sessions. It keeps you accountable!</p>
-                    
-                    <h4 style="margin-bottom: 8px;">Call to Action (CTA)</h4>
-                    <p style="margin-bottom: 0;">"Download BlockerMax today and use my code <strong>JOHN50</strong> inside the app for a special discount."</p>
+                    <!-- Point 2 -->
+                    <details class="accordion-item">
+                        <summary class="accordion-header">Talking Point 2 — Urge Control</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>Urges can hit suddenly, and one weak moment can break days or weeks of progress.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax gives users practical tools to pause, block triggers, and stay on track during difficult moments.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Panic Mode SOS</strong> gives quick support when urges hit, helping users slow down before making a decision.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Start your recovery journey with BlockerMax and use my code <strong style="color: var(--primary-color);">JOHN50</strong> for a special discount.”</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Point 3 -->
+                    <details class="accordion-item">
+                        <summary class="accordion-header">Talking Point 3 — Accountability</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>Most people fail because blocking tools are too easy to disable when they actually need them.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax is designed to make protection stronger, helping users stay accountable even when motivation is low.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Uninstall Protection</strong> helps prevent impulsive app removal, so users don’t lose protection in weak moments.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Try BlockerMax today and use my code <strong style="color: var(--primary-color);">JOHN50</strong> inside the app to unlock your special offer.”</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Point 4 -->
+                    <details class="accordion-item">
+                        <summary class="accordion-header">Talking Point 4 — Progress & Habit Change</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>Quitting adult content is harder when you can’t see your progress or understand your patterns.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax helps users track clean days, mood, energy, and progress so they can stay motivated long-term.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Streak & Mood Tracking</strong> makes recovery visible and helps users understand how their habits affect their life.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Download BlockerMax and use my code <strong style="color: var(--primary-color);">JOHN50</strong> to start building better habits today.”</p>
+                            </div>
+                        </div>
+                    </details>
                 </div>
             </div>
         </div>
