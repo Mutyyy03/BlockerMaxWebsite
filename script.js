@@ -149,8 +149,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const iconMuted = soundToggle ? soundToggle.querySelector('.icon-muted') : null;
     const iconSound = soundToggle ? soundToggle.querySelector('.icon-sound') : null;
     const popupOverlay = document.getElementById('music-popup-overlay');
+    const popupBackdrop = document.getElementById('music-popup-backdrop');
     const btnYes = document.getElementById('music-yes');
     const btnNo = document.getElementById('music-no');
+
+    // Immediately hide if already consented
+    if (popupOverlay && localStorage.getItem('blockermax_cookie_consent')) {
+        popupOverlay.style.display = 'none';
+        if (popupBackdrop) popupBackdrop.style.display = 'none';
+    }
 
     if (audio && soundToggle && popupOverlay) {
         // Helper to update UI
@@ -166,10 +173,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const closePopup = () => {
             popupOverlay.classList.add('hidden');
+            if (popupBackdrop) popupBackdrop.classList.remove('visible');
             // Remove from DOM after transition to avoid blocking clicks if opacity fails
             setTimeout(() => {
                 popupOverlay.style.display = 'none';
-            }, 500);
+                if (popupBackdrop) popupBackdrop.style.display = 'none';
+            }, 800);
         };
 
         // YES - Accept Cookies (Play Music)
