@@ -153,11 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnYes = document.getElementById('music-yes');
     const btnNo = document.getElementById('music-no');
 
-    // Immediately hide if already consented
-    if (popupOverlay && localStorage.getItem('blockermax_cookie_consent')) {
-        popupOverlay.style.display = 'none';
-        if (popupBackdrop) popupBackdrop.style.display = 'none';
-    }
+
 
     if (audio && soundToggle && popupOverlay) {
         // Helper to update UI
