@@ -380,65 +380,7 @@
 
     </div>
 
-    <script>
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn-segmented').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        function copyCode() {
-            var copyText = document.getElementById("promoCodeInput");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
-            navigator.clipboard.writeText(copyText.value);
-            
-            var btn = event.target;
-            var originalText = btn.innerText;
-            btn.innerText = "Copied!";
-            setTimeout(() => {
-                btn.innerText = originalText;
-            }, 2000);
-        }
-
-        let sandboxMode = false;
-        const origData = {
-            payout: "May 1, 2026",
-            balance: "$420.50",
-            trials: "342",
-            paid: "85",
-            subs: "310",
-            earnings: "$1,150"
-        };
-
-        function toggleSandbox() {
-            sandboxMode = document.getElementById('sandboxToggleCheckbox').checked;
-            
-            if (sandboxMode) {
-                document.getElementById('metric-payout-date').innerText = "N/A";
-                document.getElementById('metric-balance').innerText = "$0.00";
-                document.getElementById('metric-trials').innerText = "0";
-                document.getElementById('metric-paid').innerText = "0";
-                document.getElementById('metric-subs').innerText = "0";
-                document.getElementById('metric-earnings').innerText = "$0.00";
-                
-                document.getElementById('tx-tbody-real').style.display = "none";
-                document.getElementById('tx-tbody-empty').style.display = "table-row-group";
-            } else {
-                document.getElementById('metric-payout-date').innerText = origData.payout;
-                document.getElementById('metric-balance').innerText = origData.balance;
-                document.getElementById('metric-trials').innerText = origData.trials;
-                document.getElementById('metric-paid').innerText = origData.paid;
-                document.getElementById('metric-subs').innerText = origData.subs;
-                document.getElementById('metric-earnings').innerText = origData.earnings;
-                
-                document.getElementById('tx-tbody-real').style.display = "table-row-group";
-                document.getElementById('tx-tbody-empty').style.display = "none";
-            }
-        }
-    </script>
+    <!-- Custom scripts handled by dashboard.js -->
     <footer style="background-color: #fff; padding: 40px 20px; border-top: 1px solid var(--border-color); margin-top: 60px;">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
             <p style="margin: 0; font-size: 13px; color: var(--text-muted);">© 2026 BlockerMax. All rights reserved.</p>

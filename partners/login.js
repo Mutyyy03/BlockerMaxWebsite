@@ -1,6 +1,7 @@
 const API_BASE_URL = 'https://blockermax-affiliate.plide.workers.dev';
 
 document.addEventListener('DOMContentLoaded', () => {
+    localStorage.clear(); // Ensure any previous session is cleared
     const loginForm = document.querySelector('form');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');

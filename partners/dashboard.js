@@ -167,3 +167,33 @@ function updateTransactionsTable(transactions) {
         realBody.appendChild(tr);
     });
 }
+
+// UI Helper: Switch Tabs
+window.switchTab = function(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-btn-segmented').forEach(btn => btn.classList.remove('active'));
+    
+    document.getElementById(tabId).classList.add('active');
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    }
+};
+
+// UI Helper: Copy Promo Code
+window.copyCode = function() {
+    var copyText = document.getElementById("promoCodeInput");
+    if (!copyText) return;
+    
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(copyText.value);
+    
+    if (event && event.target) {
+        var btn = event.target;
+        var originalText = btn.innerText;
+        btn.innerText = "Copied!";
+        setTimeout(() => {
+            btn.innerText = originalText;
+        }, 2000);
+    }
+};
