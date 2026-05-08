@@ -420,7 +420,10 @@
             <div id="payouts" class="admin-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <h2>Payouts Ledger</h2>
-                    <button class="btn btn-outline" onclick="alert('Export to CSV Backend Not Connected')">Export CSV</button>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-outline" onclick="alert('Export to CSV Backend Not Connected')">Export CSV</button>
+                        <button class="btn btn-primary" onclick="openCreatePayoutModal()">+ Record Payout</button>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="table-responsive">
@@ -503,6 +506,37 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Modal for Create Payout -->
+    <div class="modal-overlay" id="createPayoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0;">Record Payout</h3>
+                <button class="modal-close" onclick="closeModal('createPayoutModal')">&times;</button>
+            </div>
+            <form onsubmit="submitCreatePayout(event)">
+                <div class="form-group">
+                    <label class="form-label">Influencer</label>
+                    <select class="form-control" id="payoutInfluencerSelect" required>
+                        <!-- Options filled dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Amount ($)</label>
+                    <input type="number" class="form-control" id="payoutAmountInput" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Method</label>
+                    <select class="form-control" id="payoutMethodSelect" required>
+                        <option value="crypto">Crypto (USDT)</option>
+                        <option value="wise">Wise</option>
+                        <option value="bank">Bank Transfer</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">Create Payout</button>
+            </form>
         </div>
     </div>
 

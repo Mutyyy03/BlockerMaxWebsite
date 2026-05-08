@@ -344,39 +344,39 @@ async function loadTransactions() {
 // ----------------------------------------------------
 // 3. PAYOUTS (Ödemeler)
 // ----------------------------------------------------
-async function loadPayouts() {
+window.loadPayouts = async function() {
     try {
         const payouts = await adminFetch('/api/admin/payouts');
         const tbody = document.querySelector('#payouts tbody');
         if (!tbody) return;
 
         tbody.innerHTML = '';
-        
+
         if (payouts.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Henüz kayıtlı ödeme yok</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 20px;">Ödeme kaydı bulunamadı</td></tr>';
             return;
         }
 
         payouts.forEach(p => {
             const tr = document.createElement('tr');
-            const dateStr = new Date(p.created_at || new Date()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+            const isPaid = p.status === 'paid';
+            const badgeClass = isPaid ? 'badge-success' : 'badge-warning';
             
-            let statusBadge = p.status === 'paid' 
-                ? '<span class="badge badge-success">Paid</span>' 
-                : '<span class="badge" style="background: #FFF3CD; color: #856404;">Pending</span>';
-
-            let actionBtn = p.status !== 'paid' 
-                ? `<button class="btn btn-outline" style="padding:4px 10px; font-size:11px;" onclick="window.markPayoutPaid(${p.id}, this)">Mark Paid</button>`
-                : `<span style="font-size: 12px; font-family: monospace;">${p.ref_id || '-'}</span>`;
+            const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
 
             tr.innerHTML = `
-                <td>${dateStr}</td>
-                <td><span class="badge" style="background: #eee;">${p.promo_code}</span></td>
-                <td style="font-weight: 500;">${formatCurrency(p.amount)}</td>
-                <td><span style="font-size: 12px;">Tanımsız</span></td>
-                <td>${statusBadge}</td>
-                <td>${actionBtn}</td>
+                <td>${new Date(p.created_at).toLocaleDateString()}</td>
+                <td><a href="#" style="text-decoration: none; font-weight: 500; color: var(--primary-color);" onclick="window.switchSection('influencers'); setTimeout(() => window.openEditModal(${p.influencer_id}), 100); return false;">${p.full_name || 'Bilinmiyor'}</a></td>
+                <td>${formatCurrency(p.amount)}</td>
+                <td><span style="font-family: monospace; font-size: 13px; color: var(--text-muted);">${p.wallet_address || 'Belirtilmedi'}</span></td>
+                <td><span style="text-transform: capitalize;">${p.method || 'crypto'}</span></td>
+                <td><span class="badge ${badgeClass}">${p.status}</span></td>
+                <td>
+                    ${isPaid 
+                        ? `<span style="font-size: 13px; color: var(--text-muted);">Ref: ${p.ref_id || '-'}</span>`
+                        : `<button class="btn btn-outline" style="padding: 4px 10px; font-size: 12px;" onclick="window.markPayoutPaid(${p.id}, this)">Mark Paid</button>`
+                    }
+                </td>
             `;
             tbody.appendChild(tr);
         });
@@ -384,7 +384,57 @@ async function loadPayouts() {
     } catch (error) {
         console.error('Payouts yükleme hatası:', error);
     }
-}
+};
+
+window.openCreatePayoutModal = function() {
+    const select = document.getElementById('payoutInfluencerSelect');
+    if (!select) return;
+    
+    select.innerHTML = '';
+    
+    allInfluencers.forEach(inf => {
+        const totalEarned = inf.total_earned || 0;
+        const totalPaid = inf.total_paid || 0;
+        const pendingBalance = totalEarned - totalPaid;
+        
+        const option = document.createElement('option');
+        option.value = inf.id;
+        option.innerText = `${inf.full_name} (Pending: $${pendingBalance.toFixed(2)})`;
+        select.appendChild(option);
+    });
+    
+    if (window.openModal) window.openModal('createPayoutModal');
+};
+
+window.submitCreatePayout = async function(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const origText = btn.innerText;
+    
+    const influencerId = document.getElementById('payoutInfluencerSelect').value;
+    const amount = parseFloat(document.getElementById('payoutAmountInput').value);
+    const method = document.getElementById('payoutMethodSelect').value;
+    
+    try {
+        btn.innerText = 'Creating...';
+        btn.disabled = true;
+        
+        await adminFetch('/api/admin/payouts', {
+            method: 'POST',
+            body: JSON.stringify({ influencerId, amount, method })
+        });
+        
+        alert('Payout created successfully!');
+        if (window.closeModal) window.closeModal('createPayoutModal');
+        e.target.reset();
+        window.loadPayouts();
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        btn.innerText = origText;
+        btn.disabled = false;
+    }
+};
 
 window.markPayoutPaid = async function(id, btn) {
     const refId = prompt("Ödeme yapıldığına dair referans kodu girin (TxHash, Dekont ID vb.):");
@@ -400,7 +450,7 @@ window.markPayoutPaid = async function(id, btn) {
         });
 
         // Listeyi yenile
-        loadPayouts();
+        window.loadPayouts();
     } catch (error) {
         alert(error.message);
         btn.innerText = 'Mark Paid';
