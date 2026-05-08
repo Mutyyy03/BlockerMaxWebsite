@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Hangi sekmeye geçildiyse verilerini çek
         if (sectionId === 'influencers') loadInfluencers();
+        if (sectionId === 'offer-codes') loadOfferCodes();
         if (sectionId === 'transactions') loadTransactions();
         if (sectionId === 'payouts') loadPayouts();
     };
@@ -56,13 +57,19 @@ async function adminFetch(endpoint, options = {}) {
     return response.json();
 }
 
+// Global store
+let allInfluencers = [];
+
 // ----------------------------------------------------
 // 1. INFLUENCERS (Partner Yönetimi)
 // ----------------------------------------------------
 async function loadInfluencers() {
     try {
-        const influencers = await adminFetch('/api/admin/influencers');
-        renderInfluencersList(influencers);
+        allInfluencers = await adminFetch('/api/admin/influencers');
+        renderInfluencersList(allInfluencers);
+        if (document.getElementById('offer-codes').classList.contains('active')) {
+            loadOfferCodes();
+        }
     } catch (error) {
         console.error('Influencer yükleme hatası:', error);
     }
@@ -137,6 +144,25 @@ function updateInfluencerDetail(inf) {
         statCards[2].innerText = inf.active_subs || 0;
         statCards[3].innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(inf.total_earned || 0);
     }
+
+    // Komisyon Oranlarını Güncelle (Sahte Inputlar ama en azından veriyi gösterelim)
+    const commInputs = detailPanel.querySelectorAll('.inf-comm-box input');
+    if (commInputs.length >= 2) {
+        commInputs[0].value = inf.default_first_month_pct || 30;
+        commInputs[1].value = inf.default_recurring_pct || 10;
+    }
+
+    // Payout Address (Ödeme Adresi) Güncelle
+    const payoutRows = detailPanel.querySelectorAll('.inf-payout-row .inf-payout-value');
+    if (payoutRows.length >= 3) {
+        payoutRows[2].innerText = inf.wallet_address || 'Tanımlanmadı';
+    }
+
+    // Edit butonuna tıklandığında modalı aç ve verileri doldur
+    const editBtn = detailPanel.querySelector('.inf-profile-header button.btn-outline');
+    if (editBtn) {
+        editBtn.onclick = () => window.openEditModal(inf.id);
+    }
 }
 
 // Add Influencer Form Submit Yakalayıcısı
@@ -184,6 +210,96 @@ window.addInfluencer = async function(e) {
         btn.innerText = 'Save Influencer';
         btn.disabled = false;
     }
+};
+
+// Edit Influencer Modal
+window.openEditModal = function(infId) {
+    const inf = allInfluencers.find(i => i.id === infId);
+    if (!inf) return;
+
+    const modal = document.getElementById('editInfluencerModal');
+    if (!modal) return;
+
+    const form = modal.querySelector('form');
+    const inputs = form.querySelectorAll('input');
+    
+    // Tasarımdaki Input Sırası:
+    // 0: Full Name
+    // 1: Promo Code
+    // 2: First Month %
+    // 3: Recurring %
+    // 4: Wallet Address
+    // 5: Social (İsteğe bağlı, DB'de yok, şimdilik geçiyoruz)
+
+    inputs[0].value = inf.full_name || '';
+    inputs[1].value = inf.promo_code || '';
+    inputs[2].value = inf.default_first_month_pct || 30;
+    inputs[3].value = inf.default_recurring_pct || 10;
+    inputs[4].value = inf.wallet_address || '';
+
+    // Form submit edildiğinde çağrılacak event'i eziyoruz
+    form.onsubmit = async function(e) {
+        e.preventDefault();
+        
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
+        btn.innerText = 'Güncelleniyor...';
+        btn.disabled = true;
+
+        try {
+            await adminFetch(`/api/admin/influencers/${infId}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    fullName: inputs[0].value,
+                    promoCode: inputs[1].value,
+                    firstMonthPct: parseFloat(inputs[2].value),
+                    recurringPct: parseFloat(inputs[3].value),
+                    walletAddress: inputs[4].value
+                })
+            });
+
+            alert('Partner başarıyla güncellendi!');
+            if (window.closeModal) window.closeModal('editInfluencerModal');
+            loadInfluencers();
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    };
+
+    if (window.openModal) window.openModal('editInfluencerModal');
+};
+
+// ----------------------------------------------------
+// 1.5 OFFER CODES (Kod Yönetimi)
+// ----------------------------------------------------
+window.loadOfferCodes = function() {
+    // Offer codes tablosunu doldur (Influencer verisinden faydalanıyoruz)
+    const tbody = document.querySelector('#offer-codes tbody');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    
+    if (allInfluencers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Kod bulunamadı</td></tr>';
+        return;
+    }
+
+    allInfluencers.forEach(inf => {
+        const tr = document.createElement('tr');
+        
+        tr.innerHTML = `
+            <td><span class="badge" style="background: #eee;">${inf.promo_code}</span></td>
+            <td>${inf.full_name}</td>
+            <td>${inf.default_first_month_pct}% İlk Ay</td>
+            <td>${inf.active_subs || 0} Abone</td>
+            <td><span class="badge badge-success">Active</span></td>
+            <td><a href="#" style="font-size: 13px;" onclick="event.preventDefault(); window.openEditModal(${inf.id})">Edit</a></td>
+        `;
+        tbody.appendChild(tr);
+    });
 };
 
 // ----------------------------------------------------
