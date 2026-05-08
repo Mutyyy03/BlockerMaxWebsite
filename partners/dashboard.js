@@ -74,7 +74,8 @@ async function loadDashboardData() {
 
         if (overviewData) {
             updateOverviewMetrics(overviewData);
-            updateTransactionsTable(overviewData.recent_transactions);
+            updateTransactionsTable(overviewData.recentTransactions);
+            updatePayoutsTable(overviewData.recentPayouts);
         }
 
         if (promoData) {
@@ -162,6 +163,44 @@ function updateTransactionsTable(transactions) {
             <td><span class="badge ${badgeClass}">${tx.event_type || 'Subscription'}</span></td>
             <td>${formatCurrency(tx.gross_revenue)}</td>
             <td style="color: var(--success); font-weight: 500;">+${formatCurrency(tx.commission_earned)}</td>
+        `;
+        
+        realBody.appendChild(tr);
+    });
+}
+
+// DOM: Ödeme (Payout) geçmişi tablosunu güncelleyen fonksiyon
+function updatePayoutsTable(payouts) {
+    const realBody = document.getElementById('payout-tbody-real');
+    const emptyBody = document.getElementById('payout-tbody-empty');
+
+    if (!realBody || !emptyBody) return;
+
+    realBody.innerHTML = '';
+
+    if (!payouts || payouts.length === 0) {
+        realBody.style.display = 'none';
+        emptyBody.style.display = 'table-row-group';
+        return;
+    }
+
+    realBody.style.display = 'table-row-group';
+    emptyBody.style.display = 'none';
+
+    payouts.forEach(p => {
+        const tr = document.createElement('tr');
+        
+        const dateObj = new Date(p.created_at || new Date());
+        const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        let badgeClass = p.status === 'paid' ? 'badge-success' : 'badge-warning';
+        const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+
+        tr.innerHTML = `
+            <td>${dateStr}</td>
+            <td style="font-weight: 600;">${formatCurrency(p.amount)}</td>
+            <td><span class="badge ${badgeClass}" style="text-transform: capitalize;">${p.status}</span></td>
+            <td><span style="font-family: monospace; font-size: 13px; color: var(--text-muted);">${p.ref_id || '-'}</span></td>
         `;
         
         realBody.appendChild(tr);

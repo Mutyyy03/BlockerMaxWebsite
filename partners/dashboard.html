@@ -221,6 +221,37 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Payout History Card -->
+            <div class="card mt-3" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3 class="card-title">Payout History</h3>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Reference</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payout-tbody-real" style="display: none;">
+                            <!-- Dinamik Doldurulacak -->
+                        </tbody>
+                        <tbody id="payout-tbody-empty">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                                    <div style="font-size: 32px; margin-bottom: 12px;">💸</div>
+                                    <div style="font-weight: 600; margin-bottom: 4px;">No payouts yet</div>
+                                    <div style="font-size: 13px;">Your earned commissions will be transferred to you and listed here.</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <!-- Creator Kit Tab -->
