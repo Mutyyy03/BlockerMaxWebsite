@@ -103,9 +103,9 @@ function updateOverviewMetrics(data) {
 
     // API'den gelen dinamik veriler
     if (balanceEl) balanceEl.innerText = formatCurrency(data.balance);
-    if (earningsEl) earningsEl.innerText = formatCurrency(data.total_earned);
-    if (paidEl) paidEl.innerText = data.total_paid || '0';
-    if (subsEl) subsEl.innerText = data.active_subs || '0';
+    if (earningsEl) earningsEl.innerText = formatCurrency(data.totalEarned);
+    if (paidEl) paidEl.innerText = formatCurrency(data.totalPaid || 0);
+    if (subsEl) subsEl.innerText = data.activeSubs || '0';
     
     // API'de olmayan ama istenen statik veriler
     if (payoutDateEl) payoutDateEl.innerText = "Sonraki Ayın 15'i";
@@ -146,12 +146,12 @@ function updateTransactionsTable(transactions) {
         const tr = document.createElement('tr');
         
         // Tarih Formatı
-        const dateObj = new Date(tx.date || new Date());
+        const dateObj = new Date(tx.created_at || new Date());
         const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         
         // Etkinlik Tipine Göre Rozet (Badge)
         let badgeClass = 'badge-primary'; // Varsayılan mavi
-        if (tx.type && tx.type.toLowerCase().includes('renewal')) {
+        if (tx.event_type && tx.event_type.toLowerCase().includes('renewal')) {
             badgeClass = 'badge-success'; // Yenileme ise yeşil
         }
         
@@ -159,9 +159,9 @@ function updateTransactionsTable(transactions) {
 
         tr.innerHTML = `
             <td>${dateStr}</td>
-            <td><span class="badge ${badgeClass}">${tx.type || 'Subscription'}</span></td>
-            <td>${formatCurrency(tx.revenue || tx.amount)}</td>
-            <td style="color: var(--success); font-weight: 500;">+${formatCurrency(tx.commission)}</td>
+            <td><span class="badge ${badgeClass}">${tx.event_type || 'Subscription'}</span></td>
+            <td>${formatCurrency(tx.gross_revenue)}</td>
+            <td style="color: var(--success); font-weight: 500;">+${formatCurrency(tx.commission_earned)}</td>
         `;
         
         realBody.appendChild(tr);
