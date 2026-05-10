@@ -135,43 +135,32 @@
         <div id="overview" class="tab-content active">
             <!-- Wallet Header Row -->
             <div class="wallet-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; width: 100%;">
-                <h2 style="font-size: 22px; margin: 0; font-weight: 700; color: var(--text-main);">Welcome, John</h2>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label class="switch" style="transform: scale(0.9); margin-right: 0;">
-                        <input type="checkbox" id="sandboxToggleCheckbox" onchange="toggleSandbox()">
-                        <span class="slider"></span>
-                    </label>
-                    <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); opacity: 0.8; letter-spacing: 0.5px;">Sandbox Mode</span>
-                </div>
+                <h2 id="welcome-title" style="font-size: 22px; margin: 0; font-weight: 700; color: var(--text-main);">Welcome</h2>
             </div>
 
             <div class="card overview-top" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                 <div>
                     <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Next Payout Date</p>
-                    <h3 id="metric-payout-date" style="margin: 0;">May 1, 2026</h3>
+                    <h3 id="metric-payout-date" style="margin: 0;">20th of every month</h3>
                 </div>
                 <div class="desktop-right" style="text-align: right;">
                     <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Current Balance</p>
-                    <h2 id="metric-balance" style="margin: 0; color: var(--primary-color);">$420.50</h2>
+                    <h2 id="metric-balance" style="margin: 0; color: var(--primary-color);">$0.00</h2>
                 </div>
             </div>
 
-            <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
-                <div class="card" style="padding: 16px; margin-bottom: 0;">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Trials</div>
-                    <div id="metric-trials" style="font-size: 20px; font-weight: 700; color: var(--text-main);">342</div>
-                </div>
+            <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
                 <div class="card" style="padding: 16px; margin-bottom: 0;">
                     <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Paid Users</div>
-                    <div id="metric-paid" style="font-size: 20px; font-weight: 700; color: var(--text-main);">85</div>
+                    <div id="metric-paid" style="font-size: 20px; font-weight: 700; color: var(--text-main);">0</div>
                 </div>
                 <div class="card" style="padding: 16px; margin-bottom: 0;">
                     <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Active Subs</div>
-                    <div id="metric-subs" style="font-size: 20px; font-weight: 700; color: var(--text-main);">310</div>
+                    <div id="metric-subs" style="font-size: 20px; font-weight: 700; color: var(--text-main);">0</div>
                 </div>
                 <div class="card" style="padding: 16px; margin-bottom: 0; border-color: rgba(0,122,255,0.2); background: rgba(0,122,255,0.03);">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--primary-color); letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 700;">My Earnings</div>
-                    <div id="metric-earnings" style="font-size: 20px; font-weight: 700; color: var(--primary-color);">$1,150</div>
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--primary-color); letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 700;">Ending Balance</div>
+                    <div id="metric-earnings" style="font-size: 20px; font-weight: 700; color: var(--primary-color);">$0.00</div>
                 </div>
             </div>
 

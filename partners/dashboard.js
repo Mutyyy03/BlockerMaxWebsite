@@ -99,18 +99,30 @@ function updateOverviewMetrics(data) {
     const earningsEl = document.getElementById('metric-earnings');
     const paidEl = document.getElementById('metric-paid');
     const subsEl = document.getElementById('metric-subs');
-    const payoutDateEl = document.getElementById('metric-payout-date');
-    const trialsEl = document.getElementById('metric-trials');
+    const welcomeTitleEl = document.getElementById('welcome-title');
 
     // API'den gelen dinamik veriler
     if (balanceEl) balanceEl.innerText = formatCurrency(data.balance);
     if (earningsEl) earningsEl.innerText = formatCurrency(data.totalEarned);
-    if (paidEl) paidEl.innerText = formatCurrency(data.totalPaid || 0);
+    
+    // Geçici olarak "Paid Users" kısmını sakla veya API'den gelen veriye bağla (şu an totalPaid kullanılıyor, düzeltilebilir)
+    if (paidEl) paidEl.innerText = data.activeSubs || '0'; // İleride gerçek paid users eklenebilir
     if (subsEl) subsEl.innerText = data.activeSubs || '0';
     
-    // API'de olmayan ama istenen statik veriler
-    if (payoutDateEl) payoutDateEl.innerText = "Sonraki Ayın 15'i";
-    if (trialsEl) trialsEl.innerText = "0";
+    // JWT Token'dan username'i çekip ekrana yaz
+    if (welcomeTitleEl) {
+        try {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                if (payload && payload.username) {
+                    welcomeTitleEl.innerText = `Welcome, ${payload.username.charAt(0).toUpperCase() + payload.username.slice(1)}`;
+                }
+            }
+        } catch (e) {
+            console.error('Kullanıcı adı çekilemedi', e);
+        }
+    }
 }
 
 // DOM: Promosyon kodunu güncelleyen fonksiyon
