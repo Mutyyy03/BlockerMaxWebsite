@@ -261,7 +261,7 @@
                                     <input type="number" value="5.5" step="0.5" min="0" max="100">
                                 </div>
                                 <div style="display:flex; align-items:flex-end; padding-bottom:2px;">
-                                    <button class="btn btn-primary" style="white-space:nowrap;" onclick="alert('Commission rates saved!')">Save Rates</button>
+                                    <button class="btn btn-primary" style="white-space:nowrap;" id="saveRatesBtn" onclick="saveCommissionRates(this)">Save Rates</button>
                                 </div>
                             </div>
 
@@ -500,7 +500,7 @@
 
     <!-- Modal for Add Influencer -->
     <div class="modal-overlay" id="addInfluencerModal">
-        <div class="modal-content">
+        <div class="modal-content" style="width:480px; max-height:90vh; overflow-y:auto;">
             <div class="modal-header">
                 <h3 style="margin: 0;">Add Influencer</h3>
                 <button class="modal-close" onclick="closeModal('addInfluencerModal')">&times;</button>
@@ -508,43 +508,47 @@
             <form onsubmit="addInfluencer(event)">
                 <div class="form-group">
                     <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" placeholder="e.g. Jane Smith" required>
+                    <input type="text" id="add-fullName" class="form-control" placeholder="e.g. Jane Smith" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-control" placeholder="jane@example.com" required>
+                    <label class="form-label">Username (Login)</label>
+                    <input type="text" id="add-username" class="form-control" placeholder="janedoe" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Custom Promo Code</label>
-                    <input type="text" class="form-control" placeholder="JANE50" required>
+                    <input type="text" id="add-promoCode" class="form-control" placeholder="JANE50" required>
                 </div>
                 <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
                         <label class="form-label" style="font-size: 12px;">First Month Comm. (%)</label>
-                        <input type="number" class="form-control" value="30" required>
+                        <input type="number" id="add-firstMonth" class="form-control" value="30" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" style="font-size: 12px;">Recurring Comm. (%)</label>
-                        <input type="number" class="form-control" value="5.5" step="0.1" required>
+                        <input type="number" id="add-recurring" class="form-control" value="5.5" step="0.1" required>
                     </div>
                 </div>
                 <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
                         <label class="form-label">Payout Method</label>
-                        <select class="form-control" required>
+                        <select id="add-payoutMethod" class="form-control" required>
                             <option value="crypto">Crypto (USDT)</option>
                             <option value="wise">Wise</option>
-                            <option value="upwork">Upwork</option>
+                            <option value="bank">Bank Transfer</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Payout Address / Email</label>
-                        <input type="text" class="form-control" placeholder="Wallet address or email" required>
+                        <input type="text" id="add-walletAddress" class="form-control" placeholder="Wallet address or email">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Connected Social Accounts</label>
-                    <input type="text" class="form-control" placeholder="YouTube, TikTok, or Instagram URLs">
+                    <label class="form-label" style="margin-bottom: 8px; display:block;">Connected Social Accounts</label>
+                    <input type="url" id="add-social-youtube" class="form-control" placeholder="YouTube URL" style="margin-bottom: 6px;">
+                    <input type="url" id="add-social-tiktok" class="form-control" placeholder="TikTok URL" style="margin-bottom: 6px;">
+                    <input type="url" id="add-social-instagram" class="form-control" placeholder="Instagram URL" style="margin-bottom: 6px;">
+                    <input type="url" id="add-social-twitter" class="form-control" placeholder="Twitter / X URL" style="margin-bottom: 6px;">
+                    <input type="url" id="add-social-other" class="form-control" placeholder="Other URL">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-3">Save Influencer</button>
             </form>
@@ -553,47 +557,51 @@
 
     <!-- Modal for Edit Influencer -->
     <div class="modal-overlay" id="editInfluencerModal">
-        <div class="modal-content">
+        <div class="modal-content" style="width:480px; max-height:90vh; overflow-y:auto;">
             <div class="modal-header">
                 <h3 style="margin: 0;">Edit Influencer</h3>
                 <button class="modal-close" onclick="closeModal('editInfluencerModal')">&times;</button>
             </div>
-            <form onsubmit="event.preventDefault(); alert('Settings Updated!'); closeModal('editInfluencerModal');">
+            <form id="editInfluencerForm">
                 <div class="form-group">
                     <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" value="John Doe" required>
+                    <input type="text" id="edit-fullName" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Custom Promo Code</label>
-                    <input type="text" class="form-control" value="JOHN50" required>
+                    <input type="text" id="edit-promoCode" class="form-control" required>
                 </div>
                 <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
                         <label class="form-label" style="font-size: 12px;">First Month Comm. (%)</label>
-                        <input type="number" class="form-control" value="30" required>
+                        <input type="number" id="edit-firstMonth" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" style="font-size: 12px;">Recurring Comm. (%)</label>
-                        <input type="number" class="form-control" value="5.5" step="0.1" required>
+                        <input type="number" id="edit-recurring" class="form-control" step="0.1" required>
                     </div>
                 </div>
                 <div class="grid grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="form-group">
                         <label class="form-label">Payout Method</label>
-                        <select class="form-control" required>
-                            <option value="crypto" selected>Crypto (USDT)</option>
+                        <select id="edit-payoutMethod" class="form-control" required>
+                            <option value="crypto">Crypto (USDT)</option>
                             <option value="wise">Wise</option>
-                            <option value="upwork">Upwork</option>
+                            <option value="bank">Bank Transfer</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Payout Address / Email</label>
-                        <input type="text" class="form-control" value="0x123...abc" required>
+                        <input type="text" id="edit-walletAddress" class="form-control" placeholder="Wallet address or email">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Connected Social Accounts</label>
-                    <input type="text" class="form-control" value="youtube.com/@johndoe, tiktok.com/@johndoe">
+                    <label class="form-label" style="margin-bottom: 8px; display:block;">Connected Social Accounts</label>
+                    <input type="url" id="edit-social-youtube" class="form-control" placeholder="YouTube URL" style="margin-bottom: 6px;">
+                    <input type="url" id="edit-social-tiktok" class="form-control" placeholder="TikTok URL" style="margin-bottom: 6px;">
+                    <input type="url" id="edit-social-instagram" class="form-control" placeholder="Instagram URL" style="margin-bottom: 6px;">
+                    <input type="url" id="edit-social-twitter" class="form-control" placeholder="Twitter / X URL" style="margin-bottom: 6px;">
+                    <input type="url" id="edit-social-other" class="form-control" placeholder="Other URL">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-3">Update Influencer</button>
             </form>

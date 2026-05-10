@@ -168,21 +168,28 @@ function updateInfluencerDetail(inf) {
 // Add Influencer Form Submit Yakalayıcısı
 window.addInfluencer = async function(e) {
     e.preventDefault();
-    const form = e.target;
-    const inputs = form.querySelectorAll('input');
-    
-    // Form Elemanları Sırası (Tasarımına göre index bazlı)
-    const fullName = inputs[0].value;
-    const username = inputs[1].value;
-    const promoCode = inputs[2].value;
-    const firstMonthPct = parseFloat(inputs[3].value);
-    const recurringPct = parseFloat(inputs[4].value);
-    
+
+    const fullName       = document.getElementById('add-fullName').value.trim();
+    const username       = document.getElementById('add-username').value.trim();
+    const promoCode      = document.getElementById('add-promoCode').value.trim();
+    const firstMonthPct  = parseFloat(document.getElementById('add-firstMonth').value);
+    const recurringPct   = parseFloat(document.getElementById('add-recurring').value);
+    const walletAddress  = document.getElementById('add-walletAddress').value.trim();
+
+    // Sosyal medya URL'leri (boş olanları filtrele)
+    const socials = [
+        document.getElementById('add-social-youtube').value.trim(),
+        document.getElementById('add-social-tiktok').value.trim(),
+        document.getElementById('add-social-instagram').value.trim(),
+        document.getElementById('add-social-twitter').value.trim(),
+        document.getElementById('add-social-other').value.trim()
+    ].filter(Boolean).join(', ');
+
     // Geçici Şifre
-    const password = "BlockerMax" + Math.floor(Math.random() * 1000); 
+    const password = "BlockerMax" + Math.floor(Math.random() * 1000);
 
     try {
-        const btn = form.querySelector('button[type="submit"]');
+        const btn = e.target.querySelector('button[type="submit"]');
         const originalText = btn.innerText;
         btn.innerText = 'Kaydediliyor...';
         btn.disabled = true;
@@ -190,23 +197,23 @@ window.addInfluencer = async function(e) {
         await adminFetch('/api/admin/influencers', {
             method: 'POST',
             body: JSON.stringify({
-                username, password, fullName, promoCode, firstMonthPct, recurringPct
+                username, password, fullName, promoCode, firstMonthPct, recurringPct, walletAddress
             })
         });
 
         alert(`Partner eklendi!\nKullanıcı Adı: ${username}\nŞifre: ${password}\nLütfen bu bilgileri partner ile paylaşın.`);
-        
+
         if (window.closeModal) window.closeModal('addInfluencerModal');
-        form.reset();
-        
+        e.target.reset();
+
         // Listeyi tazele
         loadInfluencers();
-        
+
         btn.innerText = originalText;
         btn.disabled = false;
     } catch (error) {
         alert(error.message);
-        const btn = form.querySelector('button[type="submit"]');
+        const btn = e.target.querySelector('button[type="submit"]');
         btn.innerText = 'Save Influencer';
         btn.disabled = false;
     }
@@ -217,44 +224,55 @@ window.openEditModal = function(infId) {
     const inf = allInfluencers.find(i => i.id === infId);
     if (!inf) return;
 
-    const modal = document.getElementById('editInfluencerModal');
-    if (!modal) return;
+    // ID bazlı elementleri doldur
+    document.getElementById('edit-fullName').value      = inf.full_name || '';
+    document.getElementById('edit-promoCode').value     = inf.promo_code || '';
+    document.getElementById('edit-firstMonth').value    = inf.default_first_month_pct || 30;
+    document.getElementById('edit-recurring').value     = inf.default_recurring_pct || 10;
+    document.getElementById('edit-walletAddress').value = inf.wallet_address || '';
 
-    const form = modal.querySelector('form');
-    const inputs = form.querySelectorAll('input');
-    
-    // Tasarımdaki Input Sırası:
-    // 0: Full Name
-    // 1: Promo Code
-    // 2: First Month %
-    // 3: Recurring %
-    // 4: Wallet Address
-    // 5: Social (İsteğe bağlı, DB'de yok, şimdilik geçiyoruz)
+    // Payout method seçili yap
+    const payoutSel = document.getElementById('edit-payoutMethod');
+    if (payoutSel && inf.payout_method) {
+        payoutSel.value = inf.payout_method;
+    }
 
-    inputs[0].value = inf.full_name || '';
-    inputs[1].value = inf.promo_code || '';
-    inputs[2].value = inf.default_first_month_pct || 30;
-    inputs[3].value = inf.default_recurring_pct || 10;
-    inputs[4].value = inf.wallet_address || '';
+    // Sosyal medya - varsa ayrıştır (virgülle ayrılmış olabilir)
+    const socialUrls = (inf.social_accounts || '').split(',').map(s => s.trim());
+    document.getElementById('edit-social-youtube').value   = socialUrls[0] || '';
+    document.getElementById('edit-social-tiktok').value    = socialUrls[1] || '';
+    document.getElementById('edit-social-instagram').value = socialUrls[2] || '';
+    document.getElementById('edit-social-twitter').value   = socialUrls[3] || '';
+    document.getElementById('edit-social-other').value     = socialUrls[4] || '';
 
-    // Form submit edildiğinde çağrılacak event'i eziyoruz
+    // Form submit event'ini bağla
+    const form = document.getElementById('editInfluencerForm');
     form.onsubmit = async function(e) {
         e.preventDefault();
-        
+
         const btn = form.querySelector('button[type="submit"]');
         const originalText = btn.innerText;
         btn.innerText = 'Güncelleniyor...';
         btn.disabled = true;
 
+        const socials = [
+            document.getElementById('edit-social-youtube').value.trim(),
+            document.getElementById('edit-social-tiktok').value.trim(),
+            document.getElementById('edit-social-instagram').value.trim(),
+            document.getElementById('edit-social-twitter').value.trim(),
+            document.getElementById('edit-social-other').value.trim()
+        ].filter(Boolean).join(', ');
+
         try {
             await adminFetch(`/api/admin/influencers/${infId}`, {
                 method: 'PUT',
                 body: JSON.stringify({
-                    fullName: inputs[0].value,
-                    promoCode: inputs[1].value,
-                    firstMonthPct: parseFloat(inputs[2].value),
-                    recurringPct: parseFloat(inputs[3].value),
-                    walletAddress: inputs[4].value
+                    fullName:      document.getElementById('edit-fullName').value.trim(),
+                    promoCode:     document.getElementById('edit-promoCode').value.trim(),
+                    firstMonthPct: parseFloat(document.getElementById('edit-firstMonth').value),
+                    recurringPct:  parseFloat(document.getElementById('edit-recurring').value),
+                    walletAddress: document.getElementById('edit-walletAddress').value.trim(),
+                    socialAccounts: socials
                 })
             });
 
@@ -270,6 +288,47 @@ window.openEditModal = function(infId) {
     };
 
     if (window.openModal) window.openModal('editInfluencerModal');
+};
+
+// Save Commission Rates (Detay Panelindeki "Save Rates" butonu)
+window.saveCommissionRates = async function(btn) {
+    // Sağ paneldeki aktif influencer'ı bul
+    const activeRow = document.querySelector('.inf-row.active');
+    if (!activeRow) { alert('Lütfen önce bir influencer seçin.'); return; }
+
+    // Seçili influencer'ı bul
+    const namEl = document.querySelector('#infDetailPanel .inf-profile-meta h3');
+    const infName = namEl ? namEl.innerText : '';
+    const inf = allInfluencers.find(i => i.full_name === infName);
+    if (!inf) { alert('Influencer bulunamadı.'); return; }
+
+    const commInputs = document.querySelectorAll('.inf-comm-box input');
+    const firstMonthPct = parseFloat(commInputs[0].value);
+    const recurringPct  = parseFloat(commInputs[1].value);
+
+    const origText = btn.innerText;
+    btn.innerText = 'Saving...';
+    btn.disabled = true;
+
+    try {
+        await adminFetch(`/api/admin/influencers/${inf.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                fullName:      inf.full_name,
+                promoCode:     inf.promo_code,
+                walletAddress: inf.wallet_address || '',
+                firstMonthPct,
+                recurringPct
+            })
+        });
+        btn.innerText = 'Saved ✓';
+        setTimeout(() => { btn.innerText = origText; btn.disabled = false; }, 2000);
+        loadInfluencers();
+    } catch (error) {
+        alert(error.message);
+        btn.innerText = origText;
+        btn.disabled = false;
+    }
 };
 
 // ----------------------------------------------------
