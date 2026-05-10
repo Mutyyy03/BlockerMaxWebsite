@@ -122,43 +122,67 @@ function updateInfluencerDetail(inf) {
     const detailPanel = document.getElementById('infDetailPanel');
     if (!detailPanel) return;
 
-    // Arayüzdeki hardcode isimleri ve dataları dinamik yapıyoruz
+    // İsim ve kullanıcı adı
     const nameEl = detailPanel.querySelector('.inf-profile-meta h3');
     const emailEl = detailPanel.querySelector('.inf-profile-meta p');
-    
     if (nameEl) nameEl.innerText = inf.full_name;
-    if (emailEl) emailEl.innerText = inf.username; // Kullanıcı adını mail gibi gösteriyoruz
-    
-    // Promosyon Kodu
-    const codeEls = detailPanel.querySelectorAll('.inf-payout-value');
-    codeEls.forEach(el => {
-        if (el.style.color === 'var(--primary-color)' || el.innerText.length < 15) {
-            el.innerText = inf.promo_code;
-        }
-    });
+    if (emailEl) emailEl.innerText = inf.username;
 
-    // Toplam Ciro (Tasarımda 4. kart)
+    // Sosyal medya chip'lerini dinamik oluştur
+    const socialLinksEl = detailPanel.querySelector('.inf-social-links');
+    if (socialLinksEl) {
+        socialLinksEl.innerHTML = '';
+        const accounts = (inf.social_accounts || '').split(',').map(s => s.trim()).filter(Boolean);
+        if (accounts.length === 0) {
+            socialLinksEl.innerHTML = '<span style="font-size:12px; color:var(--text-muted);">No social accounts added</span>';
+        } else {
+            accounts.forEach(url => {
+                // Platform adını URL'den çıkar
+                let label = url;
+                let icon = '🔗';
+                if (url.includes('youtube'))   { label = 'YouTube';   icon = '▶️'; }
+                else if (url.includes('tiktok'))    { label = 'TikTok';    icon = '🎵'; }
+                else if (url.includes('instagram')) { label = 'Instagram'; icon = '📸'; }
+                else if (url.includes('twitter') || url.includes('x.com')) { label = 'Twitter/X'; icon = '🐦'; }
+                else {
+                    // Kısa URL göster
+                    try { label = new URL(url).hostname.replace('www.', ''); } catch(e) { label = url.substring(0, 20); }
+                }
+                const a = document.createElement('a');
+                a.href = url.startsWith('http') ? url : `https://${url}`;
+                a.target = '_blank';
+                a.className = 'inf-social-btn';
+                a.innerHTML = `${icon} ${label}`;
+                socialLinksEl.appendChild(a);
+            });
+        }
+    }
+
+    // Promosyon Kodu
+    const promoEl = detailPanel.querySelector('.inf-payout-value[style*="primary-color"], .inf-payout-value[style*="letter-spacing"]');
+    if (promoEl) promoEl.innerText = inf.promo_code;
+
+    // Stat kartları
     const statCards = detailPanel.querySelectorAll('.inf-stat-value');
     if (statCards.length >= 4) {
-        // Aktif Abone ve Total Ciro
         statCards[2].innerText = inf.active_subs || 0;
         statCards[3].innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(inf.total_earned || 0);
     }
 
-    // Komisyon Oranlarını Güncelle (Sahte Inputlar ama en azından veriyi gösterelim)
+    // Komisyon oranları
     const commInputs = detailPanel.querySelectorAll('.inf-comm-box input');
     if (commInputs.length >= 2) {
         commInputs[0].value = inf.default_first_month_pct || 30;
         commInputs[1].value = inf.default_recurring_pct || 10;
     }
 
-    // Payout Address (Ödeme Adresi) Güncelle
+    // Payout detayları
     const payoutRows = detailPanel.querySelectorAll('.inf-payout-row .inf-payout-value');
     if (payoutRows.length >= 3) {
-        payoutRows[2].innerText = inf.wallet_address || 'Tanımlanmadı';
+        payoutRows[2].innerText = inf.wallet_address || 'Not set';
     }
 
-    // Edit butonuna tıklandığında modalı aç ve verileri doldur
+    // Edit butonu
     const editBtn = detailPanel.querySelector('.inf-profile-header button.btn-outline');
     if (editBtn) {
         editBtn.onclick = () => window.openEditModal(inf.id);
