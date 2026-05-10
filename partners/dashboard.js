@@ -109,18 +109,12 @@ function updateOverviewMetrics(data) {
     if (paidEl) paidEl.innerText = data.activeSubs || '0'; // İleride gerçek paid users eklenebilir
     if (subsEl) subsEl.innerText = data.activeSubs || '0';
     
-    // JWT Token'dan username'i çekip ekrana yaz
+    // API'den gelen veriden username veya fullname'i ekrana yaz
     if (welcomeTitleEl) {
-        try {
-            const token = localStorage.getItem('token');
-            if (token) {
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                if (payload && payload.username) {
-                    welcomeTitleEl.innerText = `Welcome, ${payload.username.charAt(0).toUpperCase() + payload.username.slice(1)}`;
-                }
-            }
-        } catch (e) {
-            console.error('Kullanıcı adı çekilemedi', e);
+        if (data.fullName) {
+            welcomeTitleEl.innerText = `Welcome, ${data.fullName}`;
+        } else if (data.username) {
+            welcomeTitleEl.innerText = `Welcome, ${data.username.charAt(0).toUpperCase() + data.username.slice(1)}`;
         }
     }
 }
