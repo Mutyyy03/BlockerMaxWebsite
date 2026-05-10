@@ -162,12 +162,23 @@ function updateInfluencerDetail(inf) {
     const promoEl = detailPanel.querySelector('.inf-payout-value[style*="primary-color"], .inf-payout-value[style*="letter-spacing"]');
     if (promoEl) promoEl.innerText = inf.promo_code;
 
-    // Stat kartları
-    const statCards = detailPanel.querySelectorAll('.inf-stat-value');
-    if (statCards.length >= 4) {
-        statCards[2].innerText = inf.active_subs || 0;
-        statCards[3].innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(inf.total_earned || 0);
-    }
+    // Stat kartları (ID bazlı)
+    const fmt = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(v || 0);
+    const totalEarned  = inf.total_earned || 0;
+    const totalPaid    = inf.total_paid   || 0;
+    const currentBal   = totalEarned - totalPaid;
+
+    const elCurBal  = document.getElementById('stat-current-balance');
+    const elEndBal  = document.getElementById('stat-ending-balance');
+    const elActSubs = document.getElementById('stat-active-subs');
+    const elTotRev  = document.getElementById('stat-total-revenue');
+    const elPaidSub = document.getElementById('stat-total-paid-sub');
+
+    if (elCurBal)  elCurBal.innerText  = fmt(currentBal);
+    if (elEndBal)  elEndBal.innerText  = fmt(totalEarned);
+    if (elActSubs) elActSubs.innerText = inf.active_subs || 0;
+    if (elTotRev)  elTotRev.innerText  = fmt(totalEarned);
+    if (elPaidSub) elPaidSub.innerText = `Paid out: ${fmt(totalPaid)}`;
 
     // Komisyon oranları
     const commInputs = detailPanel.querySelectorAll('.inf-comm-box input');
@@ -182,12 +193,44 @@ function updateInfluencerDetail(inf) {
         payoutRows[2].innerText = inf.wallet_address || 'Not set';
     }
 
+    // Aktif influencer ID'sini global'de sakla (delete + edit için)
+    window._currentInfId = inf.id;
+
     // Edit butonu
     const editBtn = detailPanel.querySelector('.inf-profile-header button.btn-outline');
     if (editBtn) {
-        editBtn.onclick = () => window.openEditModal(inf.id);
+        editBtn.onclick = () => window.openEditModal(window._currentInfId);
     }
 }
+
+// Delete Influencer
+window.deleteInfluencer = async function() {
+    const infId = window._currentInfId;
+    if (!infId) return;
+
+    const inf = allInfluencers.find(i => i.id === infId);
+    const name = inf ? inf.full_name : 'this influencer';
+
+    if (!confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) return;
+
+    const btn = document.getElementById('deleteInfBtn');
+    const origText = btn.innerText;
+    btn.innerText = 'Deleting...';
+    btn.disabled = true;
+
+    try {
+        await adminFetch(`/api/admin/influencers/${infId}`, { method: 'DELETE' });
+        alert(`"${name}" has been deleted.`);
+        // Detay panelini temizle ve listeyi yenile
+        document.getElementById('infDetailPanel').innerHTML = '<div class="inf-empty-state"><div style="font-size:32px;">👤</div><div>Select an influencer</div></div>';
+        window._currentInfId = null;
+        loadInfluencers();
+    } catch (error) {
+        alert(error.message);
+        btn.innerText = origText;
+        btn.disabled = false;
+    }
+};
 
 // Add Influencer Form Submit Yakalayıcısı
 window.addInfluencer = async function(e) {

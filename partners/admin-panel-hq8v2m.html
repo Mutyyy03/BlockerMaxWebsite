@@ -221,6 +221,7 @@
                                 <div style="display:flex; gap:8px;">
                                     <span class="badge badge-success">Active</span>
                                     <button class="btn btn-outline" style="padding:6px 12px; font-size:12px;" onclick="openModal('editInfluencerModal')">Edit</button>
+                                    <button class="btn" style="padding:6px 12px; font-size:12px; background:#fff0f0; color:var(--danger); border:1px solid #ffcccc;" id="deleteInfBtn" onclick="deleteInfluencer()">Delete</button>
                                 </div>
                             </div>
 
@@ -228,24 +229,24 @@
                             <p class="inf-section-title">All-Time Performance</p>
                             <div class="inf-stat-grid">
                                 <div class="inf-stat-card">
-                                    <div class="inf-stat-label">Clicks</div>
-                                    <div class="inf-stat-value" style="color:var(--text-main);">1,240</div>
-                                    <div class="inf-stat-sub">Link visits</div>
+                                    <div class="inf-stat-label">Current Balance</div>
+                                    <div class="inf-stat-value" id="stat-current-balance" style="color:var(--primary-color);">$0.00</div>
+                                    <div class="inf-stat-sub">Earned - Paid out</div>
                                 </div>
                                 <div class="inf-stat-card">
-                                    <div class="inf-stat-label">Trials</div>
-                                    <div class="inf-stat-value" style="color:var(--primary-color);">142</div>
-                                    <div class="inf-stat-sub">11.5% of clicks</div>
+                                    <div class="inf-stat-label">Ending Balance</div>
+                                    <div class="inf-stat-value" id="stat-ending-balance" style="color:#5856D6;">$0.00</div>
+                                    <div class="inf-stat-sub">Total earned</div>
                                 </div>
                                 <div class="inf-stat-card">
-                                    <div class="inf-stat-label">Paid Users</div>
-                                    <div class="inf-stat-value" style="color:#5856D6;">85</div>
-                                    <div class="inf-stat-sub">59.9% trial → paid</div>
+                                    <div class="inf-stat-label">Active Subs</div>
+                                    <div class="inf-stat-value" id="stat-active-subs" style="color:var(--text-main);">0</div>
+                                    <div class="inf-stat-sub">Active subscribers</div>
                                 </div>
                                 <div class="inf-stat-card">
                                     <div class="inf-stat-label">Total Revenue</div>
-                                    <div class="inf-stat-value" style="color:var(--success);">$1,420</div>
-                                    <div class="inf-stat-sub">Commission: $426</div>
+                                    <div class="inf-stat-value" id="stat-total-revenue" style="color:var(--success);">$0.00</div>
+                                    <div class="inf-stat-sub" id="stat-total-paid-sub">Paid out: $0.00</div>
                                 </div>
                             </div>
 
