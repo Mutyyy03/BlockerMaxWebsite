@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sectionId === 'influencers') loadInfluencers();
         if (sectionId === 'offer-codes') loadOfferCodes();
         if (sectionId === 'transactions') loadTransactions();
+        if (sectionId === 'webhooks') loadWebhooks();
         if (sectionId === 'payouts') loadPayouts();
     };
 });
@@ -464,6 +465,83 @@ async function loadTransactions() {
 
     } catch (error) {
         console.error('Transactions yükleme hatası:', error);
+    }
+}
+
+// ----------------------------------------------------
+// 2.5 WEBHOOKS (RevenueCat Logları)
+// ----------------------------------------------------
+async function loadWebhooks() {
+    try {
+        const webhooks = await adminFetch('/api/admin/webhooks');
+        const container = document.getElementById('webhooksContainer');
+        if (!container) return;
+
+        container.innerHTML = '';
+        
+        if (webhooks.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding: 20px; color: var(--text-muted); background: #fff; border-radius: 8px; border: 1px solid var(--border-color);">Henüz hiç webhook logu yok.</div>';
+            return;
+        }
+        
+        webhooks.forEach(wh => {
+            const card = document.createElement('div');
+            card.style.background = '#fff';
+            card.style.border = '1px solid var(--border-color)';
+            card.style.borderRadius = '8px'; // az radius
+            card.style.padding = '16px';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.gap = '8px';
+            card.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)';
+
+            const dateObj = new Date(wh.created_at || new Date());
+            const dateStr = dateObj.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute:'2-digit', second:'2-digit' });
+
+            let payloadObj = {};
+            let eventType = 'UNKNOWN';
+            let appUserId = 'N/A';
+            let promoCode = 'None';
+            let rawJson = wh.payload;
+
+            try {
+                payloadObj = JSON.parse(wh.payload);
+                eventType = payloadObj.type || 'UNKNOWN';
+                appUserId = payloadObj.app_user_id || 'N/A';
+                promoCode = payloadObj.offer_code || (payloadObj.subscriber_attributes && (payloadObj.subscriber_attributes.$promo_code?.value || payloadObj.subscriber_attributes.promo_code?.value)) || 'None';
+                // Prettify JSON for display
+                rawJson = JSON.stringify(payloadObj, null, 2);
+            } catch (e) {
+                console.error('JSON Parse Error:', e);
+            }
+
+            const isInitial = eventType === 'INITIAL_PURCHASE';
+            const isRenewal = eventType === 'RENEWAL';
+            let badgeColor = 'var(--text-muted)';
+            if (isInitial) badgeColor = 'var(--primary-color)'; // iOS Blue
+            else if (isRenewal) badgeColor = 'var(--success)';
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="badge" style="background: ${badgeColor}; color: #fff; font-weight: 600;">${eventType}</span>
+                        <span style="font-size: 12px; color: var(--text-muted);">${dateStr}</span>
+                    </div>
+                    <span style="font-size: 12px; font-weight: 600; color: var(--text-main);">App User ID: <span style="font-family: monospace; color: var(--primary-color);">${appUserId}</span></span>
+                </div>
+                <div style="font-size: 13px; color: var(--text-main);">
+                    <strong>Promo Code Detected:</strong> <span style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${promoCode}</span>
+                </div>
+                <details style="margin-top: 4px;">
+                    <summary style="font-size: 13px; font-weight: 600; color: var(--primary-color); cursor: pointer; outline: none;">View Raw Payload</summary>
+                    <pre style="background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-size: 11px; overflow-x: auto; margin-top: 8px; color: #333;">${rawJson}</pre>
+                </details>
+            `;
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error('Webhooks yükleme hatası:', error);
     }
 }
 

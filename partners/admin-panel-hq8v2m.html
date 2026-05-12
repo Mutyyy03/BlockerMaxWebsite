@@ -107,6 +107,7 @@
                 <li><a href="#" class="sidebar-link active" onclick="switchSection('influencers', this)">Influencers</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('offer-codes', this)">Offer Codes</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('transactions', this)">Transactions</a></li>
+                <li><a href="#" class="sidebar-link" onclick="switchSection('webhooks', this)">Webhooks</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('payouts', this)">Payouts</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('settings', this)">Settings</a></li>
             </ul>
@@ -393,6 +394,18 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+
+            <!-- Section: Webhooks -->
+            <div id="webhooks" class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2>Webhook Logs (RevenueCat)</h2>
+                    <span class="badge badge-primary">Latest 50 events</span>
+                </div>
+                <div id="webhooksContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 180px); overflow-y: auto; padding-right: 8px;">
+                    <!-- Webhook cards will be injected here -->
+                    <div style="text-align: center; padding: 20px; color: var(--text-muted);">Yükleniyor...</div>
                 </div>
             </div>
 
