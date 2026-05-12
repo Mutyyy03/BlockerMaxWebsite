@@ -191,8 +191,9 @@ function updateInfluencerDetail(inf) {
 
     // Payout detayları
     const payoutRows = detailPanel.querySelectorAll('.inf-payout-row .inf-payout-value');
-    if (payoutRows.length >= 3) {
-        payoutRows[2].innerText = inf.wallet_address || 'Not set';
+    if (payoutRows.length >= 4) {
+        payoutRows[2].innerText = inf.payout_method === 'bank' ? 'Bank Transfer' : inf.payout_method === 'wise' ? 'Wise' : 'Crypto · USDT';
+        payoutRows[3].innerText = inf.wallet_address || 'Not set';
     }
 
     // Aktif influencer ID'sini global'de sakla (delete + edit için)
