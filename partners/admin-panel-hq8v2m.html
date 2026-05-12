@@ -108,6 +108,7 @@
                 <li><a href="#" class="sidebar-link" onclick="switchSection('offer-codes', this)">Offer Codes</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('transactions', this)">Transactions</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('webhooks', this)">Webhooks</a></li>
+                <li><a href="#" class="sidebar-link" onclick="switchSection('calculator', this)">Payout Calculator</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('payouts', this)">Payouts</a></li>
                 <li><a href="#" class="sidebar-link" onclick="switchSection('settings', this)">Settings</a></li>
             </ul>
@@ -406,6 +407,50 @@
                 <div id="webhooksContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 180px); overflow-y: auto; padding-right: 8px;">
                     <!-- Webhook cards will be injected here -->
                     <div style="text-align: center; padding: 20px; color: var(--text-muted);">Yükleniyor...</div>
+                </div>
+            </div>
+
+            <!-- Section: Calculator -->
+            <div id="calculator" class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2>Payout Calculator</h2>
+                    <span class="badge badge-primary">Calculate Period Payouts</span>
+                </div>
+                
+                <div class="card" style="margin-bottom: 24px; padding: 24px; background: #fff;">
+                    <form id="calculatorForm" onsubmit="calculatePayouts(event)" style="display: flex; gap: 16px; align-items: flex-end;">
+                        <div class="form-group" style="margin: 0; flex: 1;">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" id="calcStartDate" class="form-control" required>
+                        </div>
+                        <div class="form-group" style="margin: 0; flex: 1;">
+                            <label class="form-label">End Date</label>
+                            <input type="date" id="calcEndDate" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="calcSubmitBtn" style="height: 38px; display: flex; align-items: center; justify-content: center; min-width: 100px;">Calculate</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Influencer</th>
+                                    <th>Promo Code</th>
+                                    <th>Transactions</th>
+                                    <th>Wallet / Method</th>
+                                    <th>Calculated Comm.</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calculatorResultsBody">
+                                <tr>
+                                    <td colspan="6" style="text-align:center; padding:20px; color: var(--text-muted);">Please select a date range and calculate.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

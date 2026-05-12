@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sectionId === 'offer-codes') loadOfferCodes();
         if (sectionId === 'transactions') loadTransactions();
         if (sectionId === 'webhooks') loadWebhooks();
+        if (sectionId === 'calculator') { /* Optional: set default dates */ }
         if (sectionId === 'payouts') loadPayouts();
     };
 });
@@ -544,6 +545,75 @@ async function loadWebhooks() {
         console.error('Webhooks yükleme hatası:', error);
     }
 }
+
+// ----------------------------------------------------
+// 2.6 PAYOUT CALCULATOR (Tarih Bazlı)
+// ----------------------------------------------------
+window.calculatePayouts = async function(e) {
+    e.preventDefault();
+    const startDate = document.getElementById('calcStartDate').value;
+    const endDate = document.getElementById('calcEndDate').value;
+    const tbody = document.getElementById('calculatorResultsBody');
+    const btn = document.getElementById('calcSubmitBtn');
+    
+    if (!startDate || !endDate) return;
+
+    const originalText = btn.innerText;
+    btn.innerText = '...';
+    btn.disabled = true;
+
+    try {
+        const results = await adminFetch(`/api/admin/calculator?start=${startDate}&end=${endDate}`);
+        tbody.innerHTML = '';
+        
+        if (results.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color: var(--text-muted);">Bu tarih aralığında kazanç bulunamadı.</td></tr>';
+            return;
+        }
+
+        const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+
+        results.forEach(res => {
+            const tr = document.createElement('tr');
+            const comm = parseFloat(res.calculated_commission || 0);
+            
+            tr.innerHTML = `
+                <td style="font-weight: 500;">${res.full_name}</td>
+                <td><span class="badge" style="background: #eee;">${res.promo_code}</span></td>
+                <td>${res.transaction_count}</td>
+                <td>
+                    <div style="font-size: 13px; font-family: monospace;">${res.wallet_address || '-'}</div>
+                    <div style="font-size: 11px; color: var(--text-muted); text-transform: capitalize;">${res.payout_method || '-'}</div>
+                </td>
+                <td style="color: var(--success); font-weight: 600; font-size: 15px;">${formatCurrency(comm)}</td>
+                <td>
+                    <button class="btn btn-outline" style="padding: 4px 10px; font-size: 12px;" onclick="window.fastCreatePayout(${res.influencer_id}, ${comm})">Create Payout</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
+};
+
+window.fastCreatePayout = function(influencerId, amount) {
+    // Önce Payouts sekmesine geç, modal aç
+    window.switchSection('payouts', document.querySelector('.sidebar-link[onclick*="payouts"]'));
+    window.openCreatePayoutModal();
+    
+    // Modal açıldıktan sonra select ve inputları doldur
+    setTimeout(() => {
+        const select = document.getElementById('payoutInfluencerSelect');
+        const amtInput = document.getElementById('payoutAmountInput');
+        if (select) select.value = influencerId;
+        if (amtInput) amtInput.value = amount.toFixed(2);
+    }, 100);
+};
 
 // ----------------------------------------------------
 // 3. PAYOUTS (Ödemeler)
