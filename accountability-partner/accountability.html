@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockerMax - Accountability Partner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg-color: #F9FAFB;
+            --card-bg: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --success: #10B981;
+            --danger: #EF4444;
+            --border: #E5E7EB;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 32px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .text-center { text-align: center; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        
+        h1 { font-size: 24px; font-weight: 700; margin: 0 0 8px 0; }
+        p { margin: 0; color: var(--text-muted); line-height: 1.5; }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: inherit;
+        }
+
+        .btn:hover { background-color: var(--primary-hover); }
+        .btn:disabled { background-color: #A5B4FC; cursor: not-allowed; }
+
+        .error-msg {
+            color: var(--danger);
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* Dashboard Styles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .status-card {
+            background: #F3F4F6;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .status-card.active {
+            background: #ECFDF5;
+            border-color: #A7F3D0;
+        }
+
+        .status-card.inactive {
+            background: #FEF2F2;
+            border-color: #FECACA;
+        }
+
+        .status-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .status-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .status-value {
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        
+        .active .status-value { color: var(--success); }
+        .inactive .status-value { color: var(--danger); }
+
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+            text-align: left;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+        }
+
+        .timeline-item.relapse::before { border-color: var(--danger); }
+        .timeline-item.journey::before { border-color: var(--primary); }
+
+        .log-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .log-desc {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            background: #F3F4F6;
+            padding: 10px 14px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .log-desc.relapse { background: #FEF2F2; color: #991B1B; }
+        .log-desc.journey { background: #EEF2FF; color: #3730A3; }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+        
+        #view-setup, #view-login, #view-dashboard, #view-loading { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container text-center">
+    <!-- Loading -->
+    <div id="view-loading" style="display: block;">
+        <div class="card">
+            <h2 style="color: var(--text-muted);">Verifying Secure Link...</h2>
+        </div>
+    </div>
+
+    <!-- Setup View -->
+    <div id="view-setup" class="card">
+        <h1>Welcome, Partner</h1>
+        <p class="mb-6">Please create a secure login to access accountability reports.</p>
+        
+        <form id="setupForm" onsubmit="handleSetup(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="setupUser" required placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="setupPass1" required placeholder="Enter a secure password">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="setupPass2" required placeholder="Confirm your password">
+            </div>
+            <div id="setupError" class="error-msg"></div>
+            <button type="submit" class="btn" id="setupBtn">Create Secure Login</button>
+        </form>
+    </div>
+
+    <!-- Login View -->
+    <div id="view-login" class="card">
+        <h1>Partner Login</h1>
+        <p class="mb-6">Enter your credentials to view accountability status.</p>
+        
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="loginUser" required placeholder="Your username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPass" required placeholder="Your password">
+            </div>
+            <div id="loginError" class="error-msg"></div>
+            <button type="submit" class="btn" id="loginBtn">Access Dashboard</button>
+        </form>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="view-dashboard">
+        <div class="card mb-6" style="padding-bottom: 16px;">
+            <h1 style="text-align: left; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+                Accountability Status
+                <span style="font-size: 12px; font-weight: 500; background: #EEF2FF; color: var(--primary); padding: 4px 10px; border-radius: 12px;">Live</span>
+            </h1>
+            
+            <div class="grid-2">
+                <div class="status-card" id="card-adult">
+                    <div class="status-icon">🔞</div>
+                    <div class="status-title">Adult Content</div>
+                    <div class="status-value">Loading...</div>
+                </div>
+                <div class="status-card" id="card-uninstall">
+                    <div class="status-icon">🛡️</div>
+                    <div class="status-title">Uninstall Protection</div>
+                    <div class="status-value">Loading...</div>
+                </div>
+                <div class="status-card" id="card-strict">
+                    <div class="status-icon">🔒</div>
+                    <div class="status-title">Strict Mode</div>
+                    <div class="status-value">Loading...</div>
+                </div>
+                <div class="status-card" id="card-smart">
+                    <div class="status-icon">🧠</div>
+                    <div class="status-title">Smart Blocking</div>
+                    <div class="status-value">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="text-align: left;">
+            <div class="section-title">Activity Log</div>
+            <div class="timeline" id="logTimeline">
+                <div style="color: var(--text-muted); font-size: 14px;">Loading logs...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_BASE = 'https://blockermax-affiliate.plide.workers.dev';
+    
+    // Get token from URL (e.g. ?token=XYZ)
+    const urlParams = new URLSearchParams(window.location.search);
+    const partnerToken = urlParams.get('token');
+
+    let jwtToken = localStorage.getItem(`partner_jwt_${partnerToken}`);
+
+    function switchView(viewId) {
+        document.querySelectorAll('#view-loading, #view-setup, #view-login, #view-dashboard').forEach(el => el.style.display = 'none');
+        document.getElementById(viewId).style.display = 'block';
+    }
+
+    async function init() {
+        if (!partnerToken) {
+            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Invalid Link</h2><p>No token provided in URL.</p></div>';
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE}/api/partner/check/${partnerToken}`);
+            const data = await res.json();
+
+            if (!res.ok || !data.success) {
+                document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Link Expired or Invalid</h2><p>Please request a new link from the app user.</p></div>';
+                return;
+            }
+
+            if (!data.isSetupComplete) {
+                switchView('view-setup');
+            } else {
+                if (jwtToken) {
+                    loadDashboard();
+                } else {
+                    switchView('view-login');
+                }
+            }
+        } catch (e) {
+            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Network Error</h2><p>Could not connect to server.</p></div>';
+        }
+    }
+
+    async function handleSetup(e) {
+        e.preventDefault();
+        const user = document.getElementById('setupUser').value;
+        const p1 = document.getElementById('setupPass1').value;
+        const p2 = document.getElementById('setupPass2').value;
+        const errEl = document.getElementById('setupError');
+        
+        if (p1 !== p2) {
+            errEl.innerText = "Passwords do not match.";
+            errEl.style.display = 'block';
+            return;
+        }
+        errEl.style.display = 'none';
+
+        const btn = document.getElementById('setupBtn');
+        btn.disabled = true;
+        btn.innerText = 'Creating...';
+
+        try {
+            const res = await fetch(`${API_BASE}/api/partner/setup`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ token: partnerToken, username: user, password: p1 })
+            });
+            const data = await res.json();
+            
+            if (data.success) {
+                alert('Account secured successfully! Please log in.');
+                switchView('view-login');
+            } else {
+                errEl.innerText = data.error || 'Setup failed.';
+                errEl.style.display = 'block';
+            }
+        } catch (e) {
+            errEl.innerText = 'Network error.';
+            errEl.style.display = 'block';
+        }
+        btn.disabled = false;
+        btn.innerText = 'Create Secure Login';
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        const user = document.getElementById('loginUser').value;
+        const pass = document.getElementById('loginPass').value;
+        const errEl = document.getElementById('loginError');
+        
+        errEl.style.display = 'none';
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true;
+        btn.innerText = 'Authenticating...';
+
+        try {
+            const res = await fetch(`${API_BASE}/api/partner/login`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ token: partnerToken, username: user, password: pass })
+            });
+            const data = await res.json();
+            
+            if (data.success) {
+                jwtToken = data.token;
+                localStorage.setItem(`partner_jwt_${partnerToken}`, jwtToken);
+                loadDashboard();
+            } else {
+                errEl.innerText = data.error || 'Invalid credentials.';
+                errEl.style.display = 'block';
+            }
+        } catch (e) {
+            errEl.innerText = 'Network error.';
+            errEl.style.display = 'block';
+        }
+        btn.disabled = false;
+        btn.innerText = 'Access Dashboard';
+    }
+
+    function updateCard(id, isEnabled) {
+        const card = document.getElementById(id);
+        if (!card) return;
+        
+        card.className = `status-card ${isEnabled ? 'active' : 'inactive'}`;
+        card.querySelector('.status-value').innerText = isEnabled ? 'Enabled' : 'Disabled';
+    }
+
+    async function loadDashboard() {
+        switchView('view-loading');
+        try {
+            const res = await fetch(`${API_BASE}/api/partner/dashboard`, {
+                headers: {'Authorization': `Bearer ${jwtToken}`}
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                // Token invalid or expired
+                localStorage.removeItem(`partner_jwt_${partnerToken}`);
+                jwtToken = null;
+                switchView('view-login');
+                return;
+            }
+
+            switchView('view-dashboard');
+
+            if (data.status) {
+                updateCard('card-adult', data.status.adult_content_enabled);
+                updateCard('card-uninstall', data.status.uninstall_protection_enabled);
+                updateCard('card-strict', data.status.strict_mode_enabled);
+                updateCard('card-smart', data.status.smart_blocking_enabled);
+            }
+
+            const tl = document.getElementById('logTimeline');
+            tl.innerHTML = '';
+            
+            if (!data.logs || data.logs.length === 0) {
+                tl.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">No activity logged yet.</div>';
+            } else {
+                data.logs.forEach(log => {
+                    const d = new Date(log.created_at);
+                    const isRelapse = log.event_type.toLowerCase().includes('relapse');
+                    const cls = isRelapse ? 'relapse' : 'journey';
+                    
+                    tl.innerHTML += `
+                        <div class="timeline-item ${cls}">
+                            <div class="log-date">${d.toLocaleString()}</div>
+                            <div class="log-desc ${cls}">${log.event_message}</div>
+                        </div>
+                    `;
+                });
+            }
+
+        } catch (e) {
+            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Error loading dashboard</h2><p>Please refresh the page.</p></div>';
+            document.getElementById('view-loading').style.display = 'block';
+        }
+    }
+
+    // Start
+    init();
+</script>
+</body>
+</html>
