@@ -9,39 +9,90 @@
         :root {
             --primary: #4F46E5;
             --primary-hover: #4338CA;
-            --bg-color: #F9FAFB;
+            --bg-color: #F8F9FA;
             --card-bg: #FFFFFF;
             --text-main: #111827;
             --text-muted: #6B7280;
             --success: #10B981;
             --danger: #EF4444;
             --border: #E5E7EB;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
+            /* Dotted background pattern */
+            background-image: radial-gradient(#D1D5DB 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--text-main);
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
+        }
+
+        /* Top Header */
+        .top-header {
+            background-color: var(--card-bg);
+            border-radius: 9999px;
+            box-shadow: var(--header-shadow);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .header-logo {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+
+        .header-title {
+            font-size: 16px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .header-title span.bold {
+            font-weight: 700;
+        }
+
+        .header-title span.light {
+            font-weight: 400;
+        }
+
+        .header-badge {
+            background-color: #EFF6FF;
+            color: #2563EB;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-left: 8px;
         }
 
         .container {
             width: 100%;
             max-width: 600px;
-            padding: 20px;
+            padding: 0 20px 40px 20px;
             box-sizing: border-box;
         }
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 10px; /* Less radius as requested */
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
             padding: 32px;
             width: 100%;
             box-sizing: border-box;
@@ -51,8 +102,8 @@
         .mb-4 { margin-bottom: 16px; }
         .mb-6 { margin-bottom: 24px; }
         
-        h1 { font-size: 24px; font-weight: 700; margin: 0 0 8px 0; }
-        p { margin: 0; color: var(--text-muted); line-height: 1.5; }
+        h1 { font-size: 22px; font-weight: 700; margin: 0 0 8px 0; }
+        p { margin: 0; color: var(--text-muted); line-height: 1.5; font-size: 14px;}
 
         .form-group {
             margin-bottom: 16px;
@@ -61,8 +112,8 @@
 
         label {
             display: block;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             margin-bottom: 6px;
             color: var(--text-main);
         }
@@ -71,8 +122,8 @@
             width: 100%;
             padding: 10px 14px;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 15px;
+            border-radius: 6px;
+            font-size: 14px;
             box-sizing: border-box;
             font-family: inherit;
             transition: border-color 0.2s;
@@ -90,8 +141,8 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s;
@@ -103,7 +154,7 @@
 
         .error-msg {
             color: var(--danger);
-            font-size: 14px;
+            font-size: 13px;
             margin-top: 8px;
             display: none;
         }
@@ -117,10 +168,10 @@
         }
 
         .status-card {
-            background: #F3F4F6;
-            border-radius: 12px;
+            background: #F9FAFB;
+            border-radius: 8px;
             padding: 16px;
-            text-align: center;
+            text-align: left;
             border: 1px solid var(--border);
             transition: all 0.2s;
         }
@@ -135,8 +186,10 @@
             border-color: #FECACA;
         }
 
-        .status-icon {
-            font-size: 24px;
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 8px;
         }
 
@@ -146,10 +199,19 @@
             color: var(--text-muted);
         }
 
+        /* Small indicator dot instead of emoji */
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #D1D5DB;
+        }
+        .active .status-dot { background-color: var(--success); }
+        .inactive .status-dot { background-color: var(--danger); }
+
         .status-value {
             font-size: 15px;
             font-weight: 700;
-            margin-top: 4px;
         }
         
         .active .status-value { color: var(--success); }
@@ -157,14 +219,14 @@
 
         .timeline {
             position: relative;
-            padding-left: 24px;
+            padding-left: 20px;
             text-align: left;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 7px;
+            left: 5px;
             top: 0;
             bottom: 0;
             width: 2px;
@@ -173,16 +235,16 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -24px;
-            top: 4px;
-            width: 16px;
-            height: 16px;
+            left: -21px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: var(--card-bg);
             border: 2px solid var(--border);
@@ -192,44 +254,136 @@
         .timeline-item.journey::before { border-color: var(--primary); }
 
         .log-date {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             margin-bottom: 4px;
+            font-weight: 500;
         }
 
         .log-desc {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text-main);
-            background: #F3F4F6;
+            background: #F9FAFB;
             padding: 10px 14px;
-            border-radius: 8px;
+            border-radius: 6px;
             display: inline-block;
-            margin-top: 4px;
+            border: 1px solid var(--border);
         }
 
-        .log-desc.relapse { background: #FEF2F2; color: #991B1B; }
-        .log-desc.journey { background: #EEF2FF; color: #3730A3; }
+        .log-desc.relapse { background: #FEF2F2; color: #991B1B; border-color: #FECACA; }
+        .log-desc.journey { background: #EEF2FF; color: #3730A3; border-color: #C7D2FE; }
 
         .section-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             margin-bottom: 16px;
             text-align: left;
             border-bottom: 1px solid var(--border);
             padding-bottom: 8px;
         }
+
+        .scrollable-logs {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: #CBD5E1 transparent;
+        }
+
+        .scrollable-logs::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollable-logs::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollable-logs::-webkit-scrollbar-thumb {
+            background-color: #CBD5E1;
+            border-radius: 10px;
+        }
         
         #view-setup, #view-login, #view-dashboard, #view-loading { display: none; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px 24px 16px;
+            }
+
+            .card {
+                padding: 24px 16px;
+            }
+
+            .top-header {
+                margin-top: 24px;
+                margin-bottom: 24px;
+                padding: 8px 12px;
+            }
+
+            .header-title {
+                font-size: 14px;
+            }
+
+            .header-badge {
+                font-size: 10px;
+                padding: 4px 8px;
+                margin-left: 4px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr; /* 1 column on mobile */
+                gap: 12px;
+            }
+
+            .status-card {
+                padding: 16px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .status-header {
+                margin-bottom: 0;
+            }
+
+            .status-title {
+                font-size: 14px;
+            }
+
+            .status-value {
+                font-size: 14px;
+            }
+
+            .status-dot {
+                margin-left: 8px;
+            }
+        }
     </style>
 </head>
 <body>
+
+<!-- Header Pill -->
+<div class="top-header">
+    <img src="../logo.png" alt="BlockerMax Logo" class="header-logo">
+    <div class="header-title">
+        <span class="light">BlockerMax</span>
+        <span class="bold">Accountability Partner</span>
+    </div>
+    <div class="header-badge">Partner Access</div>
+</div>
 
 <div class="container text-center">
     <!-- Loading -->
     <div id="view-loading" style="display: block;">
         <div class="card">
-            <h2 style="color: var(--text-muted);">Verifying Secure Link...</h2>
+            <h2 style="color: var(--text-muted); font-size: 16px; margin: 0;">Verifying Secure Link...</h2>
         </div>
     </div>
 
@@ -252,7 +406,7 @@
                 <input type="password" id="setupPass2" required placeholder="Confirm your password">
             </div>
             <div id="setupError" class="error-msg"></div>
-            <button type="submit" class="btn" id="setupBtn">Create Secure Login</button>
+            <button type="submit" class="btn" id="setupBtn" style="margin-top: 8px;">Create Secure Login</button>
         </form>
     </div>
 
@@ -271,37 +425,45 @@
                 <input type="password" id="loginPass" required placeholder="Your password">
             </div>
             <div id="loginError" class="error-msg"></div>
-            <button type="submit" class="btn" id="loginBtn">Access Dashboard</button>
+            <button type="submit" class="btn" id="loginBtn" style="margin-top: 8px;">Access Dashboard</button>
         </form>
     </div>
 
     <!-- Dashboard View -->
     <div id="view-dashboard">
-        <div class="card mb-6" style="padding-bottom: 16px;">
-            <h1 style="text-align: left; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="card mb-6" style="padding-bottom: 24px;">
+            <h1 style="text-align: left; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 18px;">
                 Accountability Status
-                <span style="font-size: 12px; font-weight: 500; background: #EEF2FF; color: var(--primary); padding: 4px 10px; border-radius: 12px;">Live</span>
+                <span style="font-size: 11px; font-weight: 600; background: #EEF2FF; color: var(--primary); padding: 4px 10px; border-radius: 6px;">Live Updates</span>
             </h1>
             
             <div class="grid-2">
                 <div class="status-card" id="card-adult">
-                    <div class="status-icon">🔞</div>
-                    <div class="status-title">Adult Content</div>
+                    <div class="status-header">
+                        <div class="status-title">Adult Content</div>
+                        <div class="status-dot"></div>
+                    </div>
                     <div class="status-value">Loading...</div>
                 </div>
                 <div class="status-card" id="card-uninstall">
-                    <div class="status-icon">🛡️</div>
-                    <div class="status-title">Uninstall Protection</div>
+                    <div class="status-header">
+                        <div class="status-title">Uninstall Protection</div>
+                        <div class="status-dot"></div>
+                    </div>
                     <div class="status-value">Loading...</div>
                 </div>
                 <div class="status-card" id="card-strict">
-                    <div class="status-icon">🔒</div>
-                    <div class="status-title">Strict Mode</div>
+                    <div class="status-header">
+                        <div class="status-title">Strict Mode</div>
+                        <div class="status-dot"></div>
+                    </div>
                     <div class="status-value">Loading...</div>
                 </div>
                 <div class="status-card" id="card-smart">
-                    <div class="status-icon">🧠</div>
-                    <div class="status-title">Smart Blocking</div>
+                    <div class="status-header">
+                        <div class="status-title">Smart Blocking</div>
+                        <div class="status-dot"></div>
+                    </div>
                     <div class="status-value">Loading...</div>
                 </div>
             </div>
@@ -309,8 +471,10 @@
 
         <div class="card" style="text-align: left;">
             <div class="section-title">Activity Log</div>
-            <div class="timeline" id="logTimeline">
-                <div style="color: var(--text-muted); font-size: 14px;">Loading logs...</div>
+            <div class="scrollable-logs">
+                <div class="timeline" id="logTimeline">
+                    <div style="color: var(--text-muted); font-size: 13px;">Loading logs...</div>
+                </div>
             </div>
         </div>
     </div>
@@ -332,7 +496,7 @@
 
     async function init() {
         if (!partnerToken) {
-            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Invalid Link</h2><p>No token provided in URL.</p></div>';
+            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Invalid Link</h2><p>No token provided in URL.</p></div>';
             return;
         }
 
@@ -341,7 +505,7 @@
             const data = await res.json();
 
             if (!res.ok || !data.success) {
-                document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Link Expired or Invalid</h2><p>Please request a new link from the app user.</p></div>';
+                document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Link Expired or Invalid</h2><p>Please request a new link from the app user.</p></div>';
                 return;
             }
 
@@ -355,7 +519,7 @@
                 }
             }
         } catch (e) {
-            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Network Error</h2><p>Could not connect to server.</p></div>';
+            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Network Error</h2><p>Could not connect to server.</p></div>';
         }
     }
 
@@ -386,7 +550,6 @@
             const data = await res.json();
             
             if (data.success) {
-                alert('Account secured successfully! Please log in.');
                 switchView('view-login');
             } else {
                 errEl.innerText = data.error || 'Setup failed.';
@@ -472,7 +635,7 @@
             tl.innerHTML = '';
             
             if (!data.logs || data.logs.length === 0) {
-                tl.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">No activity logged yet.</div>';
+                tl.innerHTML = '<div style="color: var(--text-muted); font-size: 13px;">No activity logged yet.</div>';
             } else {
                 data.logs.forEach(log => {
                     const d = new Date(log.created_at);
@@ -489,7 +652,7 @@
             }
 
         } catch (e) {
-            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger)">Error loading dashboard</h2><p>Please refresh the page.</p></div>';
+            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Error loading dashboard</h2><p>Please refresh the page.</p></div>';
             document.getElementById('view-loading').style.display = 'block';
         }
     }
