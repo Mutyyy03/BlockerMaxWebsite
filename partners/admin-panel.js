@@ -245,9 +245,10 @@ window.addInfluencer = async function(e) {
     const firstMonthPct  = parseFloat(document.getElementById('add-firstMonth').value);
     const recurringPct   = parseFloat(document.getElementById('add-recurring').value);
     const walletAddress  = document.getElementById('add-walletAddress').value.trim();
+    const payoutMethod   = document.getElementById('add-payoutMethod').value;
 
     // Sosyal medya URL'leri (boş olanları filtrele)
-    const socials = [
+    const socialAccounts = [
         document.getElementById('add-social-youtube').value.trim(),
         document.getElementById('add-social-tiktok').value.trim(),
         document.getElementById('add-social-instagram').value.trim(),
@@ -267,7 +268,7 @@ window.addInfluencer = async function(e) {
         await adminFetch('/api/admin/influencers', {
             method: 'POST',
             body: JSON.stringify({
-                username, password, fullName, promoCode, firstMonthPct, recurringPct, walletAddress
+                username, password, fullName, promoCode, firstMonthPct, recurringPct, walletAddress, payoutMethod, socialAccounts
             })
         });
 
