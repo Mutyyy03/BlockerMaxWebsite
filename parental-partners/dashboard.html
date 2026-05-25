@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BlockerMax Partner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="Parental Control AppIcon-opt.png" alt="BlockerMax" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">
+                <span>Parental Control : BlockerMax</span>Dashboard
+            </div>
+            <button class="menu-toggle" aria-label="Toggle Menu" onclick="document.querySelector('.navbar-nav').classList.toggle('active-menu'); this.classList.toggle('open');">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-nav">
+                <a href="login.html" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 mb-4">
+        
+        <style>
+            /* iOS Switch */
+            .switch { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; margin-right: 8px; }
+            .switch input { opacity: 0; width: 0; height: 0; }
+            .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.1); transition: .3s; border-radius: 24px; }
+            .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+            input:checked + .slider { background-color: var(--primary-color); }
+            input:checked + .slider:before { transform: translateX(20px); }
+
+            @media (max-width: 768px) {
+                /* Narrower margins for more content space */
+                html, body { 
+                    overflow-x: hidden !important; 
+                    width: 100% !important; 
+                }
+                .container { 
+                    width: 96% !important; 
+                    max-width: 96% !important;
+                    margin: 0 auto !important;
+                    padding: 0 !important;
+                }
+                
+                /* Navbar */
+                .navbar { 
+                    width: 100% !important; 
+                    margin: 0 0 20px 0 !important; 
+                    border-radius: 0 !important; 
+                    padding: 12px 16px !important;
+                }
+                .navbar .container { width: 100% !important; max-width: 100% !important; }
+                
+                /* Vertical Tabs */
+                .tabs { 
+                    flex-direction: column !important; 
+                    align-items: flex-start !important; 
+                    gap: 12px !important; 
+                }
+                .tabs > div { 
+                    width: 100% !important; 
+                    display: flex !important; 
+                    gap: 8px !important; 
+                }
+                .tab-btn { padding: 8px 10px !important; flex: 1; text-align: center; font-size: 14px !important; }
+
+                /* Header Card: Left aligned flow */
+                .overview-top { 
+                    flex-direction: column !important; 
+                    align-items: flex-start !important; 
+                    gap: 20px !important;
+                    padding: 24px !important;
+                }
+                .overview-main {
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+                    gap: 16px !important;
+                }
+                .overview-top > div { width: 100% !important; text-align: left !important; }
+                .overview-top h3 { font-size: 20px !important; }
+                .overview-top h2 { font-size: 32px !important; }
+                
+                /* Metrics Grid: Slightly larger values */
+                .metrics-grid { 
+                    grid-template-columns: 1fr 1fr !important; 
+                    gap: 8px !important; 
+                }
+                .metrics-grid .card { padding: 12px !important; }
+                .metrics-grid .card div:first-child { font-size: 12px !important; }
+                .metrics-grid .card div:last-child { font-size: 24px !important; }
+
+                /* Tables and Cards */
+                .card { padding: 16px !important; width: 100% !important; }
+                .table-responsive { width: 100% !important; overflow-x: auto !important; }
+                .switch { transform: scale(1.1) !important; }
+                .desktop-right { text-align: left !important; }
+                .wallet-header { padding: 0 12px !important; }
+            }
+
+            /* Segmented Tabs (iOS Style) */
+            .tabs-wrapper { display: flex; justify-content: center; width: 100%; margin-bottom: 32px; }
+            .tabs-segmented { display: inline-flex; background: rgba(0,0,0,0.06); padding: 3px; border-radius: 9px; }
+            .tab-btn-segmented { padding: 8px 20px; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; border-radius: 6px; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+            .tab-btn-segmented.active { background: #FFF; color: var(--text-main); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+            .btn-outline { background: #fff; border: 1px solid var(--border-color); color: var(--text-main); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+            .btn-outline:hover { background: #f9f9f9; border-color: #ccc; }
+            .desktop-only { display: flex !important; }
+            .mobile-only { display: none !important; }
+
+            @media (max-width: 1024px) {
+                .desktop-only { display: none !important; }
+                .mobile-only { display: flex !important; }
+            }
+
+            @media (max-width: 768px) {
+                .tabs-segmented { width: 100%; }
+                .tab-btn-segmented { flex: 1; padding: 10px 12px; }
+            }
+        </style>
+        <div class="tabs-wrapper">
+            <div class="tabs-segmented">
+                <button class="tab-btn-segmented active" onclick="switchTab('overview')">Overview</button>
+                <button class="tab-btn-segmented" onclick="switchTab('creator-kit')">Creator Kit</button>
+            </div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <!-- Wallet Header Row -->
+            <div class="wallet-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; width: 100%;">
+                <h2 id="welcome-title" style="font-size: 22px; margin: 0; font-weight: 700; color: var(--text-main);">Welcome</h2>
+            </div>
+
+            <div class="card overview-top" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Next Payout Date</p>
+                    <h3 id="metric-payout-date" style="margin: 0;">20th of every month</h3>
+                </div>
+                <div class="desktop-right" style="text-align: right;">
+                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Current Balance</p>
+                    <h2 id="metric-balance" style="margin: 0; color: var(--primary-color);">$0.00</h2>
+                </div>
+            </div>
+
+            <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
+                <div class="card" style="padding: 16px; margin-bottom: 0;">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Paid Users</div>
+                    <div id="metric-paid" style="font-size: 20px; font-weight: 700; color: var(--text-main);">0</div>
+                </div>
+                <div class="card" style="padding: 16px; margin-bottom: 0;">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Active Subs</div>
+                    <div id="metric-subs" style="font-size: 20px; font-weight: 700; color: var(--text-main);">0</div>
+                </div>
+                <div class="card" style="padding: 16px; margin-bottom: 0; border-color: rgba(0,122,255,0.2); background: rgba(0,122,255,0.03);">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--primary-color); letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 700;">Total Revenue</div>
+                    <div id="metric-earnings" style="font-size: 20px; font-weight: 700; color: var(--primary-color);">$0.00</div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Transactions</h3>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event Type</th>
+                                <th>Revenue</th>
+                                <th>Commission</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tx-tbody-real">
+                        </tbody>
+                        <tbody id="tx-tbody-empty" style="display: none;">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                                    <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
+                                    <div style="font-weight: 600; margin-bottom: 4px;">No transactions yet</div>
+                                    <div style="font-size: 13px;">Share your promo code to start earning commissions!</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Payout History Card -->
+            <div class="card mt-3" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3 class="card-title">Payout History</h3>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Reference</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payout-tbody-real" style="display: none;">
+                            <!-- Dinamik Doldurulacak -->
+                        </tbody>
+                        <tbody id="payout-tbody-empty">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                                    <div style="font-size: 32px; margin-bottom: 12px;">💸</div>
+                                    <div style="font-weight: 600; margin-bottom: 4px;">No payouts yet</div>
+                                    <div style="font-size: 13px;">Your earned commissions will be transferred to you and listed here.</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creator Kit Tab -->
+        <div id="creator-kit" class="tab-content">
+            <div class="grid grid-2">
+                <!-- Promo Code -->
+                <div class="card">
+                    <h3>Your Promo Code</h3>
+                    <p>Share this code with your audience so they get a discount and you get commission.</p>
+                    <div class="copy-field mt-3">
+                        <input type="text" class="form-control" value="JOHN50" readonly id="promoCodeInput" style="font-size: 18px; font-weight: bold; color: var(--primary-color);">
+                        <button class="btn btn-primary" onclick="copyCode()">Copy</button>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4>Audience Benefits</h4>
+                        <ul style="padding-left: 20px; font-size: 14px; color: var(--text-muted); margin-top: 8px;">
+                            <li>20% discount on the first month OR extended free trial.</li>
+                            <li>Users must enter code <strong>JOHN50</strong> inside the app to activate premium.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Brand Assets -->
+                <div class="card">
+                    <h3>Brand Assets</h3>
+                    <p>Download official media to use in your content.</p>
+                    
+                    <a href="../Creator%20Kit.zip" download class="btn btn-primary btn-block" style="margin-top: 16px; margin-bottom: 24px; padding: 12px; font-weight: 600; justify-content: center;">📦 Download Full Kit (ZIP)</a>
+                    
+                    <h4 style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 12px;">Individual Assets</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/App%20Screenshots.zip" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">📱 App Screenshots (ZIP)</a></li>
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Highres_Logo.png" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">✨ High-Res Logo</a></li>
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Video.mp4" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎥 Demo Video</a></li>
+                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Journey%20Cards.zip" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎨 Feature Visuals (ZIP)</a></li>
+                        <li><a href="../bgmusic.aac" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎵 Background Audio</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Talking Points -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">Talking Points & Script Outline</h3>
+                </div>
+                <style>
+                    /* Accordion Styles */
+                    .accordion { display: flex; flex-direction: column; gap: 12px; }
+                    .accordion-item { background: transparent; border: 1px solid rgba(0,0,0,0.05); border-radius: var(--radius-sm); overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+                    .accordion-header { padding: 16px 20px; font-weight: 600; font-size: 15px; color: var(--text-main); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.7); transition: background 0.2s; }
+                    .accordion-header::-webkit-details-marker { display: none; }
+                    .accordion-header::after { content: '+'; font-size: 20px; color: var(--text-muted); line-height: 1; }
+                    .accordion-item:hover .accordion-header { background: rgba(255,255,255,0.9); }
+                    details[open] .accordion-header::after { content: '−'; }
+                    details[open] .accordion-header { border-bottom: 1px solid rgba(0,0,0,0.05); background: #FFFFFF; }
+                    .accordion-content { padding: 24px; background: rgba(255,255,255,0.3); display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+                    .tp-box { background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; }
+                    .tp-box h4 { margin-bottom: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+                    .tp-box p { font-size: 13px; margin-bottom: 0; line-height: 1.5; color: var(--text-main); flex-grow: 1; }
+                </style>
+                <div class="accordion">
+                    <!-- Point 1 -->
+                    <details class="accordion-item" open>
+                        <summary class="accordion-header">Talking Point 1 — Recovery Focus</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>A lot of people don’t just need motivation — they need a system that protects them when willpower drops.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax helps users reduce adult content triggers, stay protected, and build a healthier recovery routine over time.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Strict Mode</strong> keeps blocking active when users are most vulnerable, making it harder to bypass protection impulsively.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Download BlockerMax today and use my code <strong style="color: var(--primary-color);">JOHN50</strong> inside the app for a special discount.”</p>
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <!-- Point 2 -->
+                    <details class="accordion-item">
+                        <summary class="accordion-header">Talking Point 2 — Urge Control</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>Urges can hit suddenly, and one weak moment can break days or weeks of progress.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax gives users practical tools to pause, block triggers, and stay on track during difficult moments.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Panic Mode SOS</strong> gives quick support when urges hit, helping users slow down before making a decision.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Start your recovery journey with BlockerMax and use my code <strong style="color: var(--primary-color);">JOHN50</strong> for a special discount.”</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Point 3 -->
+                    <details class="accordion-item">
+                        <summary class="accordion-header">Talking Point 3 — Accountability</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>Most people fail because blocking tools are too easy to disable when they actually need them.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax is designed to make protection stronger, helping users stay accountable even when motivation is low.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Uninstall Protection</strong> helps prevent impulsive app removal, so users don’t lose protection in weak moments.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Try BlockerMax today and use my code <strong style="color: var(--primary-color);">JOHN50</strong> inside the app to unlock your special offer.”</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Point 4 -->
+                    <details class="accordion-item">
+                        <summary class="accordion-header">Talking Point 4 — Progress & Habit Change</summary>
+                        <div class="accordion-content">
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Problem</h4>
+                                <p>Quitting adult content is harder when you can’t see your progress or understand your patterns.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--success);">Solution</h4>
+                                <p>BlockerMax helps users track clean days, mood, energy, and progress so they can stay motivated long-term.</p>
+                            </div>
+                            <div class="tp-box">
+                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
+                                <p><strong>Streak & Mood Tracking</strong> makes recovery visible and helps users understand how their habits affect their life.</p>
+                            </div>
+                            <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
+                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;">“Download BlockerMax and use my code <strong style="color: var(--primary-color);">JOHN50</strong> to start building better habits today.”</p>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Custom scripts handled by dashboard.js -->
+    <footer style="background-color: #fff; padding: 40px 20px; border-top: 1px solid var(--border-color); margin-top: 60px;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <p style="margin: 0; font-size: 13px; color: var(--text-muted);">© 2026 BlockerMax. All rights reserved.</p>
+            <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                <a href="affiliate-terms.html" style="font-size: 13px; color: var(--text-muted);">Affiliate Terms</a>
+                <a href="https://blockermax.com/privacy-policy.html" style="font-size: 13px; color: var(--text-muted);">Privacy Policy</a>
+                <a href="https://blockermax.com/support.html" style="font-size: 13px; color: var(--text-muted);">Contact</a>
+            </div>
+        </div>
+    </footer>
+    <script src="dashboard.js"></script>
+</body>
+</html>
