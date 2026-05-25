@@ -707,8 +707,13 @@
             } else {
                 data.logs.forEach(log => {
                     const d = new Date(log.created_at);
-                    const isRelapse = log.event_type.toLowerCase().includes('relapse');
-                    const cls = isRelapse ? 'relapse' : 'journey';
+                    const typeLower = log.event_type.toLowerCase();
+                    const msgLower = log.event_message.toLowerCase();
+                    
+                    // Olumsuz kelimelerin tespiti (İngilizce ve Türkçe)
+                    const isNegative = typeLower.includes('relapse') || typeLower.includes('block') || typeLower.includes('violation') || typeLower.includes('tamper') || typeLower.includes('alert') || msgLower.includes('block') || msgLower.includes('engellendi') || msgLower.includes('attempt') || msgLower.includes('kapatıldı') || msgLower.includes('ihlal');
+                    
+                    const cls = isNegative ? 'relapse' : 'journey';
                     
                     tl.innerHTML += `
                         <div class="timeline-item ${cls}">
