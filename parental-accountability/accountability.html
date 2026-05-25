@@ -483,6 +483,73 @@
 <script>
     const API_BASE = 'https://blockermax-affiliate.plide.workers.dev';
     
+    // Translation Dictionary
+    const trDict = {
+        'Parent Access': 'Ebeveyn Erişimi',
+        'Verifying Secure Link...': 'Güvenli Bağlantı Doğrulanıyor...',
+        'Invalid Link': 'Geçersiz Bağlantı',
+        "No token provided in URL.": "URL'de token bulunamadı.",
+        'Link Expired or Invalid': 'Bağlantı Süresi Dolmuş veya Geçersiz',
+        'Please request a new link from the app user.': 'Lütfen uygulama kullanıcısından yeni bir bağlantı isteyin.',
+        'Network Error': 'Ağ Hatası',
+        'Could not connect to server.': 'Sunucuya bağlanılamadı.',
+        'Welcome, Parent': 'Hoş Geldiniz, Ebeveyn',
+        'Please create a secure login to monitor activity reports.': 'Aktivite raporlarını izlemek için lütfen güvenli bir giriş oluşturun.',
+        'Email Address': 'E-posta Adresi',
+        'Password': 'Şifre',
+        'Confirm Password': 'Şifreyi Onayla',
+        'Create Secure Login': 'Güvenli Giriş Oluştur',
+        'Parent Login': 'Ebeveyn Girişi',
+        'Enter your credentials to view device status.': 'Cihaz durumunu görmek için bilgilerinizi girin.',
+        'Access Dashboard': 'Kontrol Paneline Eriş',
+        'Device Status': 'Cihaz Durumu',
+        'Live Updates': 'Canlı',
+        'Adult Content': 'Yetişkin İçeriği',
+        'Uninstall Protection': 'Silinme Koruması',
+        'Strict Mode': 'Katı Mod',
+        'Smart Blocking': 'Akıllı Engelleme',
+        'Loading...': 'Yükleniyor...',
+        'Activity Log': 'Aktivite Günlüğü',
+        'Loading logs...': 'Günlükler yükleniyor...',
+        'Enabled': 'Açık',
+        'Disabled': 'Kapalı',
+        'No activity logged yet.': 'Henüz kaydedilmiş bir aktivite yok.',
+        'Passwords do not match.': 'Şifreler eşleşmiyor.',
+        'Creating...': 'Oluşturuluyor...',
+        'Setup failed.': 'Kurulum başarısız.',
+        'Authenticating...': 'Doğrulanıyor...',
+        'Invalid credentials.': 'Geçersiz bilgiler.',
+        'Error loading dashboard': 'Kontrol paneli yüklenirken hata oluştu',
+        'Please refresh the page.': 'Lütfen sayfayı yenileyin.',
+        'Enter your email': 'E-postanızı girin',
+        'Enter a secure password': 'Güvenli bir şifre girin',
+        'Confirm your password': 'Şifrenizi onaylayın',
+        'Your email': 'E-postanız',
+        'Your password': 'Şifreniz'
+    };
+
+    let userLang = 'EN';
+
+    function t(text) {
+        return (userLang === 'TR' && trDict[text]) ? trDict[text] : text;
+    }
+
+    function translateDOM(node) {
+        if (node.nodeType === 3) {
+            let text = node.nodeValue.trim();
+            if (text && trDict[text]) {
+                node.nodeValue = node.nodeValue.replace(text, trDict[text]);
+            }
+        } else if (node.nodeType === 1) {
+            if (node.tagName === 'INPUT' && node.placeholder) {
+                if (trDict[node.placeholder]) node.placeholder = trDict[node.placeholder];
+            }
+            for (let i = 0; i < node.childNodes.length; i++) {
+                translateDOM(node.childNodes[i]);
+            }
+        }
+    }
+    
     // Get token from URL (e.g. ?token=XYZ)
     const urlParams = new URLSearchParams(window.location.search);
     const partnerToken = urlParams.get('token');
@@ -496,7 +563,7 @@
 
     async function init() {
         if (!partnerToken) {
-            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Invalid Link</h2><p>No token provided in URL.</p></div>';
+            document.getElementById('view-loading').innerHTML = `<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">${t('Invalid Link')}</h2><p>${t("No token provided in URL.")}</p></div>`;
             return;
         }
 
@@ -505,7 +572,7 @@
             const data = await res.json();
 
             if (!res.ok || !data.success) {
-                document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Link Expired or Invalid</h2><p>Please request a new link from the app user.</p></div>';
+                document.getElementById('view-loading').innerHTML = `<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">${t('Link Expired or Invalid')}</h2><p>${t('Please request a new link from the app user.')}</p></div>`;
                 return;
             }
 
@@ -519,7 +586,7 @@
                 }
             }
         } catch (e) {
-            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Network Error</h2><p>Could not connect to server.</p></div>';
+            document.getElementById('view-loading').innerHTML = `<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">${t('Network Error')}</h2><p>${t('Could not connect to server.')}</p></div>`;
         }
     }
 
@@ -531,7 +598,7 @@
         const errEl = document.getElementById('setupError');
         
         if (p1 !== p2) {
-            errEl.innerText = "Passwords do not match.";
+            errEl.innerText = t('Passwords do not match.');
             errEl.style.display = 'block';
             return;
         }
@@ -539,7 +606,7 @@
 
         const btn = document.getElementById('setupBtn');
         btn.disabled = true;
-        btn.innerText = 'Creating...';
+        btn.innerText = t('Creating...');
 
         try {
             const res = await fetch(`${API_BASE}/api/partner/setup`, {
@@ -552,15 +619,15 @@
             if (data.success) {
                 switchView('view-login');
             } else {
-                errEl.innerText = data.error || 'Setup failed.';
+                errEl.innerText = data.error || t('Setup failed.');
                 errEl.style.display = 'block';
             }
         } catch (e) {
-            errEl.innerText = 'Network error.';
+            errEl.innerText = t('Network Error');
             errEl.style.display = 'block';
         }
         btn.disabled = false;
-        btn.innerText = 'Create Secure Login';
+        btn.innerText = t('Create Secure Login');
     }
 
     async function handleLogin(e) {
@@ -572,7 +639,7 @@
         errEl.style.display = 'none';
         const btn = document.getElementById('loginBtn');
         btn.disabled = true;
-        btn.innerText = 'Authenticating...';
+        btn.innerText = t('Authenticating...');
 
         try {
             const res = await fetch(`${API_BASE}/api/partner/login`, {
@@ -587,23 +654,24 @@
                 localStorage.setItem(`partner_jwt_${partnerToken}`, jwtToken);
                 loadDashboard();
             } else {
-                errEl.innerText = data.error || 'Invalid credentials.';
+                errEl.innerText = data.error || t('Invalid credentials.');
                 errEl.style.display = 'block';
             }
         } catch (e) {
-            errEl.innerText = 'Network error.';
+            errEl.innerText = t('Network Error');
             errEl.style.display = 'block';
         }
         btn.disabled = false;
-        btn.innerText = 'Access Dashboard';
+        btn.innerText = t('Access Dashboard');
     }
 
-    function updateCard(id, isEnabled) {
+    function updateCard(id, isEnabled, titleKey) {
         const card = document.getElementById(id);
         if (!card) return;
         
+        if (titleKey) card.querySelector('.status-title').innerText = t(titleKey);
         card.className = `status-card ${isEnabled ? 'active' : 'inactive'}`;
-        card.querySelector('.status-value').innerText = isEnabled ? 'Enabled' : 'Disabled';
+        card.querySelector('.status-value').innerText = isEnabled ? t('Enabled') : t('Disabled');
     }
 
     async function loadDashboard() {
@@ -625,17 +693,17 @@
             switchView('view-dashboard');
 
             if (data.status) {
-                updateCard('card-adult', data.status.adult_content_enabled);
-                updateCard('card-uninstall', data.status.uninstall_protection_enabled);
-                updateCard('card-strict', data.status.strict_mode_enabled);
-                updateCard('card-smart', data.status.smart_blocking_enabled);
+                updateCard('card-adult', data.status.adult_content_enabled, 'Adult Content');
+                updateCard('card-uninstall', data.status.uninstall_protection_enabled, 'Uninstall Protection');
+                updateCard('card-strict', data.status.strict_mode_enabled, 'Strict Mode');
+                updateCard('card-smart', data.status.smart_blocking_enabled, 'Smart Blocking');
             }
 
             const tl = document.getElementById('logTimeline');
             tl.innerHTML = '';
             
             if (!data.logs || data.logs.length === 0) {
-                tl.innerHTML = '<div style="color: var(--text-muted); font-size: 13px;">No activity logged yet.</div>';
+                tl.innerHTML = `<div style="color: var(--text-muted); font-size: 13px;">${t('No activity logged yet.')}</div>`;
             } else {
                 data.logs.forEach(log => {
                     const d = new Date(log.created_at);
@@ -652,13 +720,35 @@
             }
 
         } catch (e) {
-            document.getElementById('view-loading').innerHTML = '<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">Error loading dashboard</h2><p>Please refresh the page.</p></div>';
+            document.getElementById('view-loading').innerHTML = `<div class="card"><h2 style="color:var(--danger); font-size: 16px; margin:0 0 8px 0;">${t('Error loading dashboard')}</h2><p>${t('Please refresh the page.')}</p></div>`;
             document.getElementById('view-loading').style.display = 'block';
         }
     }
 
+    async function startApp() {
+        try {
+            const res = await fetch('https://1.1.1.1/cdn-cgi/trace');
+            const text = await res.text();
+            const lines = text.split('\n');
+            const locLine = lines.find(l => l.startsWith('loc='));
+            if (locLine && locLine.split('=')[1] === 'TR') {
+                userLang = 'TR';
+            }
+        } catch(e) {
+            // Fallback to browser language
+            if (navigator.language && navigator.language.includes('tr')) {
+                userLang = 'TR';
+            }
+        }
+
+        if (userLang === 'TR') {
+            translateDOM(document.body);
+        }
+        init();
+    }
+
     // Start
-    init();
+    startApp();
 </script>
 </body>
 </html>
