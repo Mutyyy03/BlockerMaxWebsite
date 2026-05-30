@@ -14,7 +14,8 @@
         .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 0 64px; gap: 48px; text-align: center; }
         .hero-content { display: flex; flex-direction: column; align-items: center; max-width: 700px; }
         .hero h1 { font-size: 56px; line-height: 1.1; letter-spacing: -2px; margin-bottom: 24px; font-weight: 800; }
-        .hero h1 span { color: var(--primary-color); }
+        .accent { color: var(--primary-color); }
+        .hero p .accent { font-weight: 700; }
         .hero p { font-size: 18px; color: var(--text-muted); max-width: 540px; margin: 0 0 36px; line-height: 1.6; }
         .hero-cta { display: flex; gap: 12px; justify-content: flex-start; flex-wrap: wrap; }
         .hero-image { flex: 1; display: flex; justify-content: flex-end; }
@@ -438,12 +439,12 @@
             <div class="hero-content">
                 <div class="hero-badges" style="display: flex; gap: 12px; margin-bottom: 24px;">
                     <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" target="_blank" style="display: block; transition: transform 0.2s ease;">
-                        <img src="../Appstore.svg" alt="App Store" style="height: 34px; width: auto; background: #fff; border-radius: 6px; padding: 1px; display: block;">
+                        <img src="../Appstore.svg" alt="App Store" style="height: 50px; width: auto; display: block;">
                     </a>
                 </div>
                 <div class="section-label"><span data-en="Affiliate Program" data-tr="Ortaklık Programı">Affiliate Program</span></div>
-                <h1><span data-en="Join BlockerMax" data-tr="BlockerMax">Join BlockerMax</span><br><span data-en="Affiliate Program" data-tr="Ortaklık Programına Katıl">Affiliate Program</span></h1>
-                <p><span data-en="Become a sales partner: recommend BlockerMax Parental Control to your audience and earn a 30% revenue share. As long as your users stay subscribed, you keep earning every month." data-tr="Satış ortağımız olun: kitlenize BlockerMax Parental Control'ü önerin ve %30 gelir payı kazanın. Kullanıcılarınız abone kaldıkça her ay kazanmaya devam edin.">Become a sales partner: recommend BlockerMax Parental Control to your audience and earn a 30% revenue share. As long as your users stay subscribed, you keep earning every month.</span></p>
+                <h1><span class="accent">BlockerMax</span><br><span data-en="Sales Partner" data-tr="Satış Ortağı Olun">Sales Partner</span></h1>
+                <p><span data-en="Recommend BlockerMax Parental Control to your audience and earn a " data-tr="Kitlenize BlockerMax Parental Control'ü önerin ve ">Recommend BlockerMax Parental Control to your audience and earn a </span><b class="accent" data-en="30% revenue share" data-tr="%30 gelir payı kazanın">30% revenue share</b><span data-en=". As long as your users stay subscribed, you keep earning every month." data-tr=". Kullanıcılarınız abone kaldıkça her ay kazanmaya devam edin.">. As long as your users stay subscribed, you keep earning every month.</span></p>
                 <div class="hero-cta">
                     <a href="#apply" class="btn btn-primary" style="padding: 13px 28px; font-size: 15px;"><span data-en="Become a Partner" data-tr="Satış Ortağı Ol">Become a Partner</span></a>
                     <a href="login.html" class="btn btn-outline" style="padding: 13px 28px; font-size: 15px;"><span data-en="Partner Login" data-tr="Ortak Girişi">Partner Login</span></a>
