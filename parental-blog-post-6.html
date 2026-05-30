@@ -7,8 +7,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How Parents Can Create Healthy Digital Habits for Kids - BlockerMax</title>
     <link rel="icon" href="logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Shared header + fonts (matches parental-control.html) */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid #E2E8F0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .site-header * { box-sizing: border-box; }
+
+        .site-header-inner {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .site-header .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .site-header .brand img {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+        }
+
+        .site-header .brand span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0F172A;
+        }
+
+        .site-header .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .site-header .nav-menu a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #64748B;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .site-header .nav-menu a:hover { color: #0F172A; }
+
+        .site-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .site-header .lang-toggle {
+            display: flex;
+            border: 1px solid #E2E8F0;
+            border-radius: 999px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .site-header .lang-toggle button {
+            border: none;
+            background: transparent;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #64748B;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .site-header .lang-toggle button.active {
+            background: #2563EB;
+            color: #fff;
+        }
+
+        .site-header .hbtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            padding: 10px 20px;
+            font-size: 0.92rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            background: #2563EB;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .site-header .hbtn:hover {
+            background: #1D4ED8;
+            transform: translateY(-2px);
+        }
+
+        /* Match heading font usage from parental-control.html */
+        .parental-page h1,
+        .parental-page h2,
+        .parental-page h3,
+        .article-title,
+        .blog-title,
+        .article-content h2,
+        .article-content h3 {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 900px) {
+            .site-header .nav-menu { display: none; }
+        }
+
         .parental-page {
             background-color: #ffffff;
             color: #1a1a1a;
@@ -30,7 +162,7 @@
         }
 
         .article-main {
-            padding-top: 150px;
+            padding-top: 90px;
             padding-bottom: 100px;
             max-width: 800px;
             margin: 0 auto;
@@ -132,21 +264,32 @@
 </head>
 
 <body class="parental-page">
-    <nav class="glass-nav" style="width: 440px; padding-right: 30px; gap: 20px; justify-content: space-between;">
-        <div class="nav-left">
-            <a href="parental-control.html" class="nav-brand-link">
-                <img src="Parental Control AppIcon-opt.png" alt="Parental Control Logo" class="nav-logo-img">
-                <span class="nav-logo">BlockerMax: Parental Control</span>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a href="parental-control.html" class="brand">
+                <img src="Parental Control AppIcon-opt.png" alt="BlockerMax Parental Control">
+                <span>BlockerMax</span>
             </a>
+            <nav class="nav-menu">
+                <a href="parental-control.html#features" data-en="Features" data-tr="Özellikler">Features</a>
+                <a href="parental-control.html#how" data-en="How it works" data-tr="Nasıl çalışır">How it works</a>
+                <a href="parental-blog.html" data-en="Blog" data-tr="Blog">Blog</a>
+            </nav>
+            <div class="header-right">
+                <div class="lang-toggle">
+                    <button id="lang-en" onclick="setLang('en')">EN</button>
+                    <button id="lang-tr" onclick="setLang('tr')">TR</button>
+                </div>
+                <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="hbtn">
+                    <span data-en="Get BlockerMax" data-tr="Hemen İndir">Get BlockerMax</span>
+                </a>
+            </div>
         </div>
-        <div class="nav-right" style="margin-left: auto;">
-            <a href="parental-blog.html" class="nav-link" style="font-weight: 600;">Blog</a>
-        </div>
-    </nav>
+    </header>
 
     <main class="article-main">
         <div class="article-hero">
-            [Image placeholder]
+            <img src="Parental%20Blog%20Images/25.png" alt="Blog post image" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;">
         </div>
         <div class="article-meta">March 17, 2026</div>
         <h1 class="article-title">How Parents Can Create Healthy Digital Habits for Kids</h1>
@@ -209,6 +352,25 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script>
+        function setLang(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-en]').forEach(function (el) {
+                var txt = el.getAttribute('data-' + lang);
+                if (txt !== null) el.textContent = txt;
+            });
+            var en = document.getElementById('lang-en'), tr = document.getElementById('lang-tr');
+            if (en) en.classList.toggle('active', lang === 'en');
+            if (tr) tr.classList.toggle('active', lang === 'tr');
+            try { localStorage.setItem('bm-lang', lang); } catch (e) {}
+        }
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('bm-lang'); } catch (e) {}
+            var browser = (navigator.language || 'en').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+            setLang(saved || browser);
+        })();
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="canonical" href="https://blockermax.com/parental-blog-post-9.html" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Up Parental Controls on a New iPhone (2026 Guide) - BlockerMax</title>
+    <meta name="description" content="Setting up a new iPhone for your child? Follow this 2026 guide to configure parental controls, Screen Time, content filters, and app limits the right way.">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Set Up Parental Controls on a New iPhone (2026 Guide) - BlockerMax">
+    <meta property="og:description" content="Setting up a new iPhone for your child? Follow this 2026 guide to configure parental controls, Screen Time, content filters, and app limits the right way.">
+    <meta property="og:url" content="https://blockermax.com/parental-blog-post-9.html">
+    <meta property="og:image" content="https://blockermax.com/logo.png">
+    <meta property="og:site_name" content="BlockerMax">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Set Up Parental Controls on a New iPhone (2026 Guide) - BlockerMax">
+    <meta name="twitter:description" content="Setting up a new iPhone for your child? Follow this 2026 guide to configure parental controls, Screen Time, content filters, and app limits the right way.">
+    <meta name="twitter:image" content="https://blockermax.com/logo.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Shared header + fonts (matches parental-control.html) */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid #E2E8F0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .site-header * { box-sizing: border-box; }
+
+        .site-header-inner {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .site-header .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .site-header .brand img {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+        }
+
+        .site-header .brand span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0F172A;
+        }
+
+        .site-header .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .site-header .nav-menu a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #64748B;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .site-header .nav-menu a:hover { color: #0F172A; }
+
+        .site-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .site-header .lang-toggle {
+            display: flex;
+            border: 1px solid #E2E8F0;
+            border-radius: 999px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .site-header .lang-toggle button {
+            border: none;
+            background: transparent;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #64748B;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .site-header .lang-toggle button.active {
+            background: #2563EB;
+            color: #fff;
+        }
+
+        .site-header .hbtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            padding: 10px 20px;
+            font-size: 0.92rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            background: #2563EB;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .site-header .hbtn:hover {
+            background: #1D4ED8;
+            transform: translateY(-2px);
+        }
+
+        /* Match heading font usage from parental-control.html */
+        .parental-page h1,
+        .parental-page h2,
+        .parental-page h3,
+        .article-title,
+        .blog-title,
+        .article-content h2,
+        .article-content h3 {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 900px) {
+            .site-header .nav-menu { display: none; }
+        }
+
+        .parental-page {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .glass-nav .nav-logo, .glass-nav .nav-link {
+            color: #000000 !important;
+        }
+
+        .parental-page .glass-nav.scrolled {
+            background: rgba(255, 255, 255, 0.5) !important;
+            border-color: rgba(200, 200, 200, 0.2) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .article-main {
+            padding-top: 90px;
+            padding-bottom: 100px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #333;
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .article-hero {
+            height: 400px;
+            background: linear-gradient(45deg, #e0e0e0, #f5f5f5);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+        }
+
+        .article-meta {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .article-title {
+            font-size: 3rem;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .article-content p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            color: #444;
+        }
+
+        .article-content h2 {
+            color: #1a1a1a;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.75rem;
+        }
+
+        .article-content h3 {
+            color: #222;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .article-content ul {
+            margin-bottom: 24px;
+            padding-left: 20px;
+            color: #444;
+            font-size: 1.125rem;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .article-content a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .parental-footer {
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+
+        .parental-footer .footer-container {
+            justify-content: center;
+            text-align: center;
+        }
+    </style>
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://blockermax.com/parental-blog-post-9.html"
+        },
+        "headline": "How to Set Up Parental Controls on a New iPhone (2026 Guide)",
+        "description": "Setting up a new iPhone for your child? Follow this 2026 guide to configure parental controls, Screen Time, content filters, and app limits the right way.",
+        "image": "https://blockermax.com/logo.png",
+        "datePublished": "2026-05-25",
+        "dateModified": "2026-05-25",
+        "author": {
+                "@type": "Organization",
+                "name": "BlockerMax"
+        },
+        "publisher": {
+                "@type": "Organization",
+                "name": "BlockerMax",
+                "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://blockermax.com/logo.png"
+                }
+        }
+}
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10931560670"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-10931560670');
+    </script>
+</head>
+
+<body class="parental-page">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a href="parental-control.html" class="brand">
+                <img src="Parental Control AppIcon-opt.png" alt="BlockerMax Parental Control">
+                <span>BlockerMax</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="parental-control.html#features" data-en="Features" data-tr="Özellikler">Features</a>
+                <a href="parental-control.html#how" data-en="How it works" data-tr="Nasıl çalışır">How it works</a>
+                <a href="parental-blog.html" data-en="Blog" data-tr="Blog">Blog</a>
+            </nav>
+            <div class="header-right">
+                <div class="lang-toggle">
+                    <button id="lang-en" onclick="setLang('en')">EN</button>
+                    <button id="lang-tr" onclick="setLang('tr')">TR</button>
+                </div>
+                <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="hbtn">
+                    <span data-en="Get BlockerMax" data-tr="Hemen İndir">Get BlockerMax</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="article-main">
+        <div class="article-hero">
+            <img src="Parental%20Blog%20Images/28.png" alt="Blog post image" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;">
+        </div>
+        <div class="article-meta">May 25, 2026</div>
+        <h1 class="article-title">How to Set Up Parental Controls on a New iPhone (2026 Guide)</h1>
+        <div class="article-content">
+            <p>Giving a child a new iPhone is a big moment. Taking a few minutes to set up parental controls during setup helps create a safer experience from day one, before habits form around an unfiltered device.</p>
+
+            <h2>Step 1: Set Up Screen Time First</h2>
+            <p>During or after setup, open Settings and tap Screen Time. Choose the option that indicates the iPhone belongs to a child. This unlocks the parental control features you will use throughout this guide.</p>
+
+            <h2>Step 2: Turn On Content &amp; Privacy Restrictions</h2>
+            <ul>
+                <li>Go to Settings, Screen Time, Content &amp; Privacy Restrictions</li>
+                <li>Turn the setting on</li>
+                <li>Open Content Restrictions, then Web Content</li>
+                <li>Select Limit Adult Websites</li>
+            </ul>
+            <p>For a deeper walkthrough, see our guide on <a href="parental-blog-post-1.html">blocking adult websites on iPhone</a>.</p>
+
+            <h2>Step 3: Add a Screen Time Passcode</h2>
+            <p>Set a Screen Time passcode that is different from the device passcode. This prevents your child from changing the limits you put in place.</p>
+
+            <h2>Step 4: Set App Limits and Downtime</h2>
+            <p>Use App Limits to cap time on games and social apps, and schedule Downtime for evenings so the device winds down before bed.</p>
+
+            <h2>Step 5: Add a Parental Control App for Stronger Protection</h2>
+            <p>Built-in settings cover the basics, but a dedicated app adds protection that is harder to bypass, including:</p>
+            <ul>
+                <li>smart filtering of adult and harmful content</li>
+                <li>app blocking and scheduling</li>
+                <li>uninstall protection</li>
+                <li>an easy view of your child's protection status</li>
+            </ul>
+            <p>Apps like <a href="parental-control.html">BlockerMax</a> are designed for parents who want reliable controls without a complicated setup.</p>
+
+            <h2>Review the Setup Together</h2>
+            <p>Once everything is configured, walk your child through the basics so the rules feel fair and understandable. A short conversation at setup time prevents many arguments later.</p>
+        </div>
+    </main>
+
+    <footer class="site-footer parental-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <img src="Parental Control AppIcon-opt.png" alt="Parental Control Logo" class="footer-logo-img">
+                    <div class="footer-tagline-wrapper">
+                        <h3 class="footer-tagline">Guidance, not restriction.</h3>
+                    </div>
+                </div>
+                <div class="footer-store-buttons" style="margin-top: 20px;">
+                    <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235"
+                        class="footer-store-btn">
+                        <img src="Appstore2.svg" alt="Download on App Store">
+                    </a>
+                </div>
+                <div style="margin-top: 30px; font-size: 0.9rem;">
+                    <a href="parental-privacy-policy.html"
+                        style="color: #666; text-decoration: none; margin: 0 10px; transition: color 0.2s;"
+                        onmouseover="this.style.color='#1a1a1a'" onmouseout="this.style.color='#666'">Privacy Policy</a>
+                    <span style="color: #ccc;">|</span>
+                    <a href="parental-termsofuse.html"
+                        style="color: #666; text-decoration: none; margin: 0 10px; transition: color 0.2s;"
+                        onmouseover="this.style.color='#1a1a1a'" onmouseout="this.style.color='#666'">Terms of Usage</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        function setLang(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-en]').forEach(function (el) {
+                var txt = el.getAttribute('data-' + lang);
+                if (txt !== null) el.textContent = txt;
+            });
+            var en = document.getElementById('lang-en'), tr = document.getElementById('lang-tr');
+            if (en) en.classList.toggle('active', lang === 'en');
+            if (tr) tr.classList.toggle('active', lang === 'tr');
+            try { localStorage.setItem('bm-lang', lang); } catch (e) {}
+        }
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('bm-lang'); } catch (e) {}
+            var browser = (navigator.language || 'en').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+            setLang(saved || browser);
+        })();
+    </script>
+</body>
+
+</html>

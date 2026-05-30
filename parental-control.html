@@ -7,315 +7,1188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parental Control - BlockerMax</title>
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        .parental-page {
-            background-color: #ffffff;
-            color: #1a1a1a;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1D4ED8;
+            --soft-blue: #EFF6FF;
+            --bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text: #0F172A;
+            --muted: #64748B;
+            --green: #16A34A;
+            --orange: #F59E0B;
+            --red: #EF4444;
+            --border: #E2E8F0;
+            --radius: 14px;
+            --radius-sm: 10px;
+            --shadow: 0 10px 40px rgba(37, 99, 235, 0.08);
+            --shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        /* Override glass nav text for white background */
-        .glass-nav .nav-logo {
-            color: #000000 !important;
-        }
-
-        /* Prevent nav from turning black when scrolled on this page */
-        .parental-page .glass-nav.scrolled {
-            background: rgba(255, 255, 255, 0.5) !important;
-            border-color: rgba(200, 200, 200, 0.2) !important;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05) !important;
-        }
-
-        .parental-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 120px 20px 20px;
-            /* Reduced bottom padding to flow into gallery */
-        }
-
-        .parental-icon {
-            width: 140px;
-            height: 140px;
-            margin-bottom: 30px;
-            border-radius: 35px;
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
-            object-fit: contain;
-        }
-
-        .parental-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-            line-height: 1.1;
-        }
-
-        .parental-text {
-            font-size: 1.25rem;
-            color: #444;
-            margin-bottom: 20px;
-            max-width: 550px;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            margin-left: auto;
-            margin-right: auto;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        @media (max-width: 768px) {
-            .parental-title {
-                font-size: 2.5rem;
-            }
-
-            .parental-icon {
-                width: 110px;
-                height: 110px;
-                border-radius: 25px;
-            }
+        h1, h2, h3 {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
         }
 
-        .parental-support {
-            margin-top: 40px;
-            font-size: 1.1rem;
-            color: #333;
-            background: rgba(0, 0, 0, 0.03);
-            padding: 20px 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .parental-support span {
-            display: block;
-            margin-bottom: 10px;
-            color: #555;
-        }
-
-        .parental-support a {
-            color: #3b82f6;
+        a {
             text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 0.85rem;
             font-weight: 600;
+            color: var(--primary);
+            background: var(--soft-blue);
+            padding: 6px 14px;
+            border-radius: 999px;
+            margin-bottom: 18px;
+        }
+
+        /* ===== Buttons ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 26px;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--primary);
+            border-color: var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-white {
+            background: #fff;
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== Header ===== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 58px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+        }
+
+        .brand span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1.02rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--muted);
             transition: color 0.2s;
         }
 
-        .parental-support a:hover {
-            color: #2563eb;
-            text-decoration: underline;
+        .nav-links a:hover {
+            color: var(--text);
         }
 
-        /* Floating Scattered Videos Layout */
-        .hero-scene {
-            position: relative;
-            width: 100%;
-            max-width: 1250px;
-            height: 700px;
+        .header-right {
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            gap: 16px;
         }
 
-        .hero-center-content {
-            position: relative;
-            z-index: 10;
-            max-width: 900px;
-            text-align: center;
-            padding: 20px;
+        .lang-toggle {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .floating-video {
-            position: absolute;
-            border-radius: 20px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             background: #fff;
-            padding: 5px;
-            z-index: 1;
         }
 
-        .floating-video video {
+        .lang-toggle button {
+            border: none;
+            background: transparent;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-toggle button.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .header .btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        /* Hamburger + mobile menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 42px;
+            height: 42px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            margin: 0 auto;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.2s ease;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 120;
+            flex-direction: column;
+            padding: 8px 24px 18px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu > a {
+            padding: 14px 4px;
+            font-weight: 600;
+            font-size: 1.02rem;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mm-bottom {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .mm-bottom .btn { flex: 1; justify-content: center; padding: 12px 18px; font-size: 0.95rem; }
+
+        /* ===== Hero (full-bleed image slideshow) ===== */
+        .hero {
+            position: relative;
+            height: calc(100vh - 58px);
+            min-height: 560px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 15px;
-            display: block;
+            z-index: 1;
         }
 
-        @keyframes floatAnim {
-            0% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-15px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
+        /* Readability overlay: darker through the middle where the text sits */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.30) 0%, rgba(15, 23, 42, 0.45) 50%, rgba(15, 23, 42, 0.40) 100%);
         }
 
-        /* Specific positions for each video */
-        .vid-1 {
-            width: 180px;
-            top: 10%;
-            left: 10%;
-            animation: floatAnim 6s ease-in-out infinite;
+        .hero-inner {
+            position: relative;
+            z-index: 3;
+            padding: 0 24px;
+            max-width: 900px;
         }
 
-        .vid-2 {
-            width: 160px;
-            bottom: 6%;
-            right: 15%;
-            animation: floatAnim 7s ease-in-out infinite 1s;
+        .hero-inner h1 {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            color: #fff;
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+            margin-bottom: 18px;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
         }
 
-        .vid-3 {
-            width: 190px;
-            top: 5%;
-            right: 6%;
-            animation: floatAnim 8s ease-in-out infinite 0.5s;
+        .hero-lead {
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 620px;
+            margin: 0 auto 30px;
+            text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4);
         }
 
-        .vid-4 {
-            width: 150px;
-            bottom: 18%;
-            left: 15%;
-            animation: floatAnim 6.5s ease-in-out infinite 1.5s;
+        .hero-cta {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .floating-video:hover {
-            transform: scale(1.05) !important;
-            z-index: 20;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
-            animation-play-state: paused;
+        .hero-cta .btn {
+            min-width: 150px;
+            padding: 11px 22px;
+            font-size: 0.92rem;
         }
 
-        .mobile-videos {
+        .hero-cta .btn-light {
+            background: #fff;
+            color: var(--text);
+        }
+
+        .hero-cta .btn-light:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+
+        .hero-cta .btn-ghost {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .hero-cta .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-2px);
+        }
+
+        /* ===== App demo (mockup + chips) ===== */
+        .appdemo { background: #fff; }
+
+        .appdemo-layout {
+            display: grid;
+            grid-template-columns: 1fr 520px;
+            gap: 48px;
+            align-items: center;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .appdemo-stage {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 0;
+        }
+
+        .appdemo-screen {
+            position: relative;
+            width: 100%;
+            max-width: 270px;
+            margin: 0 auto;
+            aspect-ratio: 403 / 873;
+            border-radius: 36px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+        }
+
+        .appdemo-screen.hide { display: none; }
+
+        .appdemo-screen img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+
+        .appdemo-screen img.on { opacity: 1; }
+
+        /* Parent Access: two images side by side */
+        .appdemo-parent {
+            display: none;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .appdemo-parent.on { display: flex; }
+
+        .appdemo-parent .pp-phone {
+            width: 270px;
+            aspect-ratio: 403 / 873;
+            object-fit: cover;
+            border-radius: 36px;
+            background: #000;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .appdemo-parent .pp-dash {
+            position: absolute;
+            z-index: 2;
+            width: 290px;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.32);
+            top: 50%;
+            left: 50%;
+            transform: translate(-44%, -50%) rotate(-6deg);
+        }
+
+        @media (max-width: 600px) {
+            .appdemo-parent .pp-dash { width: 78%; }
+        }
+
+        /* Smart Blocking: floating app icons around the phone */
+        .appdemo-icons {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
             display: none;
         }
 
-        @media (max-width: 992px) {
-            .hero-scene {
-                height: auto;
-                flex-direction: column;
-                margin-top: 40px;
-            }
+        .appdemo-icons.on { display: block; }
 
-            .hero-center-content {
-                padding: 10px;
-            }
-
-            .desktop-videos .floating-video {
-                display: none;
-                /* Hide floating on mobile */
-            }
-
-            .mobile-videos {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-                margin-top: 40px;
-                width: 100%;
-            }
-
-            .mobile-video-card {
-                width: 45%;
-                max-width: 180px;
-                border-radius: 16px;
-                overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            }
-
-            .mobile-video-card video {
-                width: 100%;
-                display: block;
-            }
+        .appdemo-icons .ai {
+            position: absolute;
+            width: 88px;
+            height: auto;
+            animation: floatY 5s ease-in-out infinite;
         }
 
-        /* Auto Scrolling Mobile Previews */
-        .mobile-showcase-wrapper {
-            position: relative;
-            width: 100%;
+        .appdemo-icons[data-for="smart"] .ai { width: 60px; }
+        .appdemo-icons[data-for="usage"] .ai { width: 104px; }
+
+        .appdemo-icons .ai1 { top: 13%; left: 6%; animation-delay: 0s; }
+        .appdemo-icons .ai2 { bottom: 18%; left: 11%; animation-delay: 1s; }
+        .appdemo-icons .ai3 { top: 16%; right: 6%; animation-delay: 0.5s; }
+        .appdemo-icons .ai4 { bottom: 14%; right: 11%; animation-delay: 1.4s; }
+
+        /* Mobile demo carousel (swipeable) */
+        .appdemo-carousel { display: none; }
+
+        @media (max-width: 720px) {
+            .appdemo-layout { display: none; }
+
+            .appdemo-carousel {
+                display: flex;
+                gap: 14px;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding: 6px 24px 14px;
+                margin: 0 -24px;
+                scrollbar-width: none;
+            }
+            .appdemo-carousel::-webkit-scrollbar { display: none; }
+
+            .dslide {
+                flex: 0 0 74%;
+                scroll-snap-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dslide-label {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 700;
+                font-size: 1.08rem;
+                color: var(--text);
+                margin-bottom: 16px;
+                text-align: center;
+            }
+
+            .dslide-phone { position: relative; width: 230px; }
+
+            .dslide-phone .shot-img {
+                width: 100%;
+                aspect-ratio: 403 / 873;
+                object-fit: cover;
+                border-radius: 32px;
+                background: #000;
+                display: block;
+            }
+
+            .dslide-phone .ai {
+                position: absolute;
+                width: 62px;
+                height: auto;
+                z-index: 2;
+                animation: floatY 5s ease-in-out infinite;
+            }
+            .dslide-phone .ai1 { top: 5%; left: -20px; animation-delay: 0s; }
+            .dslide-phone .ai2 { bottom: 16%; left: -16px; animation-delay: 1s; }
+            .dslide-phone .ai3 { top: 9%; right: -20px; animation-delay: 0.5s; }
+            .dslide-phone .ai4 { bottom: 12%; right: -16px; animation-delay: 1.4s; }
+        }
+
+        .appdemo-chips {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        .appdemo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .appdemo-chip {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .appdemo-chip:hover { border-color: var(--primary); color: var(--primary); }
+        .appdemo-item.active .appdemo-chip { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        .appdemo-desc {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transform: translateY(-4px);
+            margin: 0;
+            padding-left: 4px;
+            max-width: 360px;
+            transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.35s ease,
+                        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        margin 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .appdemo-desc > span {
             overflow: hidden;
-            background: #ffffff;
-            padding: 60px 0 80px;
+            color: var(--muted);
+            font-size: 0.98rem;
+            line-height: 1.55;
+        }
+
+        .appdemo-item.active .appdemo-desc {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            transform: translateY(0);
+            margin: 10px 0 6px;
+        }
+
+        @media (max-width: 720px) {
+            .appdemo-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                justify-items: center;
+            }
+            .appdemo-chips { order: 2; width: 100%; max-width: 360px; }
+            .appdemo-stage { order: 1; }
+        }
+
+        /* ===== Hero chips (row under CTA) ===== */
+        .hero-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 26px;
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(12px) saturate(140%);
+            -webkit-backdrop-filter: blur(12px) saturate(140%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            font-size: 0.84rem;
+            font-weight: 600;
+            white-space: nowrap;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-chip svg { width: 14px; height: 14px; color: #7CF2A0; flex-shrink: 0; }
+
+        @media (max-width: 600px) {
+            .hero-chip { font-size: 0.76rem; padding: 7px 12px; }
+        }
+
+        /* ===== Problem ===== */
+        .problem .container {
+            max-width: 1080px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center;
+        }
+
+        .problem-text h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .problem-text p {
+            font-size: 1.15rem;
+            color: var(--muted);
+        }
+
+        .hl {
+            text-decoration: underline;
+            text-decoration-color: var(--primary);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        .problem-img img {
+            width: 100%;
+            display: block;
+            animation: floatY 5s ease-in-out infinite;
+        }
+
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+
+        /* floating chips over section images */
+        .problem-img, .trust-img { position: relative; }
+
+        .img-chip {
+            position: absolute;
+            z-index: 4;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: #fff;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            animation: floatY 5s ease-in-out infinite;
+        }
+
+        .img-chip .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+        .img-chip.tl { top: 7%; left: -12px; animation-delay: 0s; }
+        .img-chip.br { bottom: 9%; right: -12px; animation-delay: 1s; }
+        .img-chip.tr { top: 8%; right: -12px; animation-delay: 0.5s; }
+        .img-chip.bl { bottom: 11%; left: -12px; animation-delay: 1.4s; }
+
+        @media (max-width: 600px) {
+            .img-chip { font-size: 0.72rem; padding: 7px 11px; }
+            .img-chip.tl, .img-chip.bl { left: 0; }
+            .img-chip.br, .img-chip.tr { right: 0; }
+        }
+
+        /* ===== Solution (3 pillars) ===== */
+        .section-head {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 56px;
+        }
+
+        .section-head h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .section-head p {
+            font-size: 1.1rem;
+            color: var(--muted);
+        }
+
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 26px;
+        }
+
+        .pillar {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .pillar:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+        }
+
+        .pillar .icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--soft-blue);
+            border-radius: 16px;
+        }
+
+        .pillar h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .pillar p {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        /* ===== Features ===== */
+        .features {
+            background: #fff;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .feature {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature .ficon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--soft-blue);
+            border-radius: 12px;
+            margin-bottom: 18px;
+        }
+
+        .feature h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 0.97rem;
+        }
+
+        /* ===== Screenshot strip ===== */
+        .showcase {
+            background: var(--bg);
+            padding: 70px 0;
+            overflow: hidden;
         }
 
         .scrolling-track {
             display: flex;
             width: max-content;
-            animation: scroll-left 50s linear infinite;
+            animation: scroll-left 55s linear infinite;
         }
 
         .scrolling-track:hover {
             animation-play-state: paused;
         }
 
-        .mobile-showcase-card {
-            width: 220px;
+        .shot {
+            width: 200px;
             flex-shrink: 0;
-            margin: 0 15px;
+            margin: 0 12px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
             transition: transform 0.3s ease;
         }
 
-        .mobile-showcase-card:hover {
-            transform: translateY(-10px);
+        .shot:hover {
+            transform: translateY(-8px);
         }
 
-        .mobile-showcase-card img {
+        .shot img {
             width: 100%;
             display: block;
-            object-fit: contain;
         }
 
         @keyframes scroll-left {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
-        @media (max-width: 768px) {
-            .mobile-showcase-card {
-                width: 140px;
-                margin: 0 10px;
-            }
+        /* ===== Trust ===== */
+        .trust .container {
+            max-width: 1000px;
         }
 
-        /* Centered Footer for this specific page */
-        .parental-footer {
-            background-color: #ffffff;
-            border-top: 1px solid #eee;
+        .trust-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
         }
 
-        .parental-footer .footer-tagline {
-            color: #1a1a1a;
+        .trust h2 {
+            font-size: 2.3rem;
+            font-weight: 700;
+            margin-bottom: 18px;
         }
 
-        .parental-footer .footer-container {
+        .trust p {
+            font-size: 1.18rem;
+            color: var(--muted);
+        }
+
+        .trust-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .trust-img img {
+            width: 100%;
+            display: block;
+        }
+
+        .trust-img .float-a { animation: floatY 5s ease-in-out infinite; }
+
+        /* ===== How it works ===== */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step .num {
+            height: 60px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
             justify-content: center;
         }
 
-        .parental-footer .footer-left {
+        .step .num img {
+            height: 48px;
+            width: auto;
+            display: block;
+        }
+
+        .step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* ===== Final CTA ===== */
+        .final-cta {
+            padding-bottom: 110px;
+        }
+
+        .final-cta .container {
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            color: var(--primary);
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+
+        .final-cta .store-btn img {
+            height: 56px;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: #fff;
+            border-top: 1px solid var(--border);
+            padding: 50px 0;
+        }
+
+        .footer-inner {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            gap: 18px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand img {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.05rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin: 0 10px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        .footer-links span {
+            color: var(--border);
+        }
+
+        /* ===== Sticky promo bar ===== */
+        body { padding-bottom: 70px; }
+
+        .promo-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 150;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px 26px;
+            flex-wrap: wrap;
+            padding: 13px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 -6px 24px rgba(15, 23, 42, 0.15);
+        }
+
+        .promo-text {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .promo-text b { font-size: 1.02rem; font-weight: 700; }
+        .promo-text span { font-size: 0.92rem; opacity: 0.9; }
+        .promo-text .hl-w {
+            text-decoration: underline;
+            text-decoration-color: #fff;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+        }
+
+        .promo-bar .pbtn {
+            background: #fff;
+            color: var(--primary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 10px 22px;
+            border-radius: 999px;
+            white-space: nowrap;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .promo-bar .pbtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        @media (max-width: 600px) {
+            body { padding-bottom: 72px; }
+        }
+
+        /* ===== Screen-time stats ===== */
+        .stats { background: var(--soft-blue); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 22px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-ring { position: relative; width: 150px; height: 150px; margin: 0 auto 18px; }
+        .stat-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .stat-ring .track { fill: none; stroke: #e3edff; stroke-width: 11; }
+        .stat-ring .prog {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 11;
+            stroke-linecap: round;
+            stroke-dasharray: 327;
+            stroke-dashoffset: 327;
+            transition: stroke-dashoffset 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .stat-ring .center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .stat-ring .center .big {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+        }
+        .stat-ring .center .unit { color: var(--muted); font-size: 0.8rem; margin-top: 3px; }
+
+        .stat-card h4 { font-size: 1.05rem; margin: 0 0 4px; }
+        .stat-card p { color: var(--muted); font-size: 0.9rem; }
+
+        .stats-source { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 28px; }
+
+        /* ===== FAQ ===== */
+        .faq-list { max-width: 760px; margin: 0 auto; }
+
+        .faq-item {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .faq-item summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 18px 22px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: "+";
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1;
+            transition: transform 0.2s ease;
+        }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+
+        .faq-item .faq-a {
+            padding: 0 22px 20px;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            section { padding: 70px 0; }
+            .nav-links { display: none; }
+            .header-right { display: none; }
+            .hamburger { display: flex; }
+            .hero-inner h1 { font-size: 2.8rem; }
+            .pillars, .feature-grid, .steps { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .problem-grid, .trust-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .problem-text h2, .section-head h2, .trust h2, .final-cta h2 { font-size: 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            .hero { height: calc(100vh - 58px); }
+            .hero-inner { padding: 0 20px; }
+            .hero-inner h1 { font-size: 2.7rem; margin-bottom: 14px; }
+            .hero-lead { font-size: 1rem; line-height: 1.5; max-width: 340px; margin-bottom: 26px; }
+            .hero-cta { flex-direction: column; width: 100%; }
+            .hero-cta .btn { width: 100%; }
+
+            /* Sticky promo bar — compact mobile layout */
+            .promo-bar { flex-wrap: nowrap; gap: 12px; padding: 10px 16px; }
+            .promo-text { flex-direction: column; align-items: flex-start; gap: 1px; flex: 1; min-width: 0; }
+            .promo-text b { font-size: 0.9rem; }
+            .promo-text span { font-size: 0.74rem; line-height: 1.3; }
+            .promo-bar .pbtn { padding: 10px 16px; font-size: 0.84rem; flex-shrink: 0; }
+            .brand span { font-size: 0.9rem; }
+            .brand img { width: 30px; height: 30px; }
         }
     </style>
     <!-- Google tag (gtag.js) -->
@@ -328,115 +1201,534 @@
     </script>
 </head>
 
-<body class="parental-page">
-    <nav class="glass-nav" style="width: 440px; padding-right: 30px; gap: 20px; justify-content: space-between;">
-        <div class="nav-left">
-            <a href="parental-control.html" class="nav-brand-link">
-                <img src="Parental Control AppIcon-opt.png" alt="Parental Control Logo" class="nav-logo-img">
-                <span class="nav-logo">BlockerMax: Parental Control</span>
+<body>
+    <!-- ===== Header ===== -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="parental-control.html" class="brand">
+                <img src="Parental Control AppIcon-opt.png" alt="BlockerMax Parental Control">
+                <span>BlockerMax: Parental Control</span>
             </a>
+            <nav class="nav-links">
+                <a href="#why" data-en="Why BlockerMax" data-tr="Neden BlockerMax">Why BlockerMax</a>
+                <a href="#features" data-en="Features" data-tr="Özellikler">Features</a>
+                <a href="#how" data-en="How it works" data-tr="Nasıl çalışır">How it works</a>
+                <a href="parental-blog.html" data-en="Blog" data-tr="Blog">Blog</a>
+            </nav>
+            <div class="header-right">
+                <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="btn btn-primary">
+                    <span data-en="Get BlockerMax" data-tr="Hemen İndir">Get BlockerMax</span>
+                </a>
+            </div>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-        <div class="nav-right" style="margin-left: auto;">
-            <a href="parental-blog.html" class="nav-link" style="font-weight: 600;">Blog</a>
-        </div>
-    </nav>
 
-    <main class="parental-content">
-        <div class="hero-scene">
-            <!-- Desktop Floating Videos -->
-            <div class="desktop-videos">
-                <div class="floating-video vid-1"><video src="video1-opt.mp4" autoplay loop muted playsinline></video>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#why" data-en="Why BlockerMax" data-tr="Neden BlockerMax">Why BlockerMax</a>
+            <a href="#features" data-en="Features" data-tr="Özellikler">Features</a>
+            <a href="#how" data-en="How it works" data-tr="Nasıl çalışır">How it works</a>
+            <a href="parental-blog.html" data-en="Blog" data-tr="Blog">Blog</a>
+            <div class="mm-bottom">
+                <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="btn btn-primary">
+                    <span data-en="Get BlockerMax" data-tr="Hemen İndir">Get BlockerMax</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== Hero (full-bleed image slideshow) ===== -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="Parental%20Home%20Images/main.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-inner">
+            <h1 data-en="Guidance, not restriction." data-tr="Sınır değil, rehber.">Guidance, not restriction.</h1>
+            <p class="hero-lead"
+               data-en="Help your child stay protected from harmful content, balance app use, and build healthier digital habits."
+               data-tr="Çocuğunuzun zararlı içeriklerden korunmasına, uygulama kullanımının dengelenmesine ve daha sağlıklı dijital alışkanlıklar kazanmasına yardımcı olun.">
+                Help your child stay protected from harmful content, balance app use, and build healthier digital habits.</p>
+            <div class="hero-cta">
+                <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="btn btn-light">
+                    <span data-en="Get BlockerMax" data-tr="Hemen İndir">Get BlockerMax</span>
+                </a>
+                <a href="#features" class="btn btn-ghost">
+                    <span data-en="See Features" data-tr="Özellikleri Gör">See Features</span>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ===== Problem ===== -->
+    <section class="problem">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-img">
+                    <img src="Parental%20Home%20Images/Family.webp" alt="A family together" loading="lazy">
+                    <span class="img-chip tl">
+                        <span class="dot" style="background:var(--green);"></span>
+                        <span data-en="Safe browsing" data-tr="Güvenli tarama">Safe browsing</span>
+                    </span>
+                    <span class="img-chip br">
+                        <span class="dot" style="background:var(--orange);"></span>
+                        <span data-en="Screen time" data-tr="Ekran süresi">Screen time</span>
+                    </span>
                 </div>
-                <div class="floating-video vid-2"><video src="video2-opt.mp4" autoplay loop muted playsinline></video>
+                <div class="problem-text">
+                    <span class="section-tag" data-en="The challenge" data-tr="Zorluk">The challenge</span>
+                    <h2 data-en="Keep your child safe online."
+                        data-tr="Çocuğunuzu internette güvende tutun.">
+                        Keep your child safe online.</h2>
+                    <p><span data-en="Parents need simple tools to guide screen time, " data-tr="Ebeveynlerin, sürekli endişe veya karmaşık kurulumlar olmadan ekran süresini yönlendirecek, ">Parents need simple tools to guide screen time, </span><span class="hl" data-en="block harmful content and build safer digital boundaries." data-tr="zararlı içeriği engelleyecek ve daha güvenli dijital sınırlar oluşturacak basit araçlara ihtiyacı var.">block harmful content and build safer digital boundaries.</span></p>
                 </div>
-                <div class="floating-video vid-3"><video src="video3-opt.mp4" autoplay loop muted playsinline></video>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Screen-time stats ===== -->
+    <section class="stats">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag" data-en="Screen time today" data-tr="Bugün ekran süresi">Screen time today</span>
+                <h2 data-en="Kids spend more time on screens than ever." data-tr="Çocuklar ekranda her zamankinden çok vakit geçiriyor.">Kids spend more time on screens than ever.</h2>
+                <p data-en="Knowing the averages makes it easier to set a balance that fits your family." data-tr="Ortalamaları bilmek, ailenize uygun bir denge kurmayı kolaylaştırır.">Knowing the averages makes it easier to set a balance that fits your family.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-ring" data-pct="30">
+                        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="prog" cx="60" cy="60" r="52"/></svg>
+                        <div class="center"><span class="big">~3</span><span class="unit" data-en="hrs/day" data-tr="saat/gün">hrs/day</span></div>
+                    </div>
+                    <h4 data-en="Kids" data-tr="Çocuklar">Kids</h4>
+                    <p data-en="Ages 5–8" data-tr="5–8 yaş">Ages 5–8</p>
                 </div>
-                <div class="floating-video vid-4"><video src="video4-opt.mp4" autoplay loop muted playsinline></video>
+                <div class="stat-card">
+                    <div class="stat-ring" data-pct="50">
+                        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="prog" cx="60" cy="60" r="52"/></svg>
+                        <div class="center"><span class="big">~5</span><span class="unit" data-en="hrs/day" data-tr="saat/gün">hrs/day</span></div>
+                    </div>
+                    <h4 data-en="Tweens" data-tr="Ortaokul çağı">Tweens</h4>
+                    <p data-en="Ages 9–12" data-tr="9–12 yaş">Ages 9–12</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-ring" data-pct="80">
+                        <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="prog" cx="60" cy="60" r="52"/></svg>
+                        <div class="center"><span class="big">~8</span><span class="unit" data-en="hrs/day" data-tr="saat/gün">hrs/day</span></div>
+                    </div>
+                    <h4 data-en="Teens" data-tr="Gençler">Teens</h4>
+                    <p data-en="Ages 13–18" data-tr="13–18 yaş">Ages 13–18</p>
+                </div>
+            </div>
+            <p class="stats-source" data-en="Approximate daily entertainment screen time. Source: Common Sense Media." data-tr="Yaklaşık günlük eğlence amaçlı ekran süresi. Kaynak: Common Sense Media.">Approximate daily entertainment screen time. Source: Common Sense Media.</p>
+        </div>
+    </section>
+
+    <!-- ===== How it works ===== -->
+    <section id="how">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag" data-en="How it works" data-tr="Nasıl çalışır">How it works</span>
+                <h2 data-en="Get started in three steps." data-tr="Üç adımda başlayın.">Get started in three steps.</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="num"><img src="Parental%20Home%20Images/1.png" alt="Step 1"></div>
+                    <h3 data-en="Set up BlockerMax" data-tr="BlockerMax'i kurun">Set up BlockerMax</h3>
+                    <p data-en="Download the app and turn on safe browsing in minutes."
+                       data-tr="Uygulamayı indirin ve dakikalar içinde güvenli taramayı açın.">Download the app and turn on safe browsing in minutes.</p>
+                </div>
+                <div class="step">
+                    <div class="num"><img src="Parental%20Home%20Images/2.png" alt="Step 2"></div>
+                    <h3 data-en="Set your blocks" data-tr="Bloklamaları belirleyin">Set your blocks</h3>
+                    <p data-en="Choose the apps, websites and limits you want to block."
+                       data-tr="Engellemek istediğiniz uygulamaları, siteleri ve sınırları seçin.">Choose the apps, websites and limits you want to block.</p>
+                </div>
+                <div class="step">
+                    <div class="num"><img src="Parental%20Home%20Images/3.png" alt="Step 3"></div>
+                    <h3 data-en="Protect your kids" data-tr="Çocuklarınızı koruyun">Protect your kids</h3>
+                    <p data-en="Keep harmful content away and check protection anytime."
+                       data-tr="Zararlı içeriği uzak tutun ve korumayı istediğiniz zaman kontrol edin.">Keep harmful content away and check protection anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== App demo (mockup + chips) ===== -->
+    <section class="appdemo" id="features">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag" data-en="Full transparency" data-tr="Tam şeffaflık">Full transparency</span>
+                <h2 data-en="See the app before you download." data-tr="İndirmeden önce uygulamayı görün.">See the app before you download.</h2>
+                <p data-en="No surprises, no hidden tricks. Explore every feature up front." data-tr="Sürpriz yok, gizli numara yok. Her özelliği baştan keşfedin.">No surprises, no hidden tricks. Explore every feature up front.</p>
+            </div>
+
+            <div class="appdemo-layout">
+                <div class="appdemo-chips">
+                    <div class="appdemo-item active" data-chip="smart">
+                        <button class="appdemo-chip" data-en="Smart Blocking" data-tr="Akıllı Engelleme">Smart Blocking</button>
+                        <p class="appdemo-desc"><span data-en="Default protections block adult and harmful content right out of the box." data-tr="Hazır korumalar yetişkin ve zararlı içeriği baştan engeller.">Default protections block adult and harmful content right out of the box.</span></p>
+                    </div>
+                    <div class="appdemo-item" data-chip="usage">
+                        <button class="appdemo-chip" data-en="Usage Limits" data-tr="Kullanım Sınırları">Usage Limits</button>
+                        <p class="appdemo-desc"><span data-en="Set daily time limits by app and by day of the week." data-tr="Uygulama ve haftanın günü bazında günlük süre limitleri belirleyin.">Set daily time limits by app and by day of the week.</span></p>
+                    </div>
+                    <div class="appdemo-item" data-chip="location">
+                        <button class="appdemo-chip" data-en="Location-Based Limits" data-tr="Konuma Dayalı Sınırlar">Location-Based Limits</button>
+                        <p class="appdemo-desc"><span data-en="Block apps automatically based on where your child is." data-tr="Çocuğunuzun bulunduğu yere göre uygulamaları otomatik engelleyin.">Block apps automatically based on where your child is.</span></p>
+                    </div>
+                    <div class="appdemo-item" data-chip="uninstall">
+                        <button class="appdemo-chip" data-en="Uninstall Protection" data-tr="Kaldırma Koruması">Uninstall Protection</button>
+                        <p class="appdemo-desc"><span data-en="Makes the app harder to delete, so protection stays on." data-tr="Uygulamanın silinmesini zorlaştırır, böylece koruma açık kalır.">Makes the app harder to delete, so protection stays on.</span></p>
+                    </div>
+                    <div class="appdemo-item" data-chip="schedules">
+                        <button class="appdemo-chip" data-en="Schedules" data-tr="Programlı Sınırlar">Schedules</button>
+                        <p class="appdemo-desc"><span data-en="Automate blocking with custom time windows each day." data-tr="Her gün için özel zaman aralıklarıyla engellemeyi otomatikleştirin.">Automate blocking with custom time windows each day.</span></p>
+                    </div>
+                    <div class="appdemo-item" data-chip="parent">
+                        <button class="appdemo-chip" data-en="Parent Access" data-tr="Ebeveyn Erişimi">Parent Access</button>
+                        <p class="appdemo-desc"><span data-en="Add an accountability partner who's notified of any changes." data-tr="Her değişiklikte bilgilendirilen bir sorumluluk partneri ekleyin.">Add an accountability partner who's notified of any changes.</span></p>
+                    </div>
+                    <div class="appdemo-item" data-chip="strict">
+                        <button class="appdemo-chip" data-en="Strict Mode" data-tr="Sıkı Mod">Strict Mode</button>
+                        <p class="appdemo-desc"><span data-en="Lock in protection so it can't be bypassed until the timer ends." data-tr="Korumayı kilitleyin; süre bitene kadar atlanamaz.">Lock in protection so it can't be bypassed until the timer ends.</span></p>
+                    </div>
+                </div>
+
+                <div class="appdemo-stage">
+                    <div class="appdemo-screen">
+                        <img class="on" data-shot="smart" src="demo-shots/smart.jpg" alt="Smart Blocking screen">
+                        <img data-shot="usage" src="demo-shots/usage.jpg" alt="Usage Limit screen">
+                        <img data-shot="location" src="demo-shots/location.jpg" alt="Location Limit screen">
+                        <img data-shot="schedules" src="demo-shots/schedules.jpg" alt="Schedules screen">
+                        <img data-shot="uninstall" src="demo-shots/Prevent%20App.jpg" alt="Uninstall Protection screen">
+                        <img data-shot="strict" src="demo-shots/strict.jpg" alt="Strict Mode screen">
+                    </div>
+                    <div class="appdemo-parent">
+                        <img class="pp-phone" src="demo-shots/parent.jpg" alt="Parent Access on the phone">
+                    </div>
+                    <div class="appdemo-icons on" data-for="smart">
+                        <img class="ai ai1" src="demo-shots/Instagram.png" alt="Instagram">
+                        <img class="ai ai2" src="demo-shots/Roblox.png" alt="Roblox">
+                        <img class="ai ai3" src="demo-shots/Pubg.png" alt="PUBG">
+                        <img class="ai ai4" src="demo-shots/Brawl.png" alt="Brawl Stars">
+                    </div>
+                    <div class="appdemo-icons" data-for="usage">
+                        <img class="ai ai1" src="demo-shots/youtube.png" alt="YouTube">
+                        <img class="ai ai2" src="demo-shots/games.png" alt="Games">
+                        <img class="ai ai3" src="demo-shots/tiktok.png" alt="TikTok">
+                    </div>
                 </div>
             </div>
 
-            <div class="hero-center-content">
-                <h1 class="parental-title">Build Healthy Digital<br>Habits Early.</h1>
-                <p class="parental-text">BlockerMax's Parental Control empowers you to guide your family's screen time.
-                    Focus on what matters with science-backed filtering, distraction-free rules, and a safe browsing
-                    environment that grows with them.
-                </p>
-
-                <div style="margin: 10px 0 20px;">
-                    <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" style="display: inline-block; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <img src="Appstore2.svg" alt="Download on App Store" style="height: 56px;">
-                    </a>
+            <!-- Mobile-only swipeable carousel -->
+            <div class="appdemo-carousel">
+                <div class="dslide">
+                    <span class="dslide-label" data-en="Smart Blocking" data-tr="Akıllı Engelleme">Smart Blocking</span>
+                    <div class="dslide-phone">
+                        <img class="shot-img" src="demo-shots/smart.jpg" alt="Smart Blocking screen">
+                        <img class="ai ai1" src="demo-shots/Instagram.png" alt="Instagram">
+                        <img class="ai ai2" src="demo-shots/Roblox.png" alt="Roblox">
+                        <img class="ai ai3" src="demo-shots/Pubg.png" alt="PUBG">
+                        <img class="ai ai4" src="demo-shots/Brawl.png" alt="Brawl Stars">
+                    </div>
                 </div>
-
-                <div class="parental-support">
-                    <span>Need assistance setting up?</span>
-                    <a href="mailto:blockermax@nanegate.com">blockermax@nanegate.com</a>
+                <div class="dslide">
+                    <span class="dslide-label" data-en="Location-Based Limits" data-tr="Konuma Dayalı Sınırlar">Location-Based Limits</span>
+                    <div class="dslide-phone">
+                        <img class="shot-img" src="demo-shots/location.jpg" alt="Location Limit screen">
+                    </div>
                 </div>
-            </div>
-
-            <!-- Mobile Grid Videos (visible only on smaller screens) -->
-            <div class="mobile-videos">
-                <div class="mobile-video-card"><video src="video1-opt.mp4" autoplay loop muted playsinline></video>
+                <div class="dslide">
+                    <span class="dslide-label" data-en="Usage Limits" data-tr="Kullanım Sınırları">Usage Limits</span>
+                    <div class="dslide-phone">
+                        <img class="shot-img" src="demo-shots/usage.jpg" alt="Usage Limit screen">
+                        <img class="ai ai1" src="demo-shots/youtube.png" alt="YouTube">
+                        <img class="ai ai2" src="demo-shots/games.png" alt="Games">
+                        <img class="ai ai3" src="demo-shots/tiktok.png" alt="TikTok">
+                    </div>
                 </div>
-                <div class="mobile-video-card"><video src="video2-opt.mp4" autoplay loop muted playsinline></video>
+                <div class="dslide">
+                    <span class="dslide-label" data-en="Uninstall Protection" data-tr="Kaldırma Koruması">Uninstall Protection</span>
+                    <div class="dslide-phone">
+                        <img class="shot-img" src="demo-shots/Prevent%20App.jpg" alt="Uninstall Protection screen">
+                    </div>
                 </div>
-                <div class="mobile-video-card"><video src="video3-opt.mp4" autoplay loop muted playsinline></video>
+                <div class="dslide">
+                    <span class="dslide-label" data-en="Schedules" data-tr="Programlı Sınırlar">Schedules</span>
+                    <div class="dslide-phone">
+                        <img class="shot-img" src="demo-shots/schedules.jpg" alt="Schedules screen">
+                    </div>
                 </div>
-                <div class="mobile-video-card"><video src="video4-opt.mp4" autoplay loop muted playsinline></video>
+                <div class="dslide">
+                    <span class="dslide-label" data-en="Parent Access" data-tr="Ebeveyn Erişimi">Parent Access</span>
+                    <div class="dslide-phone">
+                        <img class="shot-img" src="demo-shots/parent.jpg" alt="Parent Access screen">
+                    </div>
+                </div>
+                <div class="dslide">
+                    <span class="dslide-label" data-en="Strict Mode" data-tr="Sıkı Mod">Strict Mode</span>
+                    <div class="dslide-phone">
+                        <img class="shot-img" src="demo-shots/strict.jpg" alt="Strict Mode screen">
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <div class="mobile-showcase-wrapper">
+    <!-- ===== Trust ===== -->
+    <section class="trust">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-text">
+                    <h2 data-en="Built for parents. Designed with care."
+                        data-tr="Ebeveynler için yapıldı. Özenle tasarlandı.">Built for parents. Designed with care.</h2>
+                    <p><span class="hl" data-en="BlockerMax is not about spying." data-tr="BlockerMax gözetlemekle ilgili değildir.">BlockerMax is not about spying.</span><span data-en=" It's about helping families create safer boundaries together." data-tr=" Ailelerin birlikte daha güvenli sınırlar oluşturmasına yardımcı olmakla ilgilidir."> It's about helping families create safer boundaries together.</span></p>
+                </div>
+                <div class="trust-img">
+                    <img class="float-a" src="Parental%20Home%20Images/momson.webp" alt="Mother and son" loading="lazy">
+                    <span class="img-chip tr">
+                        <span class="dot" style="background:var(--green);"></span>
+                        <span data-en="Works with Screen Time" data-tr="Screen Time uyumlu">Works with Screen Time</span>
+                    </span>
+                    <span class="img-chip bl">
+                        <span class="dot" style="background:var(--primary);"></span>
+                        <span data-en="iPhone &amp; iPad" data-tr="iPhone &amp; iPad">iPhone &amp; iPad</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Screenshot strip ===== -->
+    <div class="showcase">
         <div class="scrolling-track">
-            <!-- First Set -->
-            <div class="mobile-showcase-card"><img src="mobile1-opt.jpg" alt="App Screenshot 1"></div>
-            <div class="mobile-showcase-card"><img src="mobile2-opt.jpg" alt="App Screenshot 2"></div>
-            <div class="mobile-showcase-card"><img src="mobile3-opt.jpg" alt="App Screenshot 3"></div>
-            <div class="mobile-showcase-card"><img src="mobile4-opt.jpg" alt="App Screenshot 4"></div>
-            <div class="mobile-showcase-card"><img src="mobile5-opt.jpg" alt="App Screenshot 5"></div>
-            <div class="mobile-showcase-card"><img src="mobile6-opt.jpg" alt="App Screenshot 6"></div>
-            <div class="mobile-showcase-card"><img src="mobile7-opt.jpg" alt="App Screenshot 7"></div>
-            <!-- Second Set (for seamless looping) -->
-            <div class="mobile-showcase-card"><img src="mobile1-opt.jpg" alt="App Screenshot 1"></div>
-            <div class="mobile-showcase-card"><img src="mobile2-opt.jpg" alt="App Screenshot 2"></div>
-            <div class="mobile-showcase-card"><img src="mobile3-opt.jpg" alt="App Screenshot 3"></div>
-            <div class="mobile-showcase-card"><img src="mobile4-opt.jpg" alt="App Screenshot 4"></div>
-            <div class="mobile-showcase-card"><img src="mobile5-opt.jpg" alt="App Screenshot 5"></div>
-            <div class="mobile-showcase-card"><img src="mobile6-opt.jpg" alt="App Screenshot 6"></div>
-            <div class="mobile-showcase-card"><img src="mobile7-opt.jpg" alt="App Screenshot 7"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN1.jpg" alt="App screenshot 1"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN2.jpg" alt="App screenshot 2"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN3.jpg" alt="App screenshot 3"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN4.jpg" alt="App screenshot 4"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN5.jpg" alt="App screenshot 5"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN6.jpg" alt="App screenshot 6"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN7.jpg" alt="App screenshot 7"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN8.jpg" alt="App screenshot 8"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN9.jpg" alt="App screenshot 9"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN10.jpg" alt="App screenshot 10"></div>
+            <!-- duplicate for seamless loop -->
+            <div class="shot"><img src="Parental%20Home%20Images/EN1.jpg" alt="App screenshot 1"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN2.jpg" alt="App screenshot 2"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN3.jpg" alt="App screenshot 3"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN4.jpg" alt="App screenshot 4"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN5.jpg" alt="App screenshot 5"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN6.jpg" alt="App screenshot 6"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN7.jpg" alt="App screenshot 7"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN8.jpg" alt="App screenshot 8"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN9.jpg" alt="App screenshot 9"></div>
+            <div class="shot"><img src="Parental%20Home%20Images/EN10.jpg" alt="App screenshot 10"></div>
         </div>
     </div>
 
-    <footer class="site-footer parental-footer">
-        <div class="footer-container">
-            <div class="footer-left">
-                <div class="footer-brand">
-                    <img src="Parental Control AppIcon-opt.png" alt="Parental Control Logo" class="footer-logo-img">
-                    <div class="footer-tagline-wrapper">
-                        <h3 class="footer-tagline">Walking to light together</h3>
-                    </div>
+    <!-- ===== Why BlockerMax (topic cards) ===== -->
+    <section id="why">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag" data-en="Why BlockerMax" data-tr="Neden BlockerMax">Why BlockerMax</span>
+                <h2 data-en="Support for every part of digital life." data-tr="Dijital hayatın her parçasında destek.">Support for every part of digital life.</h2>
+                <p data-en="Every child faces different moments online. BlockerMax gives you calm, practical tools for each one." data-tr="Her çocuk internette farklı anlarla karşılaşır. BlockerMax her biri için sakin ve pratik araçlar sunar.">Every child faces different moments online. BlockerMax gives you calm, practical tools for each one.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature">
+                    <div class="ficon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                    <h3 data-en="Harmful content" data-tr="Zararlı içerik">Harmful content</h3>
+                    <p data-en="Filter adult and harmful websites automatically, so exploring the web stays age-appropriate." data-tr="Yetişkin ve zararlı siteleri otomatik filtreleyin; internette gezinmek yaşa uygun kalsın.">Filter adult and harmful websites automatically, so exploring the web stays age-appropriate.</p>
                 </div>
-                <div class="footer-store-buttons">
-                    <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235"
-                        class="footer-store-btn">
-                        <img src="Appstore2.svg" alt="Download on App Store">
-                    </a>
+                <div class="feature">
+                    <div class="ficon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+                    <h3 data-en="Screen-time balance" data-tr="Ekran süresi dengesi">Screen-time balance</h3>
+                    <p data-en="Set gentle daily limits so screens make room for school, play and rest." data-tr="Nazik günlük limitlerle ekranlara okula, oyuna ve dinlenmeye yer açın.">Set gentle daily limits so screens make room for school, play and rest.</p>
                 </div>
-                <div style="margin-top: 30px; font-size: 0.9rem;">
-                    <a href="parental-privacy-policy.html"
-                        style="color: #666; text-decoration: none; margin: 0 10px; transition: color 0.2s;"
-                        onmouseover="this.style.color='#1a1a1a'" onmouseout="this.style.color='#666'">Privacy Policy</a>
-                    <span style="color: #ccc;">|</span>
-                    <a href="parental-termsofuse.html"
-                        style="color: #666; text-decoration: none; margin: 0 10px; transition: color 0.2s;"
-                        onmouseover="this.style.color='#1a1a1a'" onmouseout="this.style.color='#666'">Terms of Usage</a>
+                <div class="feature">
+                    <div class="ficon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></div>
+                    <h3 data-en="Sleep &amp; focus" data-tr="Uyku ve odak">Sleep &amp; focus</h3>
+                    <p data-en="Schedule downtime before bed so devices wind down when it's time to rest." data-tr="Yatmadan önce mola programlayın; uyku vakti geldiğinde cihazlar dinlensin.">Schedule downtime before bed so devices wind down when it's time to rest.</p>
+                </div>
+                <div class="feature">
+                    <div class="ficon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+                    <h3 data-en="Privacy &amp; strangers" data-tr="Gizlilik ve yabancılar">Privacy &amp; strangers</h3>
+                    <p data-en="Limit risky apps and keep conversations age-appropriate as your child learns to be safe online." data-tr="Riskli uygulamaları sınırlayın; çocuğunuz güvenli olmayı öğrenirken sohbetler yaşa uygun kalsın.">Limit risky apps and keep conversations age-appropriate as your child learns to be safe online.</p>
+                </div>
+                <div class="feature">
+                    <div class="ficon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div>
+                    <h3 data-en="Healthy habits" data-tr="Sağlıklı alışkanlıklar">Healthy habits</h3>
+                    <p data-en="Build consistent routines together that help screen time feel balanced, not constant." data-tr="Birlikte tutarlı rutinler kurun; ekran süresi sürekli değil dengeli hissettirsin.">Build consistent routines together that help screen time feel balanced, not constant.</p>
+                </div>
+                <div class="feature">
+                    <div class="ficon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+                    <h3 data-en="Peace of mind" data-tr="İçiniz rahat">Peace of mind</h3>
+                    <p data-en="Check protection status anytime and adjust rules from your own device." data-tr="Koruma durumunu istediğiniz zaman görün, kuralları kendi cihazınızdan ayarlayın.">Check protection status anytime and adjust rules from your own device.</p>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag" data-en="FAQ" data-tr="SSS">FAQ</span>
+                <h2 data-en="Questions parents ask." data-tr="Ebeveynlerin sorduğu sorular.">Questions parents ask.</h2>
+            </div>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary><span data-en="Is BlockerMax free?" data-tr="BlockerMax ücretsiz mi?">Is BlockerMax free?</span></summary>
+                    <div class="faq-a" data-en="You can try all premium features free for 14 days, no credit card required. After that you can choose a plan that fits your family." data-tr="Tüm premium özellikleri 14 gün boyunca ücretsiz deneyebilirsiniz, kredi kartı gerekmez. Sonrasında ailenize uygun bir plan seçebilirsiniz.">You can try all premium features free for 14 days, no credit card required. After that you can choose a plan that fits your family.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span data-en="Which devices does it work on?" data-tr="Hangi cihazlarda çalışır?">Which devices does it work on?</span></summary>
+                    <div class="faq-a" data-en="BlockerMax is built for iPhone and iPad, and it works smoothly alongside Apple's Screen Time." data-tr="BlockerMax iPhone ve iPad için tasarlandı ve Apple Screen Time ile sorunsuz çalışır.">BlockerMax is built for iPhone and iPad, and it works smoothly alongside Apple's Screen Time.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span data-en="Is this about spying on my child?" data-tr="Bu, çocuğumu gözetlemek mi?">Is this about spying on my child?</span></summary>
+                    <div class="faq-a" data-en="No. BlockerMax helps families set safer boundaries together. It is about guidance and balance, not reading private messages." data-tr="Hayır. BlockerMax ailelerin birlikte daha güvenli sınırlar koymasına yardımcı olur. Mesele rehberlik ve denge; özel mesajları okumak değil.">No. BlockerMax helps families set safer boundaries together. It is about guidance and balance, not reading private messages.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span data-en="Can my child just uninstall the app?" data-tr="Çocuğum uygulamayı kaldırabilir mi?">Can my child just uninstall the app?</span></summary>
+                    <div class="faq-a" data-en="With Uninstall Protection enabled, removing BlockerMax becomes much harder, so protection stays in place." data-tr="Kaldırma Koruması açıkken BlockerMax'i silmek çok daha zorlaşır, böylece koruma yerinde kalır.">With Uninstall Protection enabled, removing BlockerMax becomes much harder, so protection stays in place.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span data-en="How long does setup take?" data-tr="Kurulum ne kadar sürer?">How long does setup take?</span></summary>
+                    <div class="faq-a" data-en="Most families are up and running in just a few minutes. Download the app, turn on safe browsing, and set your limits." data-tr="Çoğu aile birkaç dakika içinde hazır olur. Uygulamayı indirin, güvenli taramayı açın ve sınırlarınızı belirleyin.">Most families are up and running in just a few minutes. Download the app, turn on safe browsing, and set your limits.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Final CTA ===== -->
+    <section class="final-cta">
+        <div class="container">
+            <h2 data-en="Start building safer digital habits today."
+                data-tr="Bugün daha güvenli dijital alışkanlıklar oluşturmaya başlayın.">Start building safer digital habits today.</h2>
+            <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="store-btn"
+               style="display:inline-block;transition:transform 0.3s ease;"
+               onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                <img src="Appstore2.svg" alt="Download on the App Store">
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="Parental Control AppIcon-opt.png" alt="BlockerMax Parental Control">
+                <h3 data-en="Guidance, not restriction." data-tr="Kısıt değil, rehber.">Guidance, not restriction.</h3>
+            </div>
+            <div style="font-size:0.9rem;color:var(--muted);">
+                <span data-en="Need help setting up?" data-tr="Kurulumda yardıma mı ihtiyacınız var?">Need help setting up?</span>
+                <a href="mailto:blockermax@nanegate.com" style="color:var(--primary);font-weight:600;">blockermax@nanegate.com</a>
+            </div>
+            <div class="footer-links">
+                <a href="parental-privacy-policy.html" data-en="Privacy Policy" data-tr="Gizlilik Politikası">Privacy Policy</a>
+                <span>|</span>
+                <a href="parental-termsofuse.html" data-en="Terms of Usage" data-tr="Kullanım Şartları">Terms of Usage</a>
+            </div>
+        </div>
     </footer>
-    <script src="script.js"></script>
+
+    <!-- ===== Sticky promo bar ===== -->
+    <div class="promo-bar">
+        <div class="promo-text">
+            <b data-en="14-Day Free Trial" data-tr="14 Gün Ücretsiz Deneme">14-Day Free Trial</b>
+            <span data-en="Get all premium features. " data-tr="Tüm premium özellikler. ">Get all premium features. </span><span class="hl-w" data-en="No credit card required." data-tr="Kredi kartı gerekmez.">No credit card required.</span>
+        </div>
+        <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="pbtn">
+            <span data-en="Start Free Trial" data-tr="Ücretsiz Dene">Start Free Trial</span>
+        </a>
+    </div>
+
+    <script>
+        function setLang(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-en]').forEach(function (el) {
+                var txt = el.getAttribute('data-' + lang);
+                if (txt !== null) el.textContent = txt;
+            });
+            document.querySelectorAll('.lang-toggle button').forEach(function (b) {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+            try { localStorage.setItem('bm-lang', lang); } catch (e) {}
+        }
+
+        // Animated screen-time rings (fill when scrolled into view)
+        (function () {
+            var rings = document.querySelectorAll('.stat-ring');
+            if (!rings.length) return;
+            var C = 327;
+            function fill(r) {
+                var pct = parseFloat(r.getAttribute('data-pct')) || 0;
+                var prog = r.querySelector('.prog');
+                if (prog) prog.style.strokeDashoffset = (C * (1 - pct / 100)).toFixed(1);
+            }
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        if (e.isIntersecting) { fill(e.target); io.unobserve(e.target); }
+                    });
+                }, { threshold: 0.4 });
+                rings.forEach(function (r) { io.observe(r); });
+            } else {
+                rings.forEach(fill);
+            }
+        })();
+
+        // Hamburger / mobile menu
+        (function () {
+            var btn = document.getElementById('hamburgerBtn');
+            var menu = document.getElementById('mobileMenu');
+            if (!btn || !menu) return;
+            function close() { menu.classList.remove('open'); btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
+            btn.addEventListener('click', function () {
+                var open = menu.classList.toggle('open');
+                btn.classList.toggle('active', open);
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
+        })();
+
+        (function () {
+            var saved = null;
+            try { saved = localStorage.getItem('bm-lang'); } catch (e) {}
+            var browser = (navigator.language || 'en').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+            setLang(saved || browser);
+        })();
+
+        // App demo: chips switch the screenshot and expand the description below
+        (function () {
+            var items = document.querySelectorAll('.appdemo-item');
+            var shots = document.querySelectorAll('.appdemo-screen img');
+            var screenEl = document.querySelector('.appdemo-screen');
+            var parentEl = document.querySelector('.appdemo-parent');
+            var iconGroups = document.querySelectorAll('.appdemo-icons');
+            if (!items.length) return;
+            items.forEach(function (it) {
+                it.querySelector('.appdemo-chip').addEventListener('click', function () {
+                    var key = it.getAttribute('data-chip');
+                    items.forEach(function (x) { x.classList.toggle('active', x === it); });
+                    var isParent = key === 'parent';
+                    if (parentEl) parentEl.classList.toggle('on', isParent);
+                    if (screenEl) screenEl.classList.toggle('hide', isParent);
+                    iconGroups.forEach(function (g) { g.classList.toggle('on', g.getAttribute('data-for') === key); });
+                    if (!isParent) {
+                        shots.forEach(function (img) { img.classList.toggle('on', img.getAttribute('data-shot') === key); });
+                    }
+                });
+            });
+        })();
+
+    </script>
 </body>
 
 </html>
