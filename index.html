@@ -132,6 +132,12 @@
             .half:hover .label .enter { opacity: 1; transform: translateY(0); }
         }
 
+        /* Turkey: show only Parental Control, full screen */
+        html.tr-only .half-addiction { display: none; }
+        html.tr-only .split .half,
+        html.tr-only .split:hover .half { flex: 1 !important; }
+        html.tr-only .half .label .enter { opacity: 1 !important; transform: none !important; }
+
         /* mobile: stack top/bottom, no hover */
         @media (max-width: 760px), (hover: none) {
             .split { flex-direction: column; }
@@ -141,6 +147,13 @@
             .half .label h2 { font-size: clamp(1.6rem, 7vw, 2.4rem); }
         }
     </style>
+    <script>
+        /* Turkey detection (runs before paint, no flash): timezone first. */
+        try {
+            var __tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+            if (__tz === 'Europe/Istanbul') document.documentElement.classList.add('tr-only');
+        } catch (e) {}
+    </script>
 </head>
 
 <body>
@@ -166,7 +179,7 @@
         </a>
 
         <!-- Quit Your Addiction -->
-        <a class="half" href="landing.html" aria-label="Quit Your Addiction">
+        <a class="half half-addiction" href="landing.html" aria-label="Quit Your Addiction">
             <video autoplay muted loop playsinline preload="auto" src="sun.mp4"></video>
             <div class="scrim"></div>
             <div class="label">
@@ -191,6 +204,14 @@
                 if (t !== null) el.textContent = t;
             });
         })();
+
+        /* Backup IP check: if visitor is in Turkey, show only Parental Control. */
+        if (!document.documentElement.classList.contains('tr-only')) {
+            fetch('https://get.geojs.io/v1/ip/country.json')
+                .then(function (r) { return r.json(); })
+                .then(function (d) { if (d && d.country === 'TR') document.documentElement.classList.add('tr-only'); })
+                .catch(function () {});
+        }
     </script>
 </body>
 
