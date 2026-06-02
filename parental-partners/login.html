@@ -1,56 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K887P2GR');</script>
-    <!-- End Google Tag Manager -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - BlockerMax Partner Program</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <title data-i18n="login_title">Login - BlockerMax Partner Program</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        h1, h2, h3, .login-logo span { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; letter-spacing: -0.02em; }
-    </style>
+    <script src="translations.js"></script>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K887P2GR"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    <div class="lang-switcher" style="position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; align-items: center; background: rgba(0,0,0,0.03); padding: 6px 12px; border-radius: 20px; z-index: 100;">
+        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" style="background: none; border: none; font-weight: 700; color: var(--text-muted); cursor: pointer; padding: 2px; font-size: 13px; -webkit-tap-highlight-color: transparent;">EN</button>
+        <span style="color: var(--border-color); font-size: 13px;">|</span>
+        <button class="lang-btn" data-lang="tr" onclick="setLanguage('tr')" style="background: none; border: none; font-weight: 700; color: var(--text-muted); cursor: pointer; padding: 2px; font-size: 13px; -webkit-tap-highlight-color: transparent;">TR</button>
+    </div>
+
     <div class="login-page" style="background-color: #FFFFFF;">
         <div class="login-box">
             <div class="login-header">
                 <div class="login-logo">
-                    <img src="Parental Control AppIcon-opt.png" alt="BlockerMax" style="width: 44px; height: 44px; border-radius: 12px; object-fit: cover; display: block;">
-                    <span><b>Parental Control</b>: BlockerMax</span>
+                    <img src="Parental Control AppIcon-opt.png" alt="BlockerMax" style="width: 56px; height: 56px; border-radius: 14px; object-fit: cover; display: block; margin: 0 auto 10px;">
+                    <span>Parental Control : BlockerMax</span>
                 </div>
-                <p>Partner Program Login</p>
+                <p data-i18n="login_title">Partner Program Login</p>
             </div>
             
             <form action="dashboard.html" method="GET">
                 <div class="form-group">
-                    <label class="form-label" for="username">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="john.doe" required>
+                    <label class="form-label" for="username" data-i18n="login_username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="john.doe" required data-i18n="[placeholder]login_username">
                 </div>
                 
                 <div class="form-group mb-4">
-                    <label class="form-label" for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                    <label class="form-label" for="password" data-i18n="login_password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required data-i18n="[placeholder]login_password">
                 </div>
                 
-                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                <button type="submit" class="btn btn-primary btn-block" data-i18n="login_submit">Sign In</button>
             </form>
             
             <div class="text-center mt-4">
-                <p style="font-size: 13px;">Don't have an account? <a href="index.html#apply">Apply now</a></p>
+                <p style="font-size: 13px;" data-i18n="login_no_account">Don't have an account? <a href="index.html#apply">Apply now</a></p>
             </div>
         </div>
     </div>
@@ -58,11 +48,11 @@
     <!-- Simple Footer for Login Page -->
     <div style="text-align: center; padding: 40px 20px; border-top: 1px solid #eee; margin-top: auto;">
         <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
-            <a href="affiliate-terms.html" style="font-size: 13px; color: #6E6E73;">Affiliate Terms</a>
-            <a href="https://blockermax.com/privacy-policy.html" style="font-size: 13px; color: #6E6E73;">Privacy Policy</a>
-            <a href="https://blockermax.com/support.html" style="font-size: 13px; color: #6E6E73;">Contact</a>
+            <a href="affiliate-terms.html" style="font-size: 13px; color: #6E6E73;" data-i18n="footer_terms">Affiliate Terms</a>
+            <a href="https://blockermax.com/privacy-policy.html" style="font-size: 13px; color: #6E6E73;" data-i18n="footer_policy">Privacy Policy</a>
+            <a href="https://blockermax.com/support.html" style="font-size: 13px; color: #6E6E73;" data-i18n="footer_contact">Contact</a>
         </div>
-        <p style="margin-top: 15px; font-size: 12px; color: #6E6E73;">© 2026 BlockerMax. All rights reserved.</p>
+        <p style="margin-top: 15px; font-size: 12px; color: #6E6E73;" data-i18n="footer_copy">© 2026 BlockerMax. All rights reserved.</p>
     </div>
     <script src="login.js"></script>
 </body>

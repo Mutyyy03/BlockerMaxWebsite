@@ -526,3 +526,17 @@ tbody tr:hover {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+/* Language Switcher */
+.lang-btn {
+  transition: all 0.2s ease;
+  opacity: 0.65;
+}
+.lang-btn:hover {
+  opacity: 1;
+  color: var(--text-main) !important;
+}
+.lang-btn.active {
+  opacity: 1;
+  color: var(--primary-color) !important;
+}

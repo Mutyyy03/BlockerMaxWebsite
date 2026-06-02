@@ -12,9 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const username = usernameInput.value.trim();
             const password = passwordInput.value;
+            const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
 
             if (!username || !password) {
-                alert('Lütfen kullanıcı adı ve şifre giriniz.');
+                alert(isTr ? 'Lütfen kullanıcı adı ve şifre giriniz.' : 'Please enter username and password.');
                 return;
             }
 
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             try {
                 // Yükleniyor durumu
-                submitBtn.innerText = 'Giriş Yapılıyor...';
+                submitBtn.innerText = isTr ? 'Giriş Yapılıyor...' : 'Signing In...';
                 submitBtn.disabled = true;
 
                 const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -36,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.message || 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.');
+                    const defaultErr = isTr ? 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.' : 'Login failed. Please check your credentials.';
+                    throw new Error(errorData.message || defaultErr);
                 }
 
                 const data = await response.json();

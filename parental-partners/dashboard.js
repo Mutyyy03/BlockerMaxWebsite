@@ -16,13 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sandboxToggle) {
         sandboxToggle.addEventListener('change', async (e) => {
             const isSandbox = e.target.checked;
+            const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
             
             // Geçici UI/UX efekti
             const balanceEl = document.getElementById('metric-balance');
             const earningsEl = document.getElementById('metric-earnings');
             
-            if (balanceEl) balanceEl.innerText = 'Yükleniyor...';
-            if (earningsEl) earningsEl.innerText = 'Yükleniyor...';
+            if (balanceEl) balanceEl.innerText = isTr ? 'Yükleniyor...' : 'Loading...';
+            if (earningsEl) earningsEl.innerText = isTr ? 'Yükleniyor...' : 'Loading...';
             
             // API'de sandbox parametresi yok ama geçici bir bekleme efekti
             await new Promise(resolve => setTimeout(resolve, 800)); // 800ms sahte bekleme
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await loadDashboardData();
             
             if (isSandbox) {
-                console.log('Sandbox modu aktif edildi.');
+                console.log(isTr ? 'Sandbox modu aktif edildi.' : 'Sandbox mode activated.');
             }
         });
     }
@@ -57,7 +58,8 @@ async function authFetch(endpoint) {
     }
 
     if (!response.ok) {
-        throw new Error(`API Hatası: ${response.status} ${response.statusText}`);
+        const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
+        throw new Error(isTr ? `API Hatası: ${response.status} ${response.statusText}` : `API Error: ${response.status} ${response.statusText}`);
     }
 
     return response.json();
@@ -83,17 +85,19 @@ async function loadDashboardData() {
         }
 
     } catch (error) {
+        const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
         console.error('Veriler yüklenirken hata oluştu:', error);
         if (error.message !== 'Unauthorized') {
-            alert('Veriler yüklenemedi. Lütfen sayfayı yenileyin.');
+            alert(isTr ? 'Veriler yüklenemedi. Lütfen sayfayı yenileyin.' : 'Failed to load data. Please refresh the page.');
         }
     }
 }
 
 // DOM: Üst metrikleri güncelleyen fonksiyon
 function updateOverviewMetrics(data) {
+    const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
     // Para birimi formatlayıcı (Örn: $1,200.50)
-    const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+    const formatCurrency = (val) => new Intl.NumberFormat(isTr ? 'tr-TR' : 'en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
 
     const balanceEl = document.getElementById('metric-balance');
     const earningsEl = document.getElementById('metric-earnings');
@@ -105,16 +109,16 @@ function updateOverviewMetrics(data) {
     if (balanceEl) balanceEl.innerText = formatCurrency(data.balance);
     if (earningsEl) earningsEl.innerText = formatCurrency(data.totalEarned);
     
-    // Geçici olarak "Paid Users" kısmını sakla veya API'den gelen veriye bağla (şu an totalPaid kullanılıyor, düzeltilebilir)
-    if (paidEl) paidEl.innerText = data.activeSubs || '0'; // İleride gerçek paid users eklenebilir
+    if (paidEl) paidEl.innerText = data.activeSubs || '0';
     if (subsEl) subsEl.innerText = data.activeSubs || '0';
     
     // API'den gelen veriden username veya fullname'i ekrana yaz
     if (welcomeTitleEl) {
+        const welcomeText = isTr ? 'Hoş Geldiniz' : 'Welcome';
         if (data.fullName) {
-            welcomeTitleEl.innerText = `Welcome, ${data.fullName}`;
+            welcomeTitleEl.innerText = `${welcomeText}, ${data.fullName}`;
         } else if (data.username) {
-            welcomeTitleEl.innerText = `Welcome, ${data.username.charAt(0).toUpperCase() + data.username.slice(1)}`;
+            welcomeTitleEl.innerText = `${welcomeText}, ${data.username.charAt(0).toUpperCase() + data.username.slice(1)}`;
         }
     }
 }
@@ -124,6 +128,17 @@ function updatePromoCode(data) {
     const promoCodeInput = document.getElementById('promoCodeInput');
     if (promoCodeInput && data.promo_code) {
         promoCodeInput.value = data.promo_code;
+        
+        // Also update the strong tags in Audience Benefits if they exist
+        const promoBoldEl = document.getElementById('promo-bold-code');
+        if (promoBoldEl) {
+            promoBoldEl.innerText = data.promo_code;
+        }
+        
+        // Update all classes of primary-code-text if they exist
+        document.querySelectorAll('.primary-code-text').forEach(el => {
+            el.innerText = data.promo_code;
+        });
     }
 }
 
@@ -131,6 +146,7 @@ function updatePromoCode(data) {
 function updateTransactionsTable(transactions) {
     const realBody = document.getElementById('tx-tbody-real');
     const emptyBody = document.getElementById('tx-tbody-empty');
+    const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
 
     if (!realBody || !emptyBody) return;
 
@@ -154,7 +170,7 @@ function updateTransactionsTable(transactions) {
         
         // Tarih Formatı
         const dateObj = new Date(tx.created_at || new Date());
-        const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const dateStr = dateObj.toLocaleDateString(isTr ? 'tr-TR' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         
         // Etkinlik Tipine Göre Rozet (Badge)
         let badgeClass = 'badge-primary'; // Varsayılan mavi
@@ -162,11 +178,20 @@ function updateTransactionsTable(transactions) {
             badgeClass = 'badge-success'; // Yenileme ise yeşil
         }
         
-        const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+        let eventType = tx.event_type || 'Subscription';
+        if (isTr) {
+            if (eventType.toLowerCase().includes('renewal')) {
+                eventType = 'Yenileme';
+            } else if (eventType.toLowerCase().includes('subscription')) {
+                eventType = 'Abonelik';
+            }
+        }
+        
+        const formatCurrency = (val) => new Intl.NumberFormat(isTr ? 'tr-TR' : 'en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
 
         tr.innerHTML = `
             <td>${dateStr}</td>
-            <td><span class="badge ${badgeClass}">${tx.event_type || 'Subscription'}</span></td>
+            <td><span class="badge ${badgeClass}">${eventType}</span></td>
             <td>${formatCurrency(tx.gross_revenue)}</td>
             <td style="color: var(--success); font-weight: 500;">+${formatCurrency(tx.commission_earned)}</td>
         `;
@@ -179,6 +204,7 @@ function updateTransactionsTable(transactions) {
 function updatePayoutsTable(payouts) {
     const realBody = document.getElementById('payout-tbody-real');
     const emptyBody = document.getElementById('payout-tbody-empty');
+    const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
 
     if (!realBody || !emptyBody) return;
 
@@ -197,15 +223,22 @@ function updatePayoutsTable(payouts) {
         const tr = document.createElement('tr');
         
         const dateObj = new Date(p.created_at || new Date());
-        const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const dateStr = dateObj.toLocaleDateString(isTr ? 'tr-TR' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         
         let badgeClass = p.status === 'paid' ? 'badge-success' : 'badge-warning';
-        const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+        
+        let statusText = p.status || 'pending';
+        if (isTr) {
+            if (statusText === 'paid') statusText = 'Ödendi';
+            else if (statusText === 'pending') statusText = 'Beklemede';
+        }
+        
+        const formatCurrency = (val) => new Intl.NumberFormat(isTr ? 'tr-TR' : 'en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
 
         tr.innerHTML = `
             <td>${dateStr}</td>
             <td style="font-weight: 600;">${formatCurrency(p.amount)}</td>
-            <td><span class="badge ${badgeClass}" style="text-transform: capitalize;">${p.status}</span></td>
+            <td><span class="badge ${badgeClass}" style="text-transform: capitalize;">${statusText}</span></td>
             <td><span style="font-family: monospace; font-size: 13px; color: var(--text-muted);">${p.ref_id || '-'}</span></td>
         `;
         
@@ -234,9 +267,10 @@ window.copyCode = function() {
     navigator.clipboard.writeText(copyText.value);
     
     if (event && event.target) {
+        const isTr = (localStorage.getItem('pref_lang') || 'en') === 'tr';
         var btn = event.target;
         var originalText = btn.innerText;
-        btn.innerText = "Copied!";
+        btn.innerText = isTr ? "Kopyalandı!" : "Copied!";
         setTimeout(() => {
             btn.innerText = originalText;
         }, 2000);

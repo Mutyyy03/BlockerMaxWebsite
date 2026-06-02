@@ -710,8 +710,8 @@
                     const typeLower = log.event_type.toLowerCase();
                     const msgLower = log.event_message.toLowerCase();
                     
-                    // Olumsuz kelimelerin tespiti (İngilizce ve Türkçe)
-                    const isNegative = typeLower.includes('relapse') || typeLower.includes('block') || typeLower.includes('violation') || typeLower.includes('tamper') || typeLower.includes('alert') || msgLower.includes('block') || msgLower.includes('engellendi') || msgLower.includes('attempt') || msgLower.includes('kapatıldı') || msgLower.includes('ihlal');
+                    // Sadece bir özelliğin "kapatıldığı" durumları kırmızı göster
+                    const isNegative = typeLower.includes('disable') || msgLower.includes('disable') || msgLower.includes('kapat') || msgLower.includes('kapalı');
                     
                     const cls = isNegative ? 'relapse' : 'journey';
                     

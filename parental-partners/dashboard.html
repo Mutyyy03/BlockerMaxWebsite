@@ -1,30 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K887P2GR');</script>
-    <!-- End Google Tag Manager -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - BlockerMax Partner</title>
+    <title data-i18n="dash_brand">Dashboard - BlockerMax Partner</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="translations.js"></script>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K887P2GR"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <nav class="navbar">
         <div class="container">
             <div class="navbar-brand">
                 <img src="Parental Control AppIcon-opt.png" alt="BlockerMax" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover;">
-                <span>Parental Control : BlockerMax</span>Dashboard
+                <span>Parental Control : BlockerMax</span><span data-i18n="dash_brand">Dashboard</span>
             </div>
             <button class="menu-toggle" aria-label="Toggle Menu" onclick="document.querySelector('.navbar-nav').classList.toggle('active-menu'); this.classList.toggle('open');">
                 <span></span>
@@ -32,7 +21,12 @@
                 <span></span>
             </button>
             <div class="navbar-nav">
-                <a href="login.html" class="nav-link">Logout</a>
+                <a href="login.html" class="nav-link" data-i18n="dash_logout">Logout</a>
+                <div class="lang-switcher" style="display: flex; gap: 8px; align-items: center; margin-left: 8px; border-left: 1px solid var(--border-color); padding-left: 12px;">
+                    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" style="background: none; border: none; font-weight: 700; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: 13px; -webkit-tap-highlight-color: transparent;">EN</button>
+                    <span style="color: var(--border-color); font-size: 13px;">|</span>
+                    <button class="lang-btn" data-lang="tr" onclick="setLanguage('tr')" style="background: none; border: none; font-weight: 700; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: 13px; -webkit-tap-highlight-color: transparent;">TR</button>
+                </div>
             </div>
         </div>
     </nav>
@@ -138,8 +132,8 @@
         </style>
         <div class="tabs-wrapper">
             <div class="tabs-segmented">
-                <button class="tab-btn-segmented active" onclick="switchTab('overview')">Overview</button>
-                <button class="tab-btn-segmented" onclick="switchTab('creator-kit')">Creator Kit</button>
+                <button class="tab-btn-segmented active" onclick="switchTab('overview')" data-i18n="dash_overview_tab">Overview</button>
+                <button class="tab-btn-segmented" onclick="switchTab('creator-kit')" data-i18n="dash_creator_kit_tab">Creator Kit</button>
             </div>
         </div>
 
@@ -147,47 +141,47 @@
         <div id="overview" class="tab-content active">
             <!-- Wallet Header Row -->
             <div class="wallet-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; width: 100%;">
-                <h2 id="welcome-title" style="font-size: 22px; margin: 0; font-weight: 700; color: var(--text-main);">Welcome</h2>
+                <h2 id="welcome-title" style="font-size: 22px; margin: 0; font-weight: 700; color: var(--text-main);"><span data-i18n="dash_welcome">Welcome</span></h2>
             </div>
 
             <div class="card overview-top" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                 <div>
-                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Next Payout Date</p>
-                    <h3 id="metric-payout-date" style="margin: 0;">20th of every month</h3>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;" data-i18n="dash_payout_date_lbl">Next Payout Date</p>
+                    <h3 id="metric-payout-date" style="margin: 0;" data-i18n="dash_payout_date_val">20th of every month</h3>
                 </div>
                 <div class="desktop-right" style="text-align: right;">
-                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;">Current Balance</p>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 14px;" data-i18n="dash_balance_lbl">Current Balance</p>
                     <h2 id="metric-balance" style="margin: 0; color: var(--primary-color);">$0.00</h2>
                 </div>
             </div>
 
             <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
                 <div class="card" style="padding: 16px; margin-bottom: 0;">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Paid Users</div>
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;" data-i18n="dash_paid_users_lbl">Paid Users</div>
                     <div id="metric-paid" style="font-size: 20px; font-weight: 700; color: var(--text-main);">0</div>
                 </div>
                 <div class="card" style="padding: 16px; margin-bottom: 0;">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;">Active Subs</div>
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 4px;" data-i18n="dash_active_subs_lbl">Active Subs</div>
                     <div id="metric-subs" style="font-size: 20px; font-weight: 700; color: var(--text-main);">0</div>
                 </div>
                 <div class="card" style="padding: 16px; margin-bottom: 0; border-color: rgba(0,122,255,0.2); background: rgba(0,122,255,0.03);">
-                    <div style="font-size: 11px; text-transform: uppercase; color: var(--primary-color); letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 700;">Total Revenue</div>
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--primary-color); letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 700;" data-i18n="dash_total_rev_lbl">Total Revenue</div>
                     <div id="metric-earnings" style="font-size: 20px; font-weight: 700; color: var(--primary-color);">$0.00</div>
                 </div>
             </div>
 
             <div class="card mt-3">
                 <div class="card-header">
-                    <h3 class="card-title">Recent Transactions</h3>
+                    <h3 class="card-title" data-i18n="dash_recent_tx">Recent Transactions</h3>
                 </div>
                 <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Event Type</th>
-                                <th>Revenue</th>
-                                <th>Commission</th>
+                                <th data-i18n="dash_tx_date">Date</th>
+                                <th data-i18n="dash_tx_type">Event Type</th>
+                                <th data-i18n="dash_tx_rev">Revenue</th>
+                                <th data-i18n="dash_tx_comm">Commission</th>
                             </tr>
                         </thead>
                         <tbody id="tx-tbody-real">
@@ -196,8 +190,8 @@
                             <tr>
                                 <td colspan="4" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
                                     <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
-                                    <div style="font-weight: 600; margin-bottom: 4px;">No transactions yet</div>
-                                    <div style="font-size: 13px;">Share your promo code to start earning commissions!</div>
+                                    <div style="font-weight: 600; margin-bottom: 4px;" data-i18n="dash_tx_empty_title">No transactions yet</div>
+                                    <div style="font-size: 13px;" data-i18n="dash_tx_empty_desc">Share your promo code to start earning commissions!</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -208,16 +202,16 @@
             <!-- Payout History Card -->
             <div class="card mt-3" style="margin-bottom: 24px;">
                 <div class="card-header">
-                    <h3 class="card-title">Payout History</h3>
+                    <h3 class="card-title" data-i18n="dash_payout_history">Payout History</h3>
                 </div>
                 <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Reference</th>
+                                <th data-i18n="dash_payout_date">Date</th>
+                                <th data-i18n="dash_payout_amt">Amount</th>
+                                <th data-i18n="dash_payout_status">Status</th>
+                                <th data-i18n="dash_payout_ref">Reference</th>
                             </tr>
                         </thead>
                         <tbody id="payout-tbody-real" style="display: none;">
@@ -227,8 +221,8 @@
                             <tr>
                                 <td colspan="4" style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
                                     <div style="font-size: 32px; margin-bottom: 12px;">💸</div>
-                                    <div style="font-weight: 600; margin-bottom: 4px;">No payouts yet</div>
-                                    <div style="font-size: 13px;">Your earned commissions will be transferred to you and listed here.</div>
+                                    <div style="font-weight: 600; margin-bottom: 4px;" data-i18n="dash_payout_empty_title">No payouts yet</div>
+                                    <div style="font-size: 13px;" data-i18n="dash_payout_empty_desc">Your earned commissions will be transferred to you and listed here.</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -239,47 +233,30 @@
 
         <!-- Creator Kit Tab -->
         <div id="creator-kit" class="tab-content">
-            <div class="grid grid-2">
+            <div class="creator-kit-container" style="max-width: 600px; margin: 0 auto 24px auto;">
                 <!-- Promo Code -->
                 <div class="card">
-                    <h3>Your Promo Code</h3>
-                    <p>Share this code with your audience so they get a discount and you get commission.</p>
+                    <h3 data-i18n="dash_promo_title">Your Promo Code</h3>
+                    <p data-i18n="dash_promo_desc">Share this code with your audience so they get a discount and you get commission.</p>
                     <div class="copy-field mt-3">
                         <input type="text" class="form-control" value="JOHN50" readonly id="promoCodeInput" style="font-size: 18px; font-weight: bold; color: var(--primary-color);">
-                        <button class="btn btn-primary" onclick="copyCode()">Copy</button>
+                        <button class="btn btn-primary" onclick="copyCode()" data-i18n="dash_promo_copy">Copy</button>
                     </div>
                     
                     <div class="mt-4">
-                        <h4>Audience Benefits</h4>
+                        <h4 data-i18n="dash_benefits_title">Audience Benefits</h4>
                         <ul style="padding-left: 20px; font-size: 14px; color: var(--text-muted); margin-top: 8px;">
-                            <li>20% discount on the first month OR extended free trial.</li>
-                            <li>Users must enter code <strong>JOHN50</strong> inside the app to activate premium.</li>
+                            <li data-i18n="dash_benefit_1">20% discount on the first month OR extended free trial.</li>
+                            <li data-i18n="dash_benefit_2">Users must enter code <strong id="promo-bold-code">JOHN50</strong> inside the app to activate premium.</li>
                         </ul>
                     </div>
-                </div>
-
-                <!-- Brand Assets -->
-                <div class="card">
-                    <h3>Brand Assets</h3>
-                    <p>Download official media to use in your content.</p>
-                    
-                    <a href="../Creator%20Kit.zip" download class="btn btn-primary btn-block" style="margin-top: 16px; margin-bottom: 24px; padding: 12px; font-weight: 600; justify-content: center;">📦 Download Full Kit (ZIP)</a>
-                    
-                    <h4 style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 12px;">Individual Assets</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/App%20Screenshots.zip" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">📱 App Screenshots (ZIP)</a></li>
-                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Highres_Logo.png" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">✨ High-Res Logo</a></li>
-                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Video.mp4" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎥 Demo Video</a></li>
-                        <li style="margin-bottom: 8px;"><a href="../Creator%20Kit/Journey%20Cards.zip" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎨 Feature Visuals (ZIP)</a></li>
-                        <li><a href="../bgmusic.aac" download class="btn btn-outline btn-block" style="justify-content: flex-start; padding: 8px 16px;">🎵 Background Audio</a></li>
-                    </ul>
                 </div>
             </div>
 
             <!-- Talking Points -->
             <div class="card mt-3">
                 <div class="card-header">
-                    <h3 class="card-title">Talking Points & Script Outline</h3>
+                    <h3 class="card-title" data-i18n="dash_talking_points_title">Talking Points & Script Outline</h3>
                 </div>
                 <style>
                     /* Accordion Styles */
@@ -295,96 +272,102 @@
                     .tp-box { background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; }
                     .tp-box h4 { margin-bottom: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
                     .tp-box p { font-size: 13px; margin-bottom: 0; line-height: 1.5; color: var(--text-main); flex-grow: 1; }
+                    @media (max-width: 1024px) {
+                        .accordion-content { grid-template-columns: repeat(2, 1fr); }
+                    }
+                    @media (max-width: 600px) {
+                        .accordion-content { grid-template-columns: 1fr; }
+                    }
                 </style>
                 <div class="accordion">
                     <!-- Point 1 -->
                     <details class="accordion-item" open>
-                        <summary class="accordion-header">Talking Point 1 — Recovery Focus</summary>
+                        <summary class="accordion-header" data-i18n="dash_tp_1_header">Talking Point 1 — Digital Safety for Children</summary>
                         <div class="accordion-content">
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Problem</h4>
-                                <p>A lot of people don’t just need motivation — they need a system that protects them when willpower drops.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_1_prob_lbl">Problem</h4>
+                                <p data-i18n="dash_tp_1_prob_val">Children are exposed to adult content and online hazards very easily nowadays, even accidentally.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--success);">Solution</h4>
-                                <p>BlockerMax helps users reduce adult content triggers, stay protected, and build a healthier recovery routine over time.</p>
+                                <h4 style="color: var(--success);" data-i18n="dash_tp_1_sol_lbl">Solution</h4>
+                                <p data-i18n="dash_tp_1_sol_val">BlockerMax Parental Control automatically filters explicit websites, search results, and apps, ensuring a clean digital space for kids.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
-                                <p><strong>Strict Mode</strong> keeps blocking active when users are most vulnerable, making it harder to bypass protection impulsively.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_1_feat_lbl">Key Feature to Mention</h4>
+                                <p data-i18n="dash_tp_1_feat_val"><strong>Smart Filter</strong> runs silently in the background, keeping children safe across browsers and search engines.</p>
                             </div>
                             <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
-                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
-                                <p style="font-style: italic; font-weight: 500;">“Download BlockerMax today and use my code <strong style="color: var(--primary-color);">JOHN50</strong> inside the app for a special discount.”</p>
+                                <h4 style="color: var(--primary-color);" data-i18n="dash_tp_1_cta_lbl">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;" data-i18n="dash_tp_1_cta_val">“Protect your children online today. Download BlockerMax Parental Control and use code <strong class="primary-code-text">JOHN50</strong> inside the app for a special discount.”</p>
                             </div>
                         </div>
                     </details>
                     
                     <!-- Point 2 -->
                     <details class="accordion-item">
-                        <summary class="accordion-header">Talking Point 2 — Urge Control</summary>
+                        <summary class="accordion-header" data-i18n="dash_tp_2_header">Talking Point 2 — Screen Time & App Management</summary>
                         <div class="accordion-content">
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Problem</h4>
-                                <p>Urges can hit suddenly, and one weak moment can break days or weeks of progress.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_2_prob_lbl">Problem</h4>
+                                <p data-i18n="dash_tp_2_prob_val">Too much screen time and unhealthy app usage affect children's sleep, education, and mental health.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--success);">Solution</h4>
-                                <p>BlockerMax gives users practical tools to pause, block triggers, and stay on track during difficult moments.</p>
+                                <h4 style="color: var(--success);" data-i18n="dash_tp_2_sol_lbl">Solution</h4>
+                                <p data-i18n="dash_tp_2_sol_val">BlockerMax allows parents to block or limit access to distracting apps and set healthy screen boundaries.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
-                                <p><strong>Panic Mode SOS</strong> gives quick support when urges hit, helping users slow down before making a decision.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_2_feat_lbl">Key Feature to Mention</h4>
+                                <p data-i18n="dash_tp_2_feat_val"><strong>App Blocker & Limits</strong> let you manage games and social media access easily.</p>
                             </div>
                             <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
-                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
-                                <p style="font-style: italic; font-weight: 500;">“Start your recovery journey with BlockerMax and use my code <strong style="color: var(--primary-color);">JOHN50</strong> for a special discount.”</p>
+                                <h4 style="color: var(--primary-color);" data-i18n="dash_tp_2_cta_lbl">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;" data-i18n="dash_tp_2_cta_val">“Take control of your kids' screen time. Download BlockerMax and use my code <strong class="primary-code-text">JOHN50</strong> to get started.”</p>
                             </div>
                         </div>
                     </details>
 
                     <!-- Point 3 -->
                     <details class="accordion-item">
-                        <summary class="accordion-header">Talking Point 3 — Accountability</summary>
+                        <summary class="accordion-header" data-i18n="dash_tp_3_header">Talking Point 3 — Childproof Protection & Tamper Prevention</summary>
                         <div class="accordion-content">
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Problem</h4>
-                                <p>Most people fail because blocking tools are too easy to disable when they actually need them.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_3_prob_lbl">Problem</h4>
+                                <p data-i18n="dash_tp_3_prob_val">Tech-savvy kids often find ways to delete parental control apps or disable restrictions easily.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--success);">Solution</h4>
-                                <p>BlockerMax is designed to make protection stronger, helping users stay accountable even when motivation is low.</p>
+                                <h4 style="color: var(--success);" data-i18n="dash_tp_3_sol_lbl">Solution</h4>
+                                <p data-i18n="dash_tp_3_sol_val">BlockerMax includes strict uninstall protection and settings lock that prevents children from bypassing the security without parental approval.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
-                                <p><strong>Uninstall Protection</strong> helps prevent impulsive app removal, so users don’t lose protection in weak moments.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_3_feat_lbl">Key Feature to Mention</h4>
+                                <p data-i18n="dash_tp_3_feat_val"><strong>Uninstall Protection</strong> requires parental verification to remove or change settings.</p>
                             </div>
                             <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
-                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
-                                <p style="font-style: italic; font-weight: 500;">“Try BlockerMax today and use my code <strong style="color: var(--primary-color);">JOHN50</strong> inside the app to unlock your special offer.”</p>
+                                <h4 style="color: var(--primary-color);" data-i18n="dash_tp_3_cta_lbl">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;" data-i18n="dash_tp_3_cta_val">“Keep your restrictions secure. Install BlockerMax with my code <strong class="primary-code-text">JOHN50</strong> for complete peace of mind.”</p>
                             </div>
                         </div>
                     </details>
 
                     <!-- Point 4 -->
                     <details class="accordion-item">
-                        <summary class="accordion-header">Talking Point 4 — Progress & Habit Change</summary>
+                        <summary class="accordion-header" data-i18n="dash_tp_4_header">Talking Point 4 — Healthy Habits & Balanced Growth</summary>
                         <div class="accordion-content">
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Problem</h4>
-                                <p>Quitting adult content is harder when you can’t see your progress or understand your patterns.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_4_prob_lbl">Problem</h4>
+                                <p data-i18n="dash_tp_4_prob_val">Raising kids in a digital world requires guidance, but parents can't watch over them 24/7.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--success);">Solution</h4>
-                                <p>BlockerMax helps users track clean days, mood, energy, and progress so they can stay motivated long-term.</p>
+                                <h4 style="color: var(--success);" data-i18n="dash_tp_4_sol_lbl">Solution</h4>
+                                <p data-i18n="dash_tp_4_sol_val">BlockerMax acts as a gentle shield, encouraging kids to build healthier device habits and focus on real-world activities.</p>
                             </div>
                             <div class="tp-box">
-                                <h4 style="color: var(--text-muted);">Key Feature to Mention</h4>
-                                <p><strong>Streak & Mood Tracking</strong> makes recovery visible and helps users understand how their habits affect their life.</p>
+                                <h4 style="color: var(--text-muted);" data-i18n="dash_tp_4_feat_lbl">Key Feature to Mention</h4>
+                                <p data-i18n="dash_tp_4_feat_val"><strong>Category Blocking</strong> lets you block entire categories of mature content with a single tap.</p>
                             </div>
                             <div class="tp-box" style="background: rgba(0,122,255,0.05); border-color: rgba(0,122,255,0.1);">
-                                <h4 style="color: var(--primary-color);">Call to Action (CTA)</h4>
-                                <p style="font-style: italic; font-weight: 500;">“Download BlockerMax and use my code <strong style="color: var(--primary-color);">JOHN50</strong> to start building better habits today.”</p>
+                                <h4 style="color: var(--primary-color);" data-i18n="dash_tp_4_cta_lbl">Call to Action (CTA)</h4>
+                                <p style="font-style: italic; font-weight: 500;" data-i18n="dash_tp_4_cta_val">“Build healthier digital habits for your family. Get BlockerMax today using code <strong class="primary-code-text">JOHN50</strong> for a special discount.”</p>
                             </div>
                         </div>
                     </details>
@@ -397,11 +380,11 @@
     <!-- Custom scripts handled by dashboard.js -->
     <footer style="background-color: #fff; padding: 40px 20px; border-top: 1px solid var(--border-color); margin-top: 60px;">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-            <p style="margin: 0; font-size: 13px; color: var(--text-muted);">© 2026 BlockerMax. All rights reserved.</p>
+            <p style="margin: 0; font-size: 13px; color: var(--text-muted);" data-i18n="footer_copy">© 2026 BlockerMax. All rights reserved.</p>
             <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-                <a href="affiliate-terms.html" style="font-size: 13px; color: var(--text-muted);">Affiliate Terms</a>
-                <a href="https://blockermax.com/privacy-policy.html" style="font-size: 13px; color: var(--text-muted);">Privacy Policy</a>
-                <a href="https://blockermax.com/support.html" style="font-size: 13px; color: var(--text-muted);">Contact</a>
+                <a href="affiliate-terms.html" style="font-size: 13px; color: var(--text-muted);" data-i18n="footer_terms">Affiliate Terms</a>
+                <a href="https://blockermax.com/privacy-policy.html" style="font-size: 13px; color: var(--text-muted);" data-i18n="footer_policy">Privacy Policy</a>
+                <a href="https://blockermax.com/support.html" style="font-size: 13px; color: var(--text-muted);" data-i18n="footer_contact">Contact</a>
             </div>
         </div>
     </footer>
