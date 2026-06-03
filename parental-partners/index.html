@@ -491,25 +491,14 @@
                 </div>
             </div>
 
-            <!-- HERO: Year-1 total -->
-            <div class="calc-hero" style="position: relative; text-align: center; background: linear-gradient(135deg, #0052CC 0%, #2D7DFF 100%); border-radius: 22px; padding: 34px 24px; color: #fff; margin-bottom: 26px; overflow: hidden;">
-                <div style="position:absolute; top:-40px; right:-30px; width:160px; height:160px; background:rgba(255,255,255,0.10); border-radius:50%;"></div>
-                <div style="position:absolute; bottom:-50px; left:-20px; width:130px; height:130px; background:rgba(255,255,255,0.07); border-radius:50%;"></div>
-                <div style="position:relative;">
-                    <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; opacity: 0.88; margin-bottom: 12px;"><span data-en="Estimated Year-1 earnings" data-tr="Tahmini 1. yıl kazancınız">Estimated Year-1 earnings</span></div>
-                    <div id="calcTotal" style="font-size: clamp(42px, 10vw, 64px); font-weight: 800; letter-spacing: -2px; line-height: 1;">$523.86</div>
-                    <div id="calcTotalSubtext" style="font-size: 13px; opacity: 0.85; margin-top: 10px;">First + 11mo renewals</div>
-                </div>
-            </div>
-
             <!-- Slider & Input -->
             <div style="margin-bottom: 26px;">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
-                    <span style="font-size: 14px; color: var(--text-muted); font-weight: 500;"><span data-en="Users referred per year" data-tr="Yılda yönlendirilen kullanıcı sayısı">Users referred per year</span></span>
-                    <span style="display: flex; align-items: baseline; gap: 4px;">
+                    <span style="font-size: 14px; color: var(--text-muted); font-weight: 500;"><span data-en="Subscribers you refer" data-tr="Yönlendirdiğiniz abone sayısı">Subscribers you refer</span></span>
+                    <span style="display: flex; align-items: baseline; gap: 6px;">
                         <input type="number" id="calcUserInput" value="250" min="1" max="7500" oninput="updateCalcFromInput()"
                                style="font-size: 40px; font-weight: 800; color: var(--primary-color); letter-spacing: -1px; line-height: 1; width: 140px; text-align: right; outline: none; padding: 4px 8px;">
-                        <span style="font-size: 14px; font-weight: 600; color: var(--text-muted);"><span data-en="users" data-tr="kullanıcı">users</span></span>
+                        <span id="calcUnit" style="font-size: 14px; font-weight: 600; color: var(--text-muted);">aylık abone</span>
                     </span>
                 </div>
                 <input type="range" id="calcSlider" min="0" max="100" value="30" oninput="updateCalcFromSlider()"
@@ -542,21 +531,21 @@
             </div>
 
             <!-- Breakdown: first-payment + renewals -->
-            <div class="calc-breakdown" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px;">
-                <div style="background: rgba(0, 122, 255, 0.05); border-radius: 16px; padding: 20px;">
-                    <div style="display:flex; align-items:center; gap:7px; margin-bottom:8px;">
+            <div class="calc-breakdown" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                <div style="background: rgba(0, 122, 255, 0.05); border: 1px solid rgba(0, 122, 255, 0.12); border-radius: 18px; padding: 24px;">
+                    <div style="display:flex; align-items:center; gap:7px; margin-bottom:10px;">
                         <div style="width:9px;height:9px;border-radius:3px;background:var(--primary-color);"></div>
-                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-main); opacity: 0.7; font-weight: 700;"><span data-en="First-Payment" data-tr="İlk Ödeme">First-Payment</span></div>
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-main); opacity: 0.7; font-weight: 700;"><span data-en="First Payment" data-tr="İlk Ödeme">First Payment</span></div>
                     </div>
-                    <div id="calcFirst" style="font-size: 28px; font-weight: 800; color: var(--primary-color); letter-spacing: -1px; line-height: 1; margin-bottom: 5px;">$163.50</div>
-                    <div style="font-size: 12px; color: var(--text-main); opacity: 0.6;"><span data-en="80% of first payment (launch)" data-tr="İlk ödemenin %80'i (lansman)">80% of first payment (launch)</span></div>
+                    <div id="calcFirst" style="font-size: 34px; font-weight: 800; color: var(--primary-color); letter-spacing: -1.5px; line-height: 1; margin-bottom: 6px;">$163.50</div>
+                    <div style="font-size: 12px; color: var(--text-main); opacity: 0.6;"><span data-en="80% of the first payment (launch)" data-tr="İlk ödemenin %80'i (lansman)">80% of the first payment (launch)</span></div>
                 </div>
-                <div style="background: rgba(52, 199, 89, 0.05); border-radius: 16px; padding: 20px;">
-                    <div style="display:flex; align-items:center; gap:7px; margin-bottom:8px;">
+                <div style="background: rgba(52, 199, 89, 0.05); border: 1px solid rgba(52, 199, 89, 0.12); border-radius: 18px; padding: 24px;">
+                    <div style="display:flex; align-items:center; gap:7px; margin-bottom:10px;">
                         <div style="width:9px;height:9px;border-radius:3px;background:var(--success);"></div>
                         <div id="calcRenewalLabel" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-main); opacity: 0.7; font-weight: 700;">Monthly Renewal</div>
                     </div>
-                    <div id="calcRenewal" style="font-size: 28px; font-weight: 800; color: var(--success); letter-spacing: -1px; line-height: 1; margin-bottom: 5px;">$30.03</div>
+                    <div id="calcRenewal" style="font-size: 34px; font-weight: 800; color: var(--success); letter-spacing: -1.5px; line-height: 1; margin-bottom: 6px;">$30.03</div>
                     <div id="calcRenewalSubtext" style="font-size: 12px; color: var(--text-main); opacity: 0.6;">10% per renewal</div>
                 </div>
             </div>
@@ -983,21 +972,24 @@
             var first = u * p * FIRST_RATE;
             var renewalValue = u * p * 0.10;
             
-            var yearRenewalsTotal, total, renewalLabel, renewalSub, totalSub;
+            var yearRenewalsTotal, total, renewalLabel, renewalSub, totalSub, unitLabel;
 
             if (currentPlan === 'monthly') {
+                unitLabel = t("monthly subscribers", "aylık abone");
                 renewalLabel = t("Monthly Renewal", "Aylık Yenileme");
                 renewalSub = t("10% per month", "Ayda %10");
                 yearRenewalsTotal = renewalValue * 11; // 1 first month + 11 renewals
                 total = first + yearRenewalsTotal;
                 totalSub = t("First + 11mo renewals", "İlk + 11 ay yenileme");
             } else if (currentPlan === 'quarterly') {
+                unitLabel = t("3-month subscribers", "3 aylık abone");
                 renewalLabel = t("Quarterly Renewal", "Üç Aylık Yenileme");
                 renewalSub = t("10% per quarter", "Çeyrekte %10");
                 yearRenewalsTotal = renewalValue * 3; // 1 first quarter + 3 renewals in a year
                 total = first + yearRenewalsTotal;
                 totalSub = t("First + 3qtr renewals", "İlk + 3 çeyrek yenileme");
             } else {
+                unitLabel = t("yearly subscribers", "yıllık abone");
                 renewalLabel = t("Yearly Renewal", "Yıllık Yenileme");
                 renewalSub = t("10% per year", "Yılda %10");
                 yearRenewalsTotal = 0; // Yearly plan only renews after 12 months
@@ -1005,13 +997,17 @@
                 totalSub = t("First year earnings", "İlk yıl kazancı");
             }
 
+            var unitEl = document.getElementById('calcUnit');
+            if (unitEl) unitEl.textContent = unitLabel;
             document.getElementById('calcFirst').textContent = fmt(first);
             document.getElementById('calcRenewal').textContent = fmt(renewalValue);
             document.getElementById('calcRenewalLabel').textContent = renewalLabel;
             document.getElementById('calcRenewalSubtext').textContent = renewalSub;
             
-            document.getElementById('calcTotal').textContent = fmt(total);
-            document.getElementById('calcTotalSubtext').textContent = totalSub;
+            var totalEl = document.getElementById('calcTotal');
+            if (totalEl) totalEl.textContent = fmt(total);
+            var totalSubEl = document.getElementById('calcTotalSubtext');
+            if (totalSubEl) totalSubEl.textContent = totalSub;
 
             // Bar update
             var renewalsInYear = currentPlan === 'monthly' ? 11 : (currentPlan === 'quarterly' ? 3 : 1);
