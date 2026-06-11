@@ -182,14 +182,50 @@
 
     <script>
         (function () {
+            function updateLang(lang) {
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-en]').forEach(function (el) {
+                    var t = el.getAttribute('data-' + lang);
+                    if (t !== null) el.textContent = t;
+                });
+            }
+            
             var saved = null;
             try { saved = localStorage.getItem('bm-lang'); } catch (e) {}
-            var lang = saved || ((navigator.language || 'en').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en');
-            document.documentElement.lang = lang;
-            document.querySelectorAll('[data-en]').forEach(function (el) {
-                var t = el.getAttribute('data-' + lang);
-                if (t !== null) el.textContent = t;
-            });
+            if (saved) {
+                updateLang(saved);
+                return;
+            }
+            
+            var isTurkey = false;
+            try {
+                var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (tz && (tz.indexOf('Istanbul') !== -1 || tz.indexOf('Turkey') !== -1 || tz === 'Asia/Istanbul')) {
+                    isTurkey = true;
+                }
+            } catch (e) {}
+            
+            if (!isTurkey) {
+                var lang = (navigator.language || '').toLowerCase();
+                var langs = navigator.languages ? navigator.languages.map(function(l) { return l.toLowerCase(); }) : [];
+                if (lang.startsWith('tr') || langs.some(function(l) { return l.startsWith('tr'); })) {
+                    isTurkey = true;
+                }
+            }
+            
+            if (isTurkey) {
+                updateLang('tr');
+            } else {
+                updateLang('en');
+                fetch('https://get.geojs.io/v1/ip/country.json')
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        if (d && d.country === 'TR') {
+                            updateLang('tr');
+                        }
+                    })
+                    .catch(function () {});
+            }
         })();
     </script>
 </body>

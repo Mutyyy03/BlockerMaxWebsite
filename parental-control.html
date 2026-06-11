@@ -13,7 +13,7 @@
     <link rel="canonical" href="https://blockermax.com/parental-control.html" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parental Control - BlockerMax</title>
+    <title data-en="Parental Control - BlockerMax" data-tr="Ebeveyn Kontrolü - BlockerMax">Parental Control - BlockerMax</title>
     <link rel="icon" href="logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -347,6 +347,24 @@
             text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4);
         }
 
+        .hero-device-tag {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            padding: 6px 16px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: #ffffff;
+            gap: 4px;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
         .hero-cta {
             display: flex;
             gap: 14px;
@@ -651,6 +669,84 @@
 
         @media (max-width: 600px) {
             .hero-chip { font-size: 0.76rem; padding: 7px 12px; }
+        }
+
+        /* ===== Familiar (Pain Points) ===== */
+        .familiar {
+            background: var(--bg);
+            padding: 90px 0 60px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .familiar .section-head {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .familiar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .familiar-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 16px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .familiar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            border-color: #BFDBFE;
+        }
+
+        .familiar-card .icon-wrap {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .familiar-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text);
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        @media (max-width: 1100px) {
+            .familiar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .familiar { padding: 60px 0; }
+            .familiar-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .familiar-card {
+                padding: 20px;
+                flex-direction: row;
+                align-items: center;
+                gap: 16px;
+            }
+            .familiar-card p {
+                font-size: 0.92rem;
+            }
         }
 
         /* ===== Problem ===== */
@@ -1199,6 +1295,244 @@
             .brand span { font-size: 0.9rem; }
             .brand img { width: 30px; height: 30px; }
         }
+
+        /* ===== Comparison Section ===== */
+        .comparison {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-container-wrapper {
+            margin-top: 40px;
+            background: #ffffff;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .table-responsive {
+            overflow: visible;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            text-align: left;
+            min-width: 850px;
+        }
+
+        .compare-table th, 
+        .compare-table td {
+            padding: 20px 24px;
+            vertical-align: middle;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .compare-table th {
+            position: sticky;
+            top: 58px;
+            background: #FAFBFC;
+            font-weight: 700;
+            color: var(--text);
+            font-size: 0.95rem;
+            z-index: 12;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .col-features {
+            position: sticky;
+            left: 0;
+            top: 58px;
+            background: #FAFBFC !important;
+            z-index: 15;
+            border-right: 1px solid var(--border);
+            width: 280px;
+            min-width: 240px;
+        }
+
+        .compare-table td.feature-cell {
+            position: sticky;
+            left: 0;
+            background: #ffffff;
+            z-index: 9;
+            border-right: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        /* Hover effect on rows */
+        .compare-table tbody tr:hover td:not(.col-blockermax) {
+            background: #FAFBFC;
+        }
+
+        .compare-table tbody tr:hover td.feature-cell {
+            background: #FAFBFC;
+        }
+
+        /* BlockerMax Column Highlight */
+        .col-blockermax {
+            background: #F3F8FF !important;
+            text-align: center;
+        }
+        
+        th.col-blockermax {
+            position: sticky;
+            top: 58px;
+            z-index: 13;
+            background: #EFF6FF !important;
+            border-left: 1px solid #BFDBFE;
+            border-right: 1px solid #BFDBFE;
+        }
+
+        td.col-blockermax {
+            border-left: 1px solid #BFDBFE;
+            border-right: 1px solid #BFDBFE;
+        }
+
+        @media (max-width: 900px) {
+            .table-container-wrapper {
+                overflow: hidden;
+            }
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .compare-table th {
+                position: static;
+            }
+            .col-features {
+                position: sticky;
+                top: auto;
+            }
+            th.col-blockermax {
+                position: static;
+            }
+        }
+
+        .brand-header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .brand-header-content img {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+        }
+
+        .brand-header-content svg {
+            flex-shrink: 0;
+        }
+
+        .bark-logo-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #111827;
+            text-transform: lowercase;
+        }
+
+        /* Feature titles with icons */
+        .feature-title-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .platform-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .platform-icons svg {
+            opacity: 0.7;
+        }
+
+        /* Status cell alignments */
+        .val-cell {
+            text-align: center;
+        }
+
+        /* Status Icons Styling */
+        .status-icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .status-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .status-success {
+            background: #DCFCE7;
+            color: #16A34A;
+        }
+
+        .status-danger {
+            background: #FEE2E2;
+            color: #EF4444;
+        }
+
+        .status-warning {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .warning-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #D97706;
+        }
+
+        /* Spacer Row */
+        .compare-table tr.table-spacer-row td {
+            height: 36px;
+            padding: 0;
+            background: #ffffff;
+            border-bottom: none;
+            border-top: none;
+        }
+
+        .compare-table tr.table-spacer-row td.col-blockermax {
+            background: #F3F8FF !important;
+            border-left: 1px solid #BFDBFE;
+            border-right: 1px solid #BFDBFE;
+            border-bottom: none;
+            border-top: none;
+        }
+
+        /* Mobile specific scroll indicator shadow */
+        @media (max-width: 900px) {
+            .compare-table th, 
+            .compare-table td {
+                padding: 16px 18px;
+            }
+            .col-features,
+            .compare-table td.feature-cell {
+                width: 200px;
+                min-width: 180px;
+            }
+        }
     </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10931560670"></script>
@@ -1259,6 +1593,15 @@
         <div class="hero-overlay"></div>
 
         <div class="hero-inner">
+            <div class="hero-device-tag">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="margin-right: 2px; opacity: 0.95;">
+                    <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+                </svg>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="margin-right: 6px; opacity: 0.95;">
+                    <path d="M19 0h-14c-1.66 0-3 1.34-3 3v18c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3v-18c0-1.66-1.34-3-3-3zm-7 23c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm7-4h-14v-16h14v16z"/>
+                </svg>
+                <span data-en="Designed for iPhone & iPad" data-tr="iPhone ve iPad için Tasarlandı">Designed for iPhone & iPad</span>
+            </div>
             <h1 data-en="Guidance, not restriction." data-tr="Sınır değil, rehber.">Guidance, not restriction.</h1>
             <p class="hero-lead"
                data-en="Help your child stay protected from harmful content, balance app use, and build healthier digital habits."
@@ -1275,6 +1618,77 @@
 
         </div>
 
+    </section>
+
+    <!-- ===== Familiar (Pain Points) ===== -->
+    <section class="familiar">
+        <div class="container">
+            <div class="familiar-head section-head">
+                <span class="section-tag" data-en="Does this sound familiar?" data-tr="Tanıdık geliyor mu?">Does this sound familiar?</span>
+                <h2 data-en="Challenges parents face every day." data-tr="Ebeveynlerin her gün karşılaştığı zorluklar.">Challenges parents face every day.</h2>
+            </div>
+            <div class="familiar-grid">
+                <!-- Card 1 -->
+                <div class="familiar-card">
+                    <div class="icon-wrap" style="background: #FEE2E2; color: #EF4444;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <p data-en="&ldquo;My child won't get off YouTube, Roblox, or TikTok.&rdquo;" data-tr="&ldquo;Çocuğum YouTube/Roblox/TikTok’tan çıkmıyor.&rdquo;">&ldquo;My child won't get off YouTube, Roblox, or TikTok.&rdquo;</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="familiar-card">
+                    <div class="icon-wrap" style="background: #FFE4E6; color: #F43F5E;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <p data-en="&ldquo;Taking away the phone always leads to a fight.&rdquo;" data-tr="&ldquo;Telefonu alınca kavga çıkıyor.&rdquo;">&ldquo;Taking away the phone always leads to a fight.&rdquo;</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="familiar-card">
+                    <div class="icon-wrap" style="background: #FDF2F8; color: #EC4899;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+                        </svg>
+                    </div>
+                    <p data-en="&ldquo;I have no idea if they are playing games during school.&rdquo;" data-tr="&ldquo;Okuldayken oyun oynuyor mu bilmiyorum.&rdquo;">&ldquo;I have no idea if they are playing games during school.&rdquo;</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="familiar-card">
+                    <div class="icon-wrap" style="background: #FFF1F2; color: #E11D48;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <p data-en="&ldquo;I'm constantly worried they'll stumble onto harmful websites.&rdquo;" data-tr="&ldquo;Zararlı sitelere denk gelir mi korkuyorum.&rdquo;">&ldquo;I'm constantly worried they'll stumble onto harmful websites.&rdquo;</p>
+                </div>
+                <!-- Card 5 -->
+                <div class="familiar-card">
+                    <div class="icon-wrap" style="background: #FCE7F3; color: #DB2777;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <p data-en="&ldquo;I can't reach my child when they are on their phone.&rdquo;" data-tr="&ldquo;Çocuğuma ulaşamıyorum.&rdquo;">&ldquo;I can't reach my child when they are on their phone.&rdquo;</p>
+                </div>
+                <!-- Card 6 -->
+                <div class="familiar-card">
+                    <div class="icon-wrap" style="background: #FFEDD5; color: #EA580C;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                        </svg>
+                    </div>
+                    <p data-en="&ldquo;I set up Screen Time, but it just wasn't sustainable.&rdquo;" data-tr="&ldquo;Screen Time ayarladım ama sürdürülebilir olmadı.&rdquo;">&ldquo;I set up Screen Time, but it just wasn't sustainable.&rdquo;</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- ===== Problem ===== -->
@@ -1298,6 +1712,434 @@
                         data-tr="Çocuğunuzu internette güvende tutun.">
                         Keep your child safe online.</h2>
                     <p><span data-en="Parents need simple tools to guide screen time, " data-tr="Ebeveynlerin, sürekli endişe veya karmaşık kurulumlar olmadan ekran süresini yönlendirecek, ">Parents need simple tools to guide screen time, </span><span class="hl" data-en="block harmful content and build safer digital boundaries." data-tr="zararlı içeriği engelleyecek ve daha güvenli dijital sınırlar oluşturacak basit araçlara ihtiyacı var.">block harmful content and build safer digital boundaries.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Comparison Table ===== -->
+    <section class="comparison" id="compare">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag" data-en="Comparison" data-tr="Karşılaştırma">Comparison</span>
+                <h2 data-en="BlockerMax vs. Others" data-tr="BlockerMax vs. Diğerleri">BlockerMax vs. Others</h2>
+                <p data-en="See how BlockerMax compares to iOS, Family Link, and Qustodio." data-tr="BlockerMax'in iOS, Family Link ve Qustodio ile nasıl karşılaştırıldığını görün.">See how BlockerMax compares to iOS, Family Link, and Qustodio.</p>
+            </div>
+            
+            <div class="table-container-wrapper">
+                <div class="table-responsive">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th class="col-features"><span data-en="Features" data-tr="Özellikler">Features</span></th>
+                                <th class="col-brand col-blockermax">
+                                    <div class="brand-header-content">
+                                        <img src="Parental Control AppIcon-opt.png" alt="BlockerMax Icon">
+                                        <span>BlockerMax</span>
+                                    </div>
+                                </th>
+                                <th class="col-brand">
+                                    <div class="brand-header-content">
+                                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-.96.04-2.13.64-2.82 1.45-.6.69-1.13 1.83-1.01 2.95 1.07.08 2.18-.53 2.84-1.34z"/>
+                                        </svg>
+                                        <span data-en="iOS Screen Time" data-tr="iOS Screen Time">iOS Screen Time</span>
+                                    </div>
+                                </th>
+                                <th class="col-brand">
+                                    <div class="brand-header-content">
+                                        <svg viewBox="0 0 24 24" width="20" height="20">
+                                            <path d="M12 3v9H3l9-9z" fill="#4285F4"/>
+                                            <path d="M12 3l9 9h-9V3z" fill="#0F9D58"/>
+                                            <path d="M12 21v-9H3l9 9z" fill="#F4B400"/>
+                                            <path d="M12 21l9-9h-9v9z" fill="#E94235"/>
+                                        </svg>
+                                        <span data-en="Google Family Link" data-tr="Google Family Link">Google Family Link</span>
+                                    </div>
+                                </th>
+                                <th class="col-brand">
+                                    <div class="brand-header-content">
+                                        <span style="color:#00b090; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:1.05rem;">Qustodio</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Adult Content Blocking -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Adult Content Blocking" data-tr="Yetişkin İçerik Engelleme">Adult Content Blocking</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Bypass Prevention -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Bypass Prevention (VPN / Proxy)" data-tr="Bypass Önleme (VPN / Proxy)">Bypass Prevention (VPN / Proxy)</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Parental Lock -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Parental Lock (Child cannot change)" data-tr="Ebeveyn Kilidi (Çocuk değiştiremez)">Parental Lock (Child cannot change)</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Content Filter -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Content Filter" data-tr="İçerik Filtresi">Content Filter</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Location-based Protection -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap" style="flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 4px;">
+                                        <span data-en="Location-based Protection" data-tr="Konum Bazlı Koruma">Location-based Protection</span>
+                                        <span style="font-size: 0.85rem; font-weight: normal; color: var(--muted);" data-en="(e.g., School)" data-tr="(Örn: Okul)">(e.g., School)</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Real-time Reporting -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Real-time Reporting" data-tr="Gerçek Zamanlı Raporlama">Real-time Reporting</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Remote Blocking -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Remote Blocking" data-tr="Uzaktan Engelleme">Remote Blocking</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Easy Setup -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Easy Setup" data-tr="Kolay Kurulum">Easy Setup</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Medium" data-tr="Orta">Medium</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Medium" data-tr="Orta">Medium</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Medium" data-tr="Orta">Medium</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Uninstall Protection -->
+                            <tr>
+                                <td class="feature-cell">
+                                    <div class="feature-title-wrap">
+                                        <span data-en="Uninstall Protection" data-tr="Kaldırma Koruması">Uninstall Protection</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell col-blockermax">
+                                    <div class="status-icon status-success">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                                <td class="val-cell">
+                                    <div class="status-icon-wrapper">
+                                        <div class="status-icon status-warning">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <span class="warning-text" data-en="Limited" data-tr="Sınırlı">Limited</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -1597,7 +2439,7 @@
             <div class="faq-list">
                 <details class="faq-item">
                     <summary><span data-en="Is BlockerMax free?" data-tr="BlockerMax ücretsiz mi?">Is BlockerMax free?</span></summary>
-                    <div class="faq-a" data-en="You can try all premium features free for 14 days, no credit card required. After that you can choose a plan that fits your family." data-tr="Tüm premium özellikleri 14 gün boyunca ücretsiz deneyebilirsiniz, kredi kartı gerekmez. Sonrasında ailenize uygun bir plan seçebilirsiniz.">You can try all premium features free for 14 days, no credit card required. After that you can choose a plan that fits your family.</div>
+                    <div class="faq-a" data-en="You can try all premium features free for 14 days. After that you can choose a plan that fits your family." data-tr="Tüm premium özellikleri 14 gün boyunca ücretsiz deneyebilirsiniz. Sonrasında ailenize uygun bir plan seçebilirsiniz.">You can try all premium features free for 14 days. After that you can choose a plan that fits your family.</div>
                 </details>
                 <details class="faq-item">
                     <summary><span data-en="Which devices does it work on?" data-tr="Hangi cihazlarda çalışır?">Which devices does it work on?</span></summary>
@@ -1624,6 +2466,11 @@
         <div class="container">
             <h2 data-en="Start building safer digital habits today."
                 data-tr="Bugün daha güvenli dijital alışkanlıklar oluşturmaya başlayın.">Start building safer digital habits today.</h2>
+            <div class="store-devices-wrap" style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;color:var(--muted);font-size:0.95rem;font-weight:500;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="opacity: 0.75;"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="opacity: 0.75;"><path d="M19 0h-14c-1.66 0-3 1.34-3 3v18c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3v-18c0-1.66-1.34-3-3-3zm-7 23c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm7-4h-14v-16h14v16z"/></svg>
+                <span data-en="Built for iPhone & iPad" data-tr="iPhone ve iPad için Tasarlandı">Built for iPhone & iPad</span>
+            </div>
             <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="store-btn"
                style="display:inline-block;transition:transform 0.3s ease;"
                onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
@@ -1641,7 +2488,7 @@
             </div>
             <div style="font-size:0.9rem;color:var(--muted);">
                 <span data-en="Need help setting up?" data-tr="Kurulumda yardıma mı ihtiyacınız var?">Need help setting up?</span>
-                <a href="mailto:blockermax@nanegate.com" style="color:var(--primary);font-weight:600;">blockermax@nanegate.com</a>
+                <a href="mailto:hello@blockermax.com" style="color:var(--primary);font-weight:600;">hello@blockermax.com</a>
             </div>
             <div class="footer-links">
                 <a href="parental-privacy-policy.html" data-en="Privacy Policy" data-tr="Gizlilik Politikası">Privacy Policy</a>
@@ -1655,7 +2502,7 @@
     <div class="promo-bar">
         <div class="promo-text">
             <b data-en="14-Day Free Trial" data-tr="14 Gün Ücretsiz Deneme">14-Day Free Trial</b>
-            <span data-en="Get all premium features. " data-tr="Tüm premium özellikler. ">Get all premium features. </span><span class="hl-w" data-en="No credit card required." data-tr="Kredi kartı gerekmez.">No credit card required.</span>
+            <span data-en="Get all premium features." data-tr="Tüm premium özellikler.">Get all premium features.</span>
         </div>
         <a href="https://apps.apple.com/tr/app/parental-control-blockermax/id6759844235" class="pbtn">
             <span data-en="Start Free Trial" data-tr="Ücretsiz Dene">Start Free Trial</span>
@@ -1714,8 +2561,40 @@
         (function () {
             var saved = null;
             try { saved = localStorage.getItem('bm-lang'); } catch (e) {}
-            var browser = (navigator.language || 'en').toLowerCase().startsWith('tr') ? 'tr' : 'en';
-            setLang(saved || browser);
+            if (saved) {
+                setLang(saved);
+                return;
+            }
+            
+            var isTurkey = false;
+            try {
+                var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (tz && (tz.indexOf('Istanbul') !== -1 || tz.indexOf('Turkey') !== -1 || tz === 'Asia/Istanbul')) {
+                    isTurkey = true;
+                }
+            } catch (e) {}
+            
+            if (!isTurkey) {
+                var lang = (navigator.language || '').toLowerCase();
+                var langs = navigator.languages ? navigator.languages.map(function(l) { return l.toLowerCase(); }) : [];
+                if (lang.startsWith('tr') || langs.some(function(l) { return l.startsWith('tr'); })) {
+                    isTurkey = true;
+                }
+            }
+            
+            if (isTurkey) {
+                setLang('tr');
+            } else {
+                setLang('en');
+                fetch('https://get.geojs.io/v1/ip/country.json')
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        if (d && d.country === 'TR') {
+                            setLang('tr');
+                        }
+                    })
+                    .catch(function () {});
+            }
         })();
 
         // App demo: chips switch the screenshot and expand the description below
