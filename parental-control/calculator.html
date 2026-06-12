@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K887P2GR');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockerMax Parental Control — Earnings Calculator / Kazanç Hesaplayıcı</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0052CC; /* iOS Blue */
+            --primary-hover: #0066D6;
+            --success: #34C759;
+            --success-hover: #2db04e;
+            --text-main: #1C1C1E; /* iOS Dark text */
+            --text-muted: #6E6E73;
+            --border-color: #E5E5EA;
+            --bg-color: #FAFBFC;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.05);
+            --shadow-inner: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%),
+                radial-gradient(#E2E8F0 1.5px, transparent 1.5px);
+            background-size: 100% 100%, 20px 20px;
+            background-repeat: no-repeat, repeat;
+            color: var(--text-main);
+            line-height: 1.5;
+            letter-spacing: -0.01em;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .calc-wrapper {
+            width: 100%;
+            max-width: 680px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Header Layout */
+        .calc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .brand-logo img {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand-logo span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .brand-logo span b {
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        /* Language Selector */
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: 100px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .lang-btn:hover {
+            color: var(--text-main);
+        }
+
+        .lang-btn.active {
+            color: var(--primary-color);
+            background: rgba(0, 82, 204, 0.08);
+        }
+
+        .lang-divider {
+            color: var(--border-color);
+            font-size: 12px;
+            user-select: none;
+        }
+
+        /* Main Calculator Card */
+        .calc-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: var(--shadow-md), var(--shadow-inner);
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .calc-top-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+        }
+
+        .calc-title-group h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .calc-title-group p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Plan Toggle Buttons */
+        .plan-toggle {
+            display: flex;
+            background: rgba(0, 0, 0, 0.04);
+            border-radius: var(--radius-md);
+            padding: 4px;
+            gap: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .plan-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .plan-btn.active {
+            background: var(--primary-color);
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(0, 82, 204, 0.2);
+        }
+
+        /* Circular Slider (Radial) */
+        .circular-slider-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+        }
+
+        .circular-slider {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .slider-bg {
+            stroke: var(--border-color);
+        }
+
+        .slider-progress {
+            stroke: var(--primary-color);
+        }
+
+        .slider-handle {
+            fill: #FFFFFF;
+            stroke: var(--primary-color);
+        }
+
+        .center-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .center-content .number-input {
+            font-family: 'Inter', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--primary-color);
+            border: none;
+            border-bottom: 2.5px dashed rgba(0, 82, 204, 0.35);
+            background: transparent;
+            width: 130px;
+            text-align: center;
+            outline: none;
+            line-height: 1.1;
+            margin-bottom: 2px;
+            cursor: text;
+            transition: border-bottom-color 0.2s ease;
+            -moz-appearance: textfield;
+        }
+
+        .center-content .number-input:hover,
+        .center-content .number-input:focus {
+            background: transparent;
+            border-bottom-color: var(--primary-color);
+        }
+
+        .center-content .number-input::-webkit-inner-spin-button, 
+        .center-content .number-input::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        .center-content .unit-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* Custom Commission Inputs Settings */
+        .commission-settings {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            background: rgba(0, 0, 0, 0.02);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            margin: 4px auto;
+            width: fit-content;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .setting-item label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .percent-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 2px 6px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .percent-input-wrapper input {
+            border: none;
+            outline: none;
+            font-size: 12px;
+            font-weight: 700;
+            width: 26px;
+            text-align: right;
+            color: var(--text-main);
+            -moz-appearance: textfield;
+        }
+
+        .percent-input-wrapper input::-webkit-inner-spin-button, 
+        .percent-input-wrapper input::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        .percent-input-wrapper span {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-left: 1px;
+        }
+
+        /* Breakdown Grid (3 Columns) */
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .breakdown-card {
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.02);
+        }
+
+        /* First Payment Card Style */
+        .card-first {
+            background: rgba(0, 82, 204, 0.04);
+        }
+
+        /* Renewal Card Style */
+        .card-renewal {
+            background: rgba(52, 199, 89, 0.04);
+        }
+
+        /* Total Card Style */
+        .card-total {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .card-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .card-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dot-first { background-color: var(--primary-color); }
+        .dot-renewal { background-color: var(--success); }
+        .dot-total { background-color: var(--text-main); }
+
+        .card-lbl {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+            color: var(--text-main);
+            opacity: 0.8;
+        }
+
+        .card-val {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 4px;
+            white-space: nowrap;
+        }
+        .val-first { color: var(--primary-color); }
+        .val-renewal { color: var(--success); }
+        .val-total { color: var(--text-main); }
+
+        .card-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Visual Bar Styles Removed */
+
+        /* Footer Notes */
+        .calc-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 6px;
+        }
+
+        .note-disclaimer {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 680px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .calc-card {
+                padding: 24px;
+                gap: 24px;
+            }
+
+            .calc-title-group h1 {
+                font-size: 21px;
+            }
+
+            .breakdown-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .breakdown-card {
+                padding: 16px;
+            }
+
+            .card-val {
+                font-size: 24px;
+            }
+        }
+
+        /* Section Header above the dashboard preview */
+        .mock-section-header {
+            margin-top: 64px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 16px;
+        }
+
+        .mock-section-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .mock-section-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Mock Browser Window Mockup */
+        .mock-browser-window {
+            background: #FFFFFF;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .mock-browser-header {
+            background: #F2F2F7; /* Apple light gray */
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            position: absolute;
+            left: 16px;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-close {
+            background-color: #FF5F56;
+        }
+
+        .dot-minimize {
+            background-color: #FFBD2E;
+        }
+
+        .dot-expand {
+            background-color: #27C93F;
+        }
+
+        .browser-address-bar {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 4px 16px;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            text-align: center;
+            width: 240px;
+            margin: 0 auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            user-select: none;
+        }
+
+        .mock-browser-content {
+            background: var(--bg-color);
+            padding: 36px 36px 40px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Mock Dashboard Styles */
+        .mock-dashboard-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .mock-dash-header {
+            background: #FFFFFF;
+            border-radius: 100px;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm), var(--shadow-inner);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .mock-dash-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .mock-dash-brand img {
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .mock-logout-btn {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .mock-logout-btn:hover {
+            color: var(--text-main);
+        }
+
+        .mock-welcome-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-align: left;
+            margin-bottom: -8px;
+        }
+
+        /* Large Primary Metrics Card */
+        .mock-main-metrics-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-md);
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mock-metric-subgroup {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mock-metric-subgroup.right-align {
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .mock-metric-lbl {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .mock-metric-val-large {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .mock-metric-val-blue {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        /* Secondary Metrics Row */
+        .mock-metrics-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .mock-metric-box {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mock-metric-box.blue-bg {
+            background: rgba(0, 82, 204, 0.04);
+            border-color: rgba(0, 82, 204, 0.06);
+        }
+
+        .mock-metric-box-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mock-metric-box-lbl.blue-text {
+            color: var(--primary-color);
+        }
+
+        .mock-metric-box-val {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+
+        .mock-metric-box-val.blue-text {
+            color: var(--primary-color);
+        }
+
+        /* Recent Transactions Card */
+        .mock-tx-card {
+            background: #FFFFFF;
+            border-radius: var(--radius-md);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mock-tx-card h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0;
+        }
+
+        /* Table */
+        .mock-tx-table-container {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .mock-tx-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .mock-tx-table th {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            background: transparent;
+        }
+
+        .mock-tx-table td {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-main);
+            padding: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            white-space: nowrap;
+        }
+
+        .mock-tx-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 680px) {
+            .mock-main-metrics-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                padding: 20px;
+            }
+            .mock-metric-subgroup.right-align {
+                align-items: flex-start;
+                text-align: left;
+            }
+            .mock-metrics-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K887P2GR"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="calc-wrapper">
+        <!-- Header -->
+        <header class="calc-header">
+            <a href="../parental-control.html" class="brand-logo">
+                <img src="../Parental Control AppIcon-opt.png" alt="BlockerMax">
+                <span>BlockerMax <b>Partners</b></span>
+            </a>
+            
+            <div class="lang-switch">
+                <button onclick="setLanguage('tr')" id="langTR" class="lang-btn">TR</button>
+                <span class="lang-divider">|</span>
+                <button onclick="setLanguage('en')" id="langEN" class="lang-btn">EN</button>
+            </div>
+        </header>
+
+        <!-- Card -->
+        <main class="calc-card">
+            <!-- Header Group -->
+            <div class="calc-top-row">
+                <div class="calc-title-group">
+                    <h1 id="calcTitle">Kazanç Hesaplayıcı</h1>
+                    <p id="calcSub">Potansiyel ortaklık kazançlarınızı tahmin edin</p>
+                </div>
+                
+                <!-- Plan toggle -->
+                <div class="plan-toggle" id="planToggle">
+                    <button id="planMonthly" onclick="setPlan('monthly', this)" class="plan-btn active">Aylık (₺99,90)</button>
+                    <button id="planQuarterly" onclick="setPlan('quarterly', this)" class="plan-btn">3 Aylık (₺199,90)</button>
+                    <button id="planYearly" onclick="setPlan('yearly', this)" class="plan-btn">Yıllık (₺699,90)</button>
+                </div>
+            </div>
+
+            <!-- Circular Slider Section -->
+            <div class="circular-slider-container">
+                <svg class="circular-slider" viewBox="0 0 260 260">
+                    <!-- Background Track -->
+                    <circle class="slider-bg" cx="130" cy="130" r="110" fill="none" stroke-width="10"></circle>
+                    <!-- Active Track -->
+                    <circle id="sliderProgress" class="slider-progress" cx="130" cy="130" r="110" fill="none" stroke-width="10" stroke-linecap="round" transform="rotate(-90 130 130)" stroke-dasharray="691.15" stroke-dashoffset="691.15"></circle>
+                    <!-- Draggable Handle -->
+                    <circle id="sliderHandle" class="slider-handle" cx="130" cy="20" r="14" stroke-width="3" style="cursor: grab; filter: drop-shadow(0px 2px 4px rgba(0, 82, 204, 0.3));"></circle>
+                </svg>
+                
+                <!-- Number Input inside Center -->
+                <div class="center-content">
+                    <input type="number" id="calcUserInput" value="250" min="1" max="7500" class="number-input">
+                    <span id="calcUnit" class="unit-text">aylık abone</span>
+                </div>
+            </div>
+
+            <!-- Custom Commission Input Rates Settings -->
+            <div class="commission-settings">
+                <div class="setting-item">
+                    <label id="lblCommFirst">İlk Alım Komisyonu</label>
+                    <div class="percent-input-wrapper">
+                        <input type="number" id="commFirstInput" value="50" min="0" max="100" oninput="updateFromInput()">
+                        <span>%</span>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label id="lblCommRenewal">Yenileme Komisyonu</label>
+                    <div class="percent-input-wrapper">
+                        <input type="number" id="commRenewalInput" value="10" min="0" max="100" oninput="updateFromInput()">
+                        <span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breakdown Grid -->
+            <div class="breakdown-grid">
+                <!-- First Payment Card -->
+                <div class="breakdown-card card-first">
+                    <div class="card-title-row">
+                        <div class="card-dot dot-first"></div>
+                        <span class="card-lbl" id="lblFirst">İlk Ödeme</span>
+                    </div>
+                    <div id="calcFirst" class="card-val val-first">₺12.487,50</div>
+                    <div class="card-sub" id="lblFirstSub">İlk ödemenin %50'si</div>
+                </div>
+
+                <!-- Renewal Card -->
+                <div class="breakdown-card card-renewal">
+                    <div class="card-title-row">
+                        <div class="card-dot dot-renewal"></div>
+                        <span class="card-lbl" id="calcRenewalLabel">Aylık Yenileme</span>
+                    </div>
+                    <div id="calcRenewal" class="card-val val-renewal">₺2.497,50</div>
+                    <div class="card-sub" id="calcRenewalSubtext">Ayda %10</div>
+                </div>
+
+                <!-- Total Card -->
+                <div class="breakdown-card card-total">
+                    <div class="card-title-row">
+                        <div class="card-dot dot-total"></div>
+                        <span class="card-lbl" id="lblTotal">1. Yıl Toplamı</span>
+                    </div>
+                    <div id="calcTotal" class="card-val val-total">₺39.960,00</div>
+                    <div class="card-sub" id="calcTotalSubtext">İlk + 11 ay yenileme</div>
+                </div>
+            </div>
+
+            <!-- Visual Progress Bar Removed -->
+
+            <!-- Footer Details / Disclaimers -->
+            <footer class="calc-footer">
+                <div class="note-disclaimer" id="noteDisclaimer">Yalnızca örnek. Gerçek sonuçlar değişebilir.</div>
+            </footer>
+        </main>
+
+        <!-- Section Header -->
+        <div class="mock-section-header">
+            <h2 id="mockSectionTitle">Influencer Özel Paneli</h2>
+            <p id="mockSectionSub">Influencer'larımızın kazançlarını, aktif abonelerini ve komisyon ödemelerini anlık takip edebileceği kendilerine özel şık kontrol paneli.</p>
+        </div>
+
+        <!-- Örnek Panel Görünümü (Mock Dashboard) inside Browser Mockup -->
+        <div class="mock-browser-window">
+            <div class="mock-browser-header">
+                <div class="browser-dots">
+                    <span class="browser-dot dot-close"></span>
+                    <span class="browser-dot dot-minimize"></span>
+                    <span class="browser-dot dot-expand"></span>
+                </div>
+                <div class="browser-address-bar">partner.blockermax.com</div>
+            </div>
+            <div class="mock-browser-content">
+                <section class="mock-dashboard-section">
+                    <!-- Header capsule -->
+                    <div class="mock-dash-header">
+                        <div class="mock-dash-brand">
+                            <img src="../Parental Control AppIcon-opt.png" alt="BlockerMax">
+                            <span id="mockDashBrandText">BlockerMax <b>Kontrol Paneli</b></span>
+                        </div>
+                        <span class="mock-logout-btn" id="mockLogout">Çıkış yap</span>
+                    </div>
+
+                    <!-- Welcome Title -->
+                    <h2 class="mock-welcome-title" id="mockWelcome">Hoş Geldiniz, Ayşe Hanım</h2>
+
+                    <!-- Primary Metrics Card -->
+                    <div class="mock-main-metrics-card">
+                        <div class="mock-metric-subgroup">
+                            <span class="mock-metric-lbl" id="mockNextPayoutLbl">Sonraki Ödeme Tarihi</span>
+                            <span class="mock-metric-val-large" id="mockNextPayoutVal">Her ayın 20'si</span>
+                        </div>
+                        <div class="mock-metric-subgroup right-align">
+                            <span class="mock-metric-lbl" id="mockBalanceLbl">Mevcut Bakiye</span>
+                            <span class="mock-metric-val-blue" id="mockBalanceVal">₺12.450,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Metrics (3 Columns) -->
+                    <div class="mock-metrics-row">
+                        <div class="mock-metric-box">
+                            <span class="mock-metric-box-lbl" id="mockPaidUsersLbl">ÜCRETLİ KULLANICILAR</span>
+                            <span class="mock-metric-box-val">154</span>
+                        </div>
+                        <div class="mock-metric-box">
+                            <span class="mock-metric-box-lbl" id="mockActiveSubsLbl">AKTİF ABONELER</span>
+                            <span class="mock-metric-box-val">120</span>
+                        </div>
+                        <div class="mock-metric-box blue-bg">
+                            <span class="mock-metric-box-lbl blue-text" id="mockTotalRevLbl">TOPLAM GELİR</span>
+                            <span class="mock-metric-box-val blue-text" id="mockTotalRevVal">₺38.540,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions Card -->
+                    <div class="mock-tx-card">
+                        <h2 id="mockRecentTx">Son İşlemler</h2>
+                        
+                        <div class="mock-tx-table-container">
+                            <table class="mock-tx-table">
+                                <thead>
+                                    <tr>
+                                        <th id="colDate">TARİH</th>
+                                        <th id="colEvent">ETKİNLİK TÜRÜ</th>
+                                        <th id="colRev">PAKET ÜCRETİ</th>
+                                        <th id="colComm">KOMİSYON</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>12.06.2026</td>
+                                        <td id="tx1Type">Yeni Üye (Yıllık)</td>
+                                        <td id="tx1Rev">₺699,90</td>
+                                        <td id="tx1Comm">₺349,95</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11.06.2026</td>
+                                        <td id="tx2Type">Yenileme (Aylık)</td>
+                                        <td id="tx2Rev">₺99,90</td>
+                                        <td id="tx2Comm">₺9,99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10.06.2026</td>
+                                        <td id="tx3Type">Yeni Üye (Aylık)</td>
+                                        <td id="tx3Rev">₺99,90</td>
+                                        <td id="tx3Comm">₺49,95</td>
+                                    </tr>
+                                    <tr>
+                                        <td>08.06.2026</td>
+                                        <td id="tx4Type">Yeni Üye (3 Aylık)</td>
+                                        <td id="tx4Rev">₺199,90</td>
+                                        <td id="tx4Comm">₺99,95</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculations & Translations Script -->
+    <script>
+        // Set default language state
+        let currentLang = 'tr';
+        let currentPlan = 'monthly';
+        let calcPlan = { price: 99.90 };
+        let CUR = { locale: 'tr-TR', symbol: '₺' };
+        
+        // UI Translation Dictionary
+        const translations = {
+            en: {
+                calcTitle: "Earnings Calculator",
+                calcSub: "Estimate your potential partner earnings",
+                lblFirst: "First Payment",
+                lblFirstSub: "First payment commission",
+                lblTotal: "Year 1 Total",
+                noteDisclaimer: "Example only. Actual results may vary.",
+                lblCommFirst: "First Payment Comm.",
+                lblCommRenewal: "Renewal Commission",
+                
+                // Dynamic strings updated based on selected plan
+                unit_monthly: "monthly subscribers",
+                unit_quarterly: "3-month subscribers",
+                unit_yearly: "yearly subscribers",
+                
+                renewal_monthly: "Renewal",
+                renewal_quarterly: "Renewal",
+                renewal_yearly: "Renewal",
+                
+                renewal_sub_monthly: "per month",
+                renewal_sub_quarterly: "per quarter",
+                renewal_sub_yearly: "per year",
+                
+                total_sub_monthly: "First + 11mo renewals",
+                total_sub_quarterly: "First + 3qtr renewals",
+                total_sub_yearly: "First year earnings",
+                
+                plan_monthly: "Monthly",
+                plan_quarterly: "3-Month",
+                plan_yearly: "Yearly",
+
+                // Section titles for mockup
+                mockSectionTitle: "Influencer Partner Dashboard",
+                mockSectionSub: "A dedicated control panel for our influencers to track earnings, active subscribers, and commission payouts in real-time.",
+
+                // Mock Dashboard
+                logout: "Logout",
+                overview: "Overview",
+                welcome: "Welcome, Ayşe Hanım",
+                nextPayoutLbl: "Next Payout Date",
+                nextPayoutVal: "20th of every month",
+                balanceLbl: "Current Balance",
+                balanceVal: "₺12,450.00",
+                paidUsersLbl: "PAID USERS",
+                activeSubsLbl: "ACTIVE SUBSCRIBERS",
+                totalRevLbl: "TOTAL REVENUE",
+                totalRevVal: "₺38,540.00",
+                recentTx: "Recent Transactions",
+                dateCol: "DATE",
+                eventCol: "EVENT TYPE",
+                revenueCol: "PACKAGE PRICE",
+                commCol: "COMMISSION",
+                tx1Type: "New Subscriber (Yearly)",
+                tx2Type: "Renewal (Monthly)",
+                tx3Type: "New Subscriber (Monthly)",
+                tx4Type: "New Subscriber (3-Month)",
+                tx1Rev: "₺699.90",
+                tx1Comm: "₺349.95",
+                tx2Rev: "₺99.90",
+                tx2Comm: "₺9.99",
+                tx3Rev: "₺99.90",
+                tx3Comm: "₺49.95",
+                tx4Rev: "₺199.90",
+                tx4Comm: "₺99.95"
+            },
+            tr: {
+                calcTitle: "Kazanç Hesaplayıcı",
+                calcSub: "Potansiyel ortaklık kazançlarınızı tahmin edin",
+                lblFirst: "İlk Ödeme",
+                lblFirstSub: "İlk ödeme komisyonu",
+                lblTotal: "1. Yıl Toplamı",
+                noteDisclaimer: "Yalnızca örnek. Gerçek sonuçlar değişebilir.",
+                lblCommFirst: "İlk Alım Komisyonu",
+                lblCommRenewal: "Yenileme Komisyonu",
+                
+                // Dynamic strings updated based on selected plan
+                unit_monthly: "aylık abone",
+                unit_quarterly: "3 aylık abone",
+                unit_yearly: "yıllık abone",
+                
+                renewal_monthly: "Yenileme",
+                renewal_quarterly: "Yenileme",
+                renewal_yearly: "Yenileme",
+                
+                renewal_sub_monthly: "aylık",
+                renewal_sub_quarterly: "üç aylık",
+                renewal_sub_yearly: "yıllık",
+                
+                total_sub_monthly: "İlk + 11 ay yenileme",
+                total_sub_quarterly: "İlk + 3 çeyrek yenileme",
+                total_sub_yearly: "İlk yıl kazancı",
+                
+                plan_monthly: "Aylık",
+                plan_quarterly: "3 Aylık",
+                plan_yearly: "Yıllık",
+
+                // Section titles for mockup
+                mockSectionTitle: "Influencer Özel Paneli",
+                mockSectionSub: "Influencer'larımızın kazançlarını, aktif abonelerini ve komisyon ödemelerini anlık takip edebileceği kendilerine özel şık kontrol paneli.",
+
+                // Mock Dashboard
+                logout: "Çıkış yap",
+                overview: "Genel Bakış",
+                welcome: "Hoş Geldiniz, Ayşe Hanım",
+                nextPayoutLbl: "Sonraki Ödeme Tarihi",
+                nextPayoutVal: "Her ayın 20'si",
+                balanceLbl: "Mevcut Bakiye",
+                balanceVal: "₺12.450,00",
+                paidUsersLbl: "ÜCRETLİ KULLANICILAR",
+                activeSubsLbl: "AKTİF ABONELER",
+                totalRevLbl: "TOPLAM GELİR",
+                totalRevVal: "₺38.540,00",
+                recentTx: "Son İşlemler",
+                dateCol: "TARİH",
+                eventCol: "ETKİNLİK TÜRÜ",
+                revenueCol: "PAKET ÜCRETİ",
+                commCol: "KOMİSYON",
+                tx1Type: "Yeni Üye (Yıllık)",
+                tx2Type: "Yenileme (Aylık)",
+                tx3Type: "Yeni Üye (Aylık)",
+                tx4Type: "Yeni Üye (3 Aylık)",
+                tx1Rev: "₺699,90",
+                tx1Comm: "349,95",
+                tx2Rev: "₺99,90",
+                tx2Comm: "₺9,99",
+                tx3Rev: "₺99,90",
+                tx3Comm: "₺49,95",
+                tx4Rev: "₺199,90",
+                tx4Comm: "₺99,95"
+            }
+        };
+
+        // DOM elements
+        const svg = document.querySelector('.circular-slider');
+        const handle = document.getElementById('sliderHandle');
+        const progress = document.getElementById('sliderProgress');
+        const userInput = document.getElementById('calcUserInput');
+        const commFirstInput = document.getElementById('commFirstInput');
+        const commRenewalInput = document.getElementById('commRenewalInput');
+
+        // Circular Slider Interaction Logic
+        let isDragging = false;
+
+        function getAngleAndValue(e) {
+            const rect = svg.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            
+            // Mouse/touch coords
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            const dx = clientX - cx;
+            const dy = clientY - cy;
+            
+            let angle = Math.atan2(dx, -dy);
+            if (angle < 0) angle += 2 * Math.PI;
+            
+            const pct = angle / (2 * Math.PI);
+            const u = Math.round(pct * 7499) + 1;
+            return { angle, pct, u };
+        }
+
+        function updateDial(pct) {
+            const r = 110;
+            const c = 2 * Math.PI * r;
+            const offset = c * (1 - pct);
+            progress.style.strokeDashoffset = offset;
+            
+            const angle = pct * 2 * Math.PI;
+            const x = 130 + r * Math.sin(angle);
+            const y = 130 - r * Math.cos(angle);
+            handle.setAttribute('cx', x);
+            handle.setAttribute('cy', y);
+        }
+
+        function handleDrag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            const { pct, u } = getAngleAndValue(e);
+            userInput.value = u;
+            updateDial(pct);
+            calculateValues(u);
+        }
+
+        svg.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            handleDrag(e);
+        });
+
+        window.addEventListener('mousemove', handleDrag);
+        window.addEventListener('mouseup', () => isDragging = false);
+
+        // Mobile touch support
+        svg.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            handleDrag(e);
+        }, { passive: false });
+
+        window.addEventListener('touchmove', handleDrag, { passive: false });
+        window.addEventListener('touchend', () => isDragging = false);
+
+        // Math calculations and formatter
+        function fmt(val) {
+            return CUR.symbol + val.toLocaleString(CUR.locale, { 
+                minimumFractionDigits: 2, 
+                maximumFractionDigits: 2 
+            });
+        }
+
+        function getCommissionRates() {
+            let f = parseFloat(commFirstInput.value);
+            if (isNaN(f) || f < 0) f = 0;
+            if (f > 100) f = 100;
+            
+            let r = parseFloat(commRenewalInput.value);
+            if (isNaN(r) || r < 0) r = 0;
+            if (r > 100) r = 100;
+            
+            return { firstRate: f / 100, renewalRate: r / 100 };
+        }
+
+        // Apply translations based on selected language
+        function applyTranslations() {
+            const dictionary = translations[currentLang];
+            
+            document.getElementById('calcTitle').textContent = dictionary.calcTitle;
+            document.getElementById('calcSub').textContent = dictionary.calcSub;
+            document.getElementById('lblFirst').textContent = dictionary.lblFirst;
+            document.getElementById('lblTotal').textContent = dictionary.lblTotal;
+            document.getElementById('noteDisclaimer').textContent = dictionary.noteDisclaimer;
+            document.getElementById('lblCommFirst').textContent = dictionary.lblCommFirst;
+            document.getElementById('lblCommRenewal').textContent = dictionary.lblCommRenewal;
+
+            const monthlyPrice = 99.90;
+            const quarterlyPrice = 199.90;
+            const yearlyPrice = 699.90;
+            
+            document.getElementById('planMonthly').textContent = dictionary.plan_monthly + ' (' + fmt(monthlyPrice) + ')';
+            document.getElementById('planQuarterly').textContent = dictionary.plan_quarterly + ' (' + fmt(quarterlyPrice) + ')';
+            document.getElementById('planYearly').textContent = dictionary.plan_yearly + ' (' + fmt(yearlyPrice) + ')';
+
+            // Apply Mock Dashboard Section Header translations
+            document.getElementById('mockSectionTitle').textContent = dictionary.mockSectionTitle;
+            document.getElementById('mockSectionSub').textContent = dictionary.mockSectionSub;
+
+            // Apply Mock Dashboard translations
+            document.getElementById('mockDashBrandText').innerHTML = currentLang === 'tr' ? 'BlockerMax <b>Kontrol Paneli</b>' : 'BlockerMax <b>Control Panel</b>';
+            document.getElementById('mockLogout').textContent = dictionary.logout;
+            document.getElementById('mockWelcome').textContent = dictionary.welcome;
+            
+            document.getElementById('mockNextPayoutLbl').textContent = dictionary.nextPayoutLbl;
+            document.getElementById('mockNextPayoutVal').textContent = dictionary.nextPayoutVal;
+            document.getElementById('mockBalanceLbl').textContent = dictionary.balanceLbl;
+            document.getElementById('mockBalanceVal').textContent = dictionary.balanceVal;
+            
+            document.getElementById('mockPaidUsersLbl').textContent = dictionary.paidUsersLbl;
+            document.getElementById('mockActiveSubsLbl').textContent = dictionary.activeSubsLbl;
+            document.getElementById('mockTotalRevLbl').textContent = dictionary.totalRevLbl;
+            document.getElementById('mockTotalRevVal').textContent = dictionary.totalRevVal;
+            
+            document.getElementById('mockRecentTx').textContent = dictionary.recentTx;
+            document.getElementById('colDate').textContent = dictionary.dateCol;
+            document.getElementById('colEvent').textContent = dictionary.eventCol;
+            document.getElementById('colRev').textContent = dictionary.revenueCol;
+            document.getElementById('colComm').textContent = dictionary.commCol;
+
+            document.getElementById('tx1Type').textContent = dictionary.tx1Type;
+            document.getElementById('tx2Type').textContent = dictionary.tx2Type;
+            document.getElementById('tx3Type').textContent = dictionary.tx3Type;
+            document.getElementById('tx4Type').textContent = dictionary.tx4Type;
+
+            document.getElementById('tx1Rev').textContent = dictionary.tx1Rev;
+            document.getElementById('tx1Comm').textContent = dictionary.tx1Comm;
+            document.getElementById('tx2Rev').textContent = dictionary.tx2Rev;
+            document.getElementById('tx2Comm').textContent = dictionary.tx2Comm;
+            document.getElementById('tx3Rev').textContent = dictionary.tx3Rev;
+            document.getElementById('tx3Comm').textContent = dictionary.tx3Comm;
+            document.getElementById('tx4Rev').textContent = dictionary.tx4Rev;
+            document.getElementById('tx4Comm').textContent = dictionary.tx4Comm;
+
+            document.documentElement.lang = currentLang;
+            updateFromInput();
+        }
+
+        // Language setter
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            if (lang === 'tr') {
+                CUR = { locale: 'tr-TR', symbol: '₺' };
+            } else {
+                CUR = { locale: 'en-US', symbol: '₺' };
+            }
+            
+            document.getElementById('langTR').classList.toggle('active', lang === 'tr');
+            document.getElementById('langEN').classList.toggle('active', lang === 'en');
+            
+            try {
+                localStorage.setItem('pref_lang', lang);
+            } catch(e) {}
+            
+            applyTranslations();
+        }
+
+        // Plan setter
+        function setPlan(plan, btn) {
+            currentPlan = plan;
+            
+            const buttons = btn.parentElement.querySelectorAll('button');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (plan === 'yearly') { calcPlan.price = 699.90; }
+            else if (plan === 'quarterly') { calcPlan.price = 199.90; }
+            else { calcPlan.price = 99.90; }
+            
+            updateFromInput();
+        }
+
+        function updateFromInput() {
+            let valStr = userInput.value;
+            if (valStr === '') return; // Don't force recalculating/snapping while typing
+            let u = parseInt(valStr);
+            if (isNaN(u)) return;
+            if (u < 1) u = 1;
+            if (u > 7500) u = 7500;
+            
+            const pct = (u - 1) / 7499;
+            updateDial(pct);
+            calculateValues(u);
+        }
+
+        userInput.addEventListener('input', updateFromInput);
+        userInput.addEventListener('blur', () => {
+            let u = parseInt(userInput.value);
+            if (isNaN(u) || u < 1) {
+                userInput.value = 250; // default to a safe mid value when cleared
+                updateFromInput();
+            } else if (u > 7500) {
+                userInput.value = 7500;
+                updateFromInput();
+            }
+        });
+
+        // Main Calculation Updates
+        function calculateValues(u) {
+            const p = calcPlan.price;
+            const { firstRate, renewalRate } = getCommissionRates();
+            
+            const first = u * p * firstRate;
+            const renewalValue = u * p * renewalRate;
+            
+            let yearRenewalsTotal, total, renewalLabel, renewalSub, totalSub, unitLabel;
+            const dictionary = translations[currentLang];
+
+            // Setup dynamic text labels based on rates
+            const firstRatePct = Math.round(firstRate * 100);
+            const renewalRatePct = Math.round(renewalRate * 100);
+            
+            document.getElementById('lblFirstSub').textContent = dictionary.lblFirstSub + ` (%${firstRatePct})`;
+
+            if (currentPlan === 'monthly') {
+                unitLabel = dictionary.unit_monthly;
+                renewalLabel = dictionary.renewal_monthly;
+                renewalSub = `%${renewalRatePct} ` + dictionary.renewal_sub_monthly;
+                yearRenewalsTotal = renewalValue * 11;
+                total = first + yearRenewalsTotal;
+                totalSub = dictionary.total_sub_monthly;
+            } else if (currentPlan === 'quarterly') {
+                unitLabel = dictionary.unit_quarterly;
+                renewalLabel = dictionary.renewal_quarterly;
+                renewalSub = `%${renewalRatePct} ` + dictionary.renewal_sub_quarterly;
+                yearRenewalsTotal = renewalValue * 3;
+                total = first + yearRenewalsTotal;
+                totalSub = dictionary.total_sub_quarterly;
+            } else {
+                unitLabel = dictionary.unit_yearly;
+                renewalLabel = dictionary.renewal_yearly;
+                renewalSub = `%${renewalRatePct} ` + dictionary.renewal_sub_yearly;
+                yearRenewalsTotal = 0;
+                total = first;
+                totalSub = dictionary.total_sub_yearly;
+            }
+
+            document.getElementById('calcUnit').textContent = unitLabel;
+            document.getElementById('calcFirst').textContent = fmt(first);
+            document.getElementById('calcRenewal').textContent = fmt(renewalValue);
+            document.getElementById('calcRenewalLabel').textContent = renewalLabel;
+            document.getElementById('calcRenewalSubtext').textContent = renewalSub;
+            document.getElementById('calcTotal').textContent = fmt(total);
+            document.getElementById('calcTotalSubtext').textContent = totalSub;
+
+            // Bar updates removed
+        }
+
+        // Initialize state on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            let detectedLang = 'tr'; // Default is Turkish
+            
+            try {
+                const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+                if (browserLang.startsWith('en')) {
+                    detectedLang = 'en';
+                }
+            } catch(e) {}
+
+            try {
+                const saved = localStorage.getItem('pref_lang');
+                if (saved === 'tr' || saved === 'en') {
+                    detectedLang = saved;
+                }
+            } catch(e) {}
+            
+            setLanguage(detectedLang);
+        });
+    </script>
+</body>
+</html>
